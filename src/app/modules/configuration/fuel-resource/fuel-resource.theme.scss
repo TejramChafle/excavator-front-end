@@ -1,0 +1,110 @@
+@import "src/@fuse/scss/fuse";
+@mixin fuel-resources-theme($theme) {
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $is-dark: map-get($theme, is-dark);
+
+    #fuel-resources {
+
+        .header {
+
+            .search-wrapper {
+                background: map-get($background, card);
+
+                width: 100%;
+                border-radius: 28px;
+                overflow: hidden;
+                @include mat-elevation(1);
+
+                .search {
+
+                    width: 100%;
+                    height: 48px;
+                    line-height: 48px;
+                    padding: 0 18px;
+                    background-color: white;
+
+                    .mat-icon {
+                        color: map-get($foreground, icon);
+                    }
+
+                    input {
+                        background: map-get($background, card);
+                        color: map-get($foreground, text);
+
+                        width: 100%;
+                        height: 48px;
+                        min-height: 48px;
+                        max-height: 48px;
+                        padding: 0 16px;
+                        border: none;
+                        outline: none;
+                    }
+                }
+            }
+        }
+
+        .content {
+
+            .sidebar {
+
+                .sidebar-content {
+
+                    .card {
+                        background: map-get($background, card);
+                    }
+
+                    &:not(.locked-open) {
+                        background: white;
+                    }
+                }
+            }
+        }
+    } 
+}
+
+#fuel-resource {
+
+    .header {
+
+        .search-wrapper {
+            width: 100%;
+            // max-width: 480px;
+            border-radius: 28px;
+            overflow: hidden;
+            @include mat-elevation(1);
+
+            .search {
+                width: 100%;
+                height: 48px;
+                line-height: 48px;
+                padding: 0 18px;
+                background-color: white;
+                .mat-icon {
+                    color: rgba(0,0,0,.54);
+                }
+                input {
+                    width: 100%;
+                    height: 48px;
+                    min-height: 48px;
+                    max-height: 48px;
+                    padding: 0 16px;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    .content {
+        overflow: hidden;
+
+        .sidebar {
+
+            &:not(.locked-open) {
+                background: white;
+            }
+        }
+    }
+}
