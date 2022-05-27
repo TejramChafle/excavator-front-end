@@ -27,8 +27,7 @@ user-list {
         .mat-row {
             position: relative;
             cursor: pointer;
-            padding: 8px;
-
+            padding: 8px 0px;
             .mat-cell {
                 min-width: 0;
 
@@ -68,17 +67,17 @@ user-list {
     -ms-hyphens: auto;
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
-    hyphens: auto; */
-    &-avatar {
+    hyphens: auto;*/
+    /* &-email {
         flex: 0 0 10% !important;
         width: 10% !important;   
-    }
+    }  */
     &-active {
         flex: 0 0 5% !important;
         width: 5% !important;   
     }
     &-actions {
-        flex: 0 0 5% !important;
-        width: 5% !important; 
+        flex: 0 0 8% !important;
+        width: 8% !important; 
     }
 }

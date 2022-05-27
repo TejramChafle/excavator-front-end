@@ -26,6 +26,7 @@ export class AppService {
             this.user._id = auth.user._id;
             this.user.role = auth.role;
             this.user.username = auth.username;
+            this.user.token = auth.token;
             this.httpOptions = {
                 headers: new HttpHeaders({
                     'Content-Type': 'application/json',

@@ -12,6 +12,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FuseAlertDialogModule } from '@fuse/components/alert-dialog/alert-dialog.module';
 
 const modules = [
     MatButtonModule,
@@ -24,7 +27,9 @@ const modules = [
     MatPaginatorModule,
     MatToolbarModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatTabsModule,
+    MatSnackBarModule
 ];
 
 @NgModule({
@@ -32,12 +37,14 @@ const modules = [
         FuseSharedModule,
         FuseConfirmDialogModule,
         FuseSidebarModule,
+        FuseAlertDialogModule,
         ...modules
     ],
     exports: [
         FuseSharedModule,
         FuseConfirmDialogModule,
         FuseSidebarModule,
+        FuseAlertDialogModule,
         ...modules
     ]
 })

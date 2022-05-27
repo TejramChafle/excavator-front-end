@@ -1,0 +1,195 @@
+<div id="business" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <!-- <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/apps/e-commerce/businesss'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button> -->
+
+                <div class="business-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    <img *ngIf="business.logo" [src]="business.logo">
+                    <img *ngIf="!business.logo" [src]="'assets/images/ecommerce/product-image-placeholder.png'">
+                </div>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{business.name}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Business
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>{{business.tagline || 'Your business tagline/slogan will be displayed here'}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-business-button"
+                    [disabled]="businessForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="addBusiness()">
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-business-button"
+                    [disabled]="businessForm.invalid || businessForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="updateBusiness()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+                <form name="businessForm" [formGroup]="businessForm" class="business w-100-p" fxLayout="column" fxFlex>
+                    <mat-tab-group>
+                        <!-- Basic Info -->
+                        <mat-tab label="Basic Info">
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Business Name</mat-label>
+                                    <input matInput placeholder="Business Name"
+                                           name="name"
+                                           formControlName="name"
+                                           required>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Tagline</mat-label>
+                                    <input matInput placeholder="Tagline/Slogan"
+                                           name="tagline"
+                                           formControlName="tagline">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Logo</mat-label>
+                                    <input matInput placeholder="Logo URL"
+                                           name="logo"
+                                           formControlName="logo"
+                                           type="url"
+                                           >
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>About</mat-label>
+                                    <textarea matInput placeholder="About your business"
+                                              name="about"
+                                              formControlName="about"
+                                              rows="5">
+                                    </textarea>
+                                </mat-form-field>
+                            </div>
+                        </mat-tab>
+
+                        <!-- Owner Detail -->
+                        <mat-tab label="Owner">
+                            <div class="tab-content p-24" fusePerfectScrollbar formGroupName="owner">
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Name</mat-label>
+                                    <input matInput placeholder="Name"
+                                           name="name"
+                                           formControlName="name"
+                                           required>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="Email"
+                                           name="email"
+                                           formControlName="email"
+                                           type="email"
+                                           required>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput placeholder="Phone"
+                                            name="phone"
+                                            formControlName="phone"
+                                            type="tel"
+                                            required>
+                                </mat-form-field>
+                            </div>
+                        </mat-tab>
+
+                        <!-- Contact Detail -->
+                        <mat-tab label="Contact Detail">
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="Email"
+                                           name="email"
+                                           formControlName="email"
+                                           type="email"
+                                           required>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput placeholder="Phone"
+                                            name="phone"
+                                            formControlName="phone"
+                                            type="tel"
+                                            required>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Alternate Phone</mat-label>
+                                    <input matInput placeholder="Alternate Phone"
+                                           name="alternatePhone"
+                                           formControlName="alternatePhone"
+                                           type="tel">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Address</mat-label>
+                                    <textarea matInput placeholder="Address"
+                                            name="address"
+                                            formControlName="address"
+                                            rows="5">
+                                    </textarea>
+                                </mat-form-field>
+                            </div>
+                        </mat-tab>
+
+                        <!-- Billing Info -->
+                        <mat-tab label="Billing Info">
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>PAN</mat-label>
+                                    <input matInput placeholder="PAN"
+                                           name="panNo"
+                                           formControlName="panNo">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>GST Number</mat-label>
+                                    <input matInput placeholder="GST Number"
+                                            name="gstNo"
+                                            formControlName="gstNo">
+                                </mat-form-field>
+                            </div>
+                        </mat-tab>
+
+                    </mat-tab-group>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

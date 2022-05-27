@@ -26,11 +26,12 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { ContactsService } from './contacts/contacts.service';
 import { ContactsSelectedBarComponent } from './contacts/selected-bar/selected-bar.component';
 import { ContactsMainSidebarComponent } from './contacts/sidebars/main/main.component';
-import { FuseAlertDialogComponent } from '@fuse/components/alert-dialog/alert-dialog.component';
 import { UsersComponent } from './users/users.component';
 import { UsersService } from './users/users.service';
 import { UserFormDialogComponent } from './users/user-form/user-form.component';
 import { UserListComponent } from './users/user-list/user-list.component';
+import { BusinessComponent } from './business/business.component';
+import { BusinessService } from './business/business.service';
 
 const routes: Routes = [
     {
@@ -80,6 +81,14 @@ const routes: Routes = [
             users: UsersService
         },
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'configuration/business-detail',
+        component: BusinessComponent,
+        resolve: {
+            business: BusinessService
+        },
+        canActivate: [AuthGuard]
     }
 ];
 
@@ -103,10 +112,10 @@ const routes: Routes = [
         ContactsMainSidebarComponent,
         ContactFormDialogComponent,
         ContactListDialogComponent,
-        FuseAlertDialogComponent,
         UsersComponent,
         UserListComponent,
-        UserFormDialogComponent
+        UserFormDialogComponent,
+        BusinessComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -119,7 +128,8 @@ const routes: Routes = [
         EmployeesService,
         ClientService,
         ContactsService,
-        UsersService
+        UsersService,
+        BusinessService
     ],
     entryComponents: [
         TagFormDialogComponent,
@@ -128,7 +138,6 @@ const routes: Routes = [
         ClientFormDialogComponent,
         ContactFormDialogComponent,
         ContactListDialogComponent,
-        FuseAlertDialogComponent,
         UserFormDialogComponent
     ]
 })

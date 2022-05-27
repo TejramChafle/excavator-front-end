@@ -1346,6 +1346,6 @@ export let navigation: FuseNavigation[] = [
 ];
 
 // merge fuze menu in main navigation menu to show on non-prod environments 
-if (environment.production) {
+if (!environment.production) {
     navigation = [...navigation, ...fuzeMenu];
 }

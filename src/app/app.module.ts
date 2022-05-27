@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -28,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthModule } from './modules/authentication/auth.module';
 import { AppService } from './app.service';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
+import { AppInterceptor } from './app.interceptor';
 
 const appRoutes: Routes = [
     {
@@ -104,7 +105,8 @@ const appRoutes: Routes = [
         AppComponent
     ],
     providers   : [
-        AppService
+        AppService,
+        { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
     ]
 })
 export class AppModule

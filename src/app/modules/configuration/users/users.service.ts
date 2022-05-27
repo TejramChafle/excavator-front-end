@@ -86,7 +86,7 @@ export class UsersService implements Resolve<any> {
      * @returns {Promise<any>}
      */
     getUsers(params?: any): Promise<any> {
-        let url = apiBaseUrl + 'auth/users';
+        let url = apiBaseUrl + 'user/users';
         if (params && params.page) {
             url += '?page=' + params.page + '&limit=' + params.limit;
         } else {
@@ -97,9 +97,10 @@ export class UsersService implements Resolve<any> {
         } else if (this.searchText && this.searchText.trim().length) {
             url += '&name=' + this.searchText.trim();
         }
+        url += '&businessId=' + this._appService.user.business._id;
         url += '&sort_order=desc';
         return new Promise((resolve, reject) => {
-            this._httpClient.get(url, this._appService.httpOptions)
+            this._httpClient.get(url)
                 .subscribe((response: any) => {
                     this.users = response.docs;
                     delete response.docs;
@@ -219,7 +220,7 @@ export class UsersService implements Resolve<any> {
      */
     createUser(user): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.post(apiBaseUrl + 'auth/signup', { ...user }, this._appService.httpOptions)
+            this._httpClient.post(apiBaseUrl + 'user/signup', { ...user })
                 .subscribe(response => {
                     this.getUsers();
                     resolve(response);
@@ -238,7 +239,7 @@ export class UsersService implements Resolve<any> {
      */
     updateUser(user): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.put(apiBaseUrl + 'user/' + user._id, { ...user }, this._appService.httpOptions)
+            this._httpClient.put(apiBaseUrl + 'user/' + user._id, { ...user })
                 .subscribe(response => {
                     this.getUsers();
                     resolve(response);
@@ -296,7 +297,7 @@ export class UsersService implements Resolve<any> {
      */
     deleteUser(user): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.delete(apiBaseUrl + 'user/' + user._id, this._appService.httpOptions)
+            this._httpClient.delete(apiBaseUrl + 'user/' + user._id)
                 .subscribe(response => {
                     this.getUsers();
                     resolve(response);

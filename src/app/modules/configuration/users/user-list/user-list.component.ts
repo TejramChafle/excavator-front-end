@@ -27,7 +27,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     users: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['avatar', 'name', 'role', 'designation', 'email', 'phone', 'designation', 'active', 'actions'];
+    displayedColumns = ['avatar', 'name', 'role', 'designation', 'email', 'phone', 'active', 'actions'];
     // selectedUsers: any[];
     // checkboxes: {};
     dialogRef: any;
