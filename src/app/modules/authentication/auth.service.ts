@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError, retry, delay } from 'rxjs/operators';
 
 import { AppService } from '../../app.service';
-import { apiBaseUrl } from '../../app.config';
+import { BASE_URL } from '../../app.config';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,7 +22,7 @@ export class AuthService {
         ) { }
 
     login(credential): Observable<any> {
-        return this._http.post(apiBaseUrl + 'auth/login', credential, httpOptions).pipe(
+        return this._http.post(BASE_URL + 'auth/login', credential, httpOptions).pipe(
             // delay(3000),
             // retry(3),
             map((response) => {

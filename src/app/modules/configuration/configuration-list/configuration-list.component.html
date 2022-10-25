@@ -1,0 +1,210 @@
+<mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}" *ngIf="tableColumns">
+
+    <!-- SERVICE COLUMNS -->
+    <div *ngIf="module === 'services'">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let service">
+                <p class="text-truncate font-weight-600">{{service.name}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Rate Column -->
+        <ng-container matColumnDef="rate">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Rate</mat-header-cell>
+            <mat-cell *matCellDef="let service" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{service.rate}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Billing Type Column -->
+        <ng-container matColumnDef="billingType">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Billing Type</mat-header-cell>
+            <mat-cell *matCellDef="let service" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{service.billingType}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+            <mat-cell *matCellDef="let service">
+                <p class="text-truncate">
+                    {{service.description | titlecase}}
+                </p>
+            </mat-cell>
+        </ng-container>
+    </div>
+
+    <!-- USER COLUMNS -->
+    <div *ngIf="module === 'users'">
+        <!-- Avatar Column -->
+        <ng-container matColumnDef="avatar">
+            <mat-header-cell *matHeaderCellDef fxFlex="96px"></mat-header-cell>
+            <mat-cell *matCellDef="let user" fxFlex="96px">
+                <img class="avatar" [alt]="user.name" [src]="user.avatar || 'assets/images/avatars/profile.jpg'" />
+            </mat-cell>
+        </ng-container>
+        
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let user">
+                <p class="text-truncate font-weight-600">{{user.name}}</p>
+            </mat-cell>
+        </ng-container>
+        
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Role</mat-header-cell>
+            <mat-cell *matCellDef="let user" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{user.role | titlecase}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        
+        <!-- Designation Column -->
+        <ng-container matColumnDef="designation">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Designation</mat-header-cell>
+            <mat-cell *matCellDef="let user" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{user.designation}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-cell *matCellDef="let user">
+                <p class="text-truncate">
+                    {{user.email}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md fxShow.gt-lg>Phone</mat-header-cell>
+            <mat-cell *matCellDef="let user" fxShow.gt-md fxShow.gt-lg>
+                <p class="phone text-truncate">
+                    {{user.phone}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        
+        <!-- User Active Column -->
+        <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-lg fxShow.gt-md>Active</mat-header-cell>
+            <mat-cell *matCellDef="let user" fxShow.gt-lg fxShow.gt-md>
+                <mat-icon *ngIf="user.isActive" class="active-icon green-600 s-16">check</mat-icon>
+                <mat-icon *ngIf="!user.isActive" class="active-icon red-500 s-16">close</mat-icon>
+            </mat-cell>
+        </ng-container>
+    </div>
+
+    <!-- TAG COLUMNS -->
+    <div *ngIf="module === 'tags'">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let config">
+                <p class="text-truncate font-weight-600">{{config.name}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Purpose Column -->
+        <ng-container matColumnDef="purpose">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Purpose</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.purpose}}
+                </p>
+            </mat-cell>
+        </ng-container>
+    </div>
+
+    
+    <!-- Created By Column -->
+    <ng-container matColumnDef="createdBy">
+        <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created By</mat-header-cell>
+        <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+            <p class="text-truncate">
+                {{config.createdBy?.name | titlecase}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Updated By Column -->
+    <ng-container matColumnDef="updatedBy">
+        <mat-header-cell *matHeaderCellDef>Updated By</mat-header-cell>
+        <mat-cell *matCellDef="let config">
+            <p class="text-truncate">
+                {{config.updatedBy?.name | titlecase}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Created At Column -->
+    <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created At</mat-header-cell>
+        <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+            <p class="text-truncate">
+                {{config.createdAt | date : 'd MMM, y h:mm a'}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Updated At Column -->
+    <ng-container matColumnDef="updatedAt">
+        <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Updated At</mat-header-cell>
+        <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+            <p class="text-truncate">
+                {{config.updatedAt | date : 'd MMM, y h:mm a'}}
+            </p>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Action Buttons Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let configuration">
+            <div fxFlex="row" fxLayoutAlign="end center">
+                <!-- Action button icon -->
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                    (click)="$event.stopPropagation();">
+                    <mat-icon class="secondary-text">more_vert</mat-icon>
+                </button>
+                <!-- Action button dropdow options -->
+                <mat-menu #moreMenu="matMenu">
+                    <button mat-menu-item aria-label="change_history" (click)="editConfiguration(configuration)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                    <button mat-menu-item aria-label="remove" (click)="deleteConfiguration(configuration)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Remove</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let configuration; columns: tableColumns;" class="configuration"
+        (click)="editConfiguration(configuration)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+    </mat-row>
+</mat-table>
+
+
+<!-- PAGINATION -->
+<mat-paginator [length]="_dataService.pagination.total" [pageSize]="_dataService.pagination.limit"
+    [pageSizeOptions]="[10, 20, 50, 100]" (page)="onPageChange($event)">
+</mat-paginator>

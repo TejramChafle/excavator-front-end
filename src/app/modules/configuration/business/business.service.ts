@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { apiBaseUrl } from 'app/app.config';
+import { BASE_URL } from 'app/app.config';
 import { AppService } from 'app/app.service';
 
 @Injectable()
@@ -33,6 +33,7 @@ export class BusinessService implements Resolve<any>
      * @returns {Observable<any> | Promise<any> | any}
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+        console.log({route});
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getBusiness()
@@ -50,7 +51,7 @@ export class BusinessService implements Resolve<any>
     getBusiness(): Promise<any> {
         const bId = this._appService.user.business._id;
         return new Promise((resolve, reject) => {
-            this._httpClient.get(apiBaseUrl + 'business/' + bId)
+            this._httpClient.get(BASE_URL + 'business/' + bId)
                 .subscribe((response: any) => {
                     this.business = response;
                     this.onBusinessChanged.next(this.business);
@@ -67,7 +68,7 @@ export class BusinessService implements Resolve<any>
      */
     updateBusiness(business): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.put(apiBaseUrl + 'business/' + business.id, business)
+            this._httpClient.put(BASE_URL + 'business/' + business.id, business)
                 .subscribe((response: any) => {
                     resolve(response);
                 }, reject);
@@ -82,7 +83,7 @@ export class BusinessService implements Resolve<any>
      */
     addBusiness(business): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.post(apiBaseUrl + 'business/register', business)
+            this._httpClient.post(BASE_URL + 'business/register', business)
                 .subscribe((response: any) => {
                     resolve(response);
                 }, reject);

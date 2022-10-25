@@ -1,0 +1,39 @@
+<form [formGroup]="serviceForm">
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Name</mat-label>
+            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            <input name="name" formControlName="name" matInput required (change)="onSubmit(serviceForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Rate</mat-label>
+            <mat-icon matSuffix class="secondary-text">rate</mat-icon>
+            <input name="rate" formControlName="rate" matInput type="number" required (change)="onSubmit(serviceForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Billing Type</mat-label>
+            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            <mat-select matNativeControl required formControlName="billingType" (change)="onSubmit(serviceForm)">
+                <mat-option *ngFor="let type of billingTypes" [value]="type.value">{{type.title}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="About this service in detail"
+                  name="description"
+                  formControlName="description"
+                  rows="5"
+                  (change)="onSubmit(serviceForm)">
+        </textarea>
+    </mat-form-field>
+
+</form>

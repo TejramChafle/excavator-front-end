@@ -1135,12 +1135,12 @@ export let navigation: FuseNavigation[] = [
                 icon     : 'phonelink_setup',
                 children : [
                     {
-                        id       : 'business-detail',
+                        id       : 'business',
                         title    : 'Business detail',
                         translate: 'NAV.BUSINESS_DETAIL',
                         type     : 'item',
                         icon     : 'business',
-                        url      : '/configuration/business-detail'
+                        url      : '/configuration/business'
                     },
                     {
                         id       : 'users',
@@ -1155,7 +1155,7 @@ export let navigation: FuseNavigation[] = [
                         title    : 'Petrol pumps',
                         type     : 'item',
                         icon     : 'local_gas_station',
-                        url      : '/configuration/fuel-resource'
+                        url      : '/configuration/petrolPumps'
                     },
                     {
                         id       : 'vehicles',
@@ -1169,7 +1169,7 @@ export let navigation: FuseNavigation[] = [
                         title    : 'Site/Customer/Client',
                         type     : 'item',
                         icon     : 'person',
-                        url      : '/configuration/client'
+                        url      : '/configuration/clients'
                     },
                     {
                         id       : 'services',
@@ -1183,7 +1183,7 @@ export let navigation: FuseNavigation[] = [
                         title    : 'Tags',
                         type     : 'item',
                         icon     : 'label',
-                        url      : '/configuration/tag'
+                        url      : '/configuration/tags'
                     }
                 ]
             },

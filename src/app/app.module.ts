@@ -29,6 +29,7 @@ import { AuthModule } from './modules/authentication/auth.module';
 import { AppService } from './app.service';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
 import { AppInterceptor } from './app.interceptor';
+import { DataService } from './data.service';
 
 const appRoutes: Routes = [
     {
@@ -106,6 +107,7 @@ const appRoutes: Routes = [
     ],
     providers   : [
         AppService,
+        DataService,
         { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
     ]
 })
