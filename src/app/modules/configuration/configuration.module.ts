@@ -15,6 +15,7 @@ import { ConfigurationListComponent } from './configuration-list/configuration-l
 import { ServiceFormDialogComponent } from './configuration-form/service-form/service-form.component';
 import { TagFormDialogComponent } from './configuration-form/tag-form/tag-form.component';
 import { UserFormDialogComponent } from './configuration-form/user-form/user-form.component';
+import { VehicleFormDialogComponent } from './configuration-form/vehicle-form/vehicle-form.component';
 
 
 const routes: Routes = [
@@ -54,7 +55,8 @@ const routes: Routes = [
 
         ServiceFormDialogComponent,
         TagFormDialogComponent,
-        UserFormDialogComponent
+        UserFormDialogComponent,
+        VehicleFormDialogComponent
     ],
     imports: [
         RouterModule.forChild(routes),

@@ -6,14 +6,14 @@ export const WORKING_SHIFT = [
     'Night'
 ];
 
-export const TAG_PURPOSE = {
-    Contact: 'Contact',
-    Reminder: 'Reminder',
-    Task: 'Task',
-    Bill: 'Bill',
-    Payment: 'Payment',
-    Maintenance: 'Maintenance'
-};
+export const TAG_PURPOSE = [
+    'Contact',
+    'Reminder',
+    'Task',
+    'Bill',
+    'Payment',
+    'Maintenance'
+];
 
 // Application modules/pages
 export const MODULE = {
@@ -76,7 +76,6 @@ export const MODULE = {
             'number',
             'capacity',
             'fuel',
-            'active',
             'createdBy',
             'createdAt',
             'updatedBy',
@@ -105,9 +104,9 @@ export const MODULE = {
         ]
     },
     petrolPumps: {
-        backendRoute: 'client',
-        frontendRoute: 'clients',
-        pageTitle: 'Site/Customer/Client',
+        backendRoute: 'petrol-pump',
+        frontendRoute: 'petrolPumps',
+        pageTitle: 'Petrol Pumps',
         tableColumns: [
             'name',
             'place',
@@ -134,3 +133,15 @@ export const MODULE = {
         ]
     }
 }
+
+// Vehicle Types
+/*  
+    Mover (Dozer)
+    Excavator (Large)
+    Excavator (Small)
+    Tractor
+    Bike
+    Car
+    Thresher Machine
+    Harvestor Machine
+ */

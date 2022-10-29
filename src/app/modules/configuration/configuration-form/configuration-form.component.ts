@@ -47,12 +47,10 @@ export class ConfigurationFormDialogComponent implements OnInit {
         this.module = _data.module;
 
         if (this.action === 'edit') {
-            this.dialogTitle = 'Edit Service';
+            this.dialogTitle = 'Edit ' + MODULE[this.module].pageTitle;
             this.formData = _data.data;
-        }
-        else {
-            this.dialogTitle = 'New Service';
-            // this.data = new Service({});
+        } else {
+            this.dialogTitle = 'Add ' + MODULE[this.module].pageTitle;
         }
         console.log('this._data : ', this._data, 'this.formData', this.formData, 'this.module', this.module);
     }
@@ -68,7 +66,6 @@ export class ConfigurationFormDialogComponent implements OnInit {
         console.log({formData});
         formData.business = this._appService.user.business._id;
         formData.updatedBy = this._appService.user._id;
-        formData.createdBy = this._appService.user._id;
         // If the service id exist then update and save the service
         if (formData._id) {
             this._dataService.updateRecord(MODULE[this.module].backendRoute, formData).then((response) => {
@@ -76,6 +73,7 @@ export class ConfigurationFormDialogComponent implements OnInit {
                 this.matDialogRef.close(true);
             });
         } else {
+            formData.createdBy = this._appService.user._id;
             this._dataService.createRecord(MODULE[this.module].backendRoute, formData).then((response) => {
                 this._appService.handleMessage(response.message || 'New service created successfully.', 'Success');
                 this.matDialogRef.close(true);

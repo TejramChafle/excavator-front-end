@@ -1,16 +1,16 @@
 import { Component, Inject, ViewEncapsulation, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { User } from './user.model';
+import { Vehicle } from './vehicle.model';
 
 @Component({
-    selector: 'user-form',
-    templateUrl: './user-form.component.html',
+    selector: 'vehicle-form',
+    templateUrl: './vehicle-form.component.html',
     encapsulation: ViewEncapsulation.None
 })
 
-export class UserFormDialogComponent implements OnInit {
-    user: User;
-    userForm: FormGroup;
+export class VehicleFormDialogComponent implements OnInit {
+    vehicle: Vehicle;
+    vehicleForm: FormGroup;
     @Input('data') data: any;
     @Input('action') action: string;
     @Output() formChanged: EventEmitter<any> = new EventEmitter()
@@ -29,28 +29,24 @@ export class UserFormDialogComponent implements OnInit {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Create user form
+     * Create vehicle form
      *
      * @returns {FormGroup}
      */
     createUserForm(): FormGroup {
         return this._formBuilder.group({
-            _id: [this.user._id],
-            name: [this.user.name],
-            role: [this.user.role],
-            avatar: [this.user.avatar],
-            email: [this.user.email],
-            phone: [this.user.phone],
-            password: [null],
-            designation: [this.user.designation],
-            otp: [this.user.otp],
-            token: [this.user.token],
-            isActive: [this.user.isActive]
+            _id: [this.vehicle._id],
+            name: [this.vehicle.name],
+            type: [this.vehicle.type],
+            fuel: [this.vehicle.fuel],
+            number: [this.vehicle.number],
+            capacity: [this.vehicle.capacity],
+            isActive: [this.vehicle.isActive]
         });
     }
 
 
-    // Do save/update user information on click of add/save button
+    // Do save/update vehicle information on click of add/save button
     onSubmit(formData): void {
         console.log({formData});
         this.formChanged.emit(formData);
@@ -61,11 +57,11 @@ export class UserFormDialogComponent implements OnInit {
      */
     ngOnInit(): void {
         if (this.action === 'edit') {
-            this.user = this.data;
+            this.vehicle = this.data;
         } else {
-            this.user = new User({});
+            this.vehicle = new Vehicle({});
         }
-        this.userForm = this.createUserForm();
-        console.log('this.user : ', this.user);
+        this.vehicleForm = this.createUserForm();
+        console.log('this.vehicle : ', this.vehicle);
     }
 }

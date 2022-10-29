@@ -1152,7 +1152,7 @@ export let navigation: FuseNavigation[] = [
                     },
                     {
                         id       : 'fuel-resource',
-                        title    : 'Petrol pumps',
+                        title    : 'Petrol Pumps',
                         type     : 'item',
                         icon     : 'local_gas_station',
                         url      : '/configuration/petrolPumps'

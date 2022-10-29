@@ -130,6 +130,108 @@
         </ng-container>
     </div>
 
+    <!-- VEHICLE COLUMNS -->
+    <div *ngIf="module === 'vehicles'">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let config">
+                <p class="text-truncate font-weight-600">{{config.name}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Fuel Type Column -->
+        <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Type</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.type}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Number -->
+        <ng-container matColumnDef="number">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Number</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.number}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Capacity -->
+        <ng-container matColumnDef="capacity">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Capacity</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.capacity}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Fuel -->
+        <ng-container matColumnDef="fuel">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Fuel</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.fuel}}
+                </p>
+            </mat-cell>
+        </ng-container>
+    </div>
+
+    <!-- PETROL PUMP -->
+    <div *ngIf="module === 'petrolPumps'">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let config">
+                <p class="text-truncate font-weight-600">{{config.name}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Place Column -->
+        <ng-container matColumnDef="place">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Place</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.place}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Contact -->
+        <ng-container matColumnDef="contact">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Contact Person</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.contact}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Petrol Rate -->
+        <!-- <ng-container matColumnDef="capacity">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Capacity</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.capacity}}
+                </p>
+            </mat-cell>
+        </ng-container> -->
+
+        <!-- Fuel -->
+        <!-- <ng-container matColumnDef="fuel">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Fuel</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.fuel}}
+                </p>
+            </mat-cell>
+        </ng-container> -->
+    </div>
+
     
     <!-- Created By Column -->
     <ng-container matColumnDef="createdBy">
@@ -143,8 +245,8 @@
 
     <!-- Updated By Column -->
     <ng-container matColumnDef="updatedBy">
-        <mat-header-cell *matHeaderCellDef>Updated By</mat-header-cell>
-        <mat-cell *matCellDef="let config">
+        <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Updated By</mat-header-cell>
+        <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
             <p class="text-truncate">
                 {{config.updatedBy?.name | titlecase}}
             </p>

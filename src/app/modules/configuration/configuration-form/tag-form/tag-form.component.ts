@@ -1,54 +1,30 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
 import { Tag } from './tag.model';
-import { AppService } from 'app/app.service';
 import { TAG_PURPOSE } from 'app/app.config';
 
 @Component({
-    selector: 'tag-form-dialog',
+    selector: 'tag-form',
     templateUrl: './tag-form.component.html',
-    // styleUrls: ['./tag-form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class TagFormDialogComponent {
-    action: string;
+export class TagFormDialogComponent implements OnInit {
     tag: Tag;
     tagForm: FormGroup;
-    dialogTitle: string;
-    purposes: Array<string>;
+    @Input('data') data: any;
+    @Input('action') action: string;
+    @Output() formChanged: EventEmitter<any> = new EventEmitter()
+    purposes = TAG_PURPOSE;
     /**
      * Constructor
-     *
-     * @param {MatDialogRef<TagFormDialogComponent>} matDialogRef
      * @param _data
      * @param {FormBuilder} _formBuilder
      */
     constructor(
-        public matDialogRef: MatDialogRef<TagFormDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) private _data: any,
-        private _formBuilder: FormBuilder,
-        private _appService: AppService
+        private _formBuilder: FormBuilder
     ) {
-        // Set the defaults
-        this.action = _data.action;
-
-        if (this.action === 'edit') {
-            this.dialogTitle = 'Edit Tag';
-            this.tag = _data.tag;
-        }
-        else {
-            this.dialogTitle = 'New Tag';
-            this.tag = new Tag({});
-        }
-
-        this.tagForm = this.createTagForm();
-
-        // Set the purpose options
-        // this.purposes = TAG_PURPOSE;
-        this.purposes = [];
+        console.log({purposes: this.purposes});
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -72,5 +48,15 @@ export class TagFormDialogComponent {
     // Do save/update tag information on click of add/save button
     onSubmit(formData): void {
         console.log(formData);
+        this.formChanged.emit(formData);
+    }
+
+    ngOnInit(): void {
+        if (this.action === 'edit') {
+            this.tag = this.data;
+        } else {
+            this.tag = new Tag({});
+        }
+        this.tagForm = this.createTagForm();
     }
 }
