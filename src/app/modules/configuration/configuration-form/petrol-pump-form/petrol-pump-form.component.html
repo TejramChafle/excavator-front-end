@@ -1,0 +1,34 @@
+<form [formGroup]="petrolPumpForm">
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Name</mat-label>
+            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            <input name="name" formControlName="name" matInput required (change)="onSubmit(petrolPumpForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Place</mat-label>
+            <mat-icon matSuffix class="secondary-text">filter_alt</mat-icon>
+            <input name="place" formControlName="place" matInput type="text" required (change)="onSubmit(petrolPumpForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Petrol Rate ₹/L</mat-label>
+            <mat-icon matSuffix class="secondary-text">rate</mat-icon>
+            <input name="petrolRate" formControlName="petrolRate" matInput type="number" required (change)="onSubmit(petrolPumpForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Diesel Rate ₹/L</mat-label>
+            <mat-icon matSuffix class="secondary-text">rate</mat-icon>
+            <input name="dieselRate" formControlName="dieselRate" matInput type="number" required (change)="onSubmit(petrolPumpForm)">
+        </mat-form-field>
+    </div>
+</form>

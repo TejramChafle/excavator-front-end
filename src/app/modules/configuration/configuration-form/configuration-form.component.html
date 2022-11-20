@@ -18,6 +18,10 @@
 
         <vehicle-form [data]="formData" [action]="action" *ngIf="module === 'vehicles'" (formChanged)="onFormChange($event)"></vehicle-form>
 
+        <petrol-pump-form [data]="formData" [action]="action" *ngIf="module === 'petrolPumps'" (formChanged)="onFormChange($event)"></petrol-pump-form>
+
+        <customer-form [data]="formData" [action]="action" *ngIf="module === 'customers'" (formChanged)="onFormChange($event)"></customer-form>
+
     </div>
 
     <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">

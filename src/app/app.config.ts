@@ -38,10 +38,10 @@ export const MODULE = {
         frontendRoute: 'users',
         pageTitle: 'Users',
         tableColumns : [
-            'avatar',
+            // 'avatar',
             'name',
             'role',
-            'designation',
+            // 'designation',
             'email',
             'phone',
             'active',
@@ -88,18 +88,21 @@ export const MODULE = {
         frontendRoute: 'contacts',
         pageTitle: 'Contacts',
         tableColumns: [
-            'firstname',
-            'gender',
-            'email',
-            'mobile',
+            // 'checkbox',
+            // 'avatar',
+            'name',
+            // 'gender',
+            // 'email',
             'phone',
-            'designation',
-            'company',
+            // 'alternatePhone',
+            // 'designation',
+            // 'company',
             'type',
-            'createdBy',
-            'createdAt',
-            'updatedBy',
-            'updatedAt',
+            'important',
+            // 'createdBy',
+            // 'createdAt',
+            // 'updatedBy',
+            // 'updatedAt',
             'actions'
         ]
     },
@@ -110,6 +113,8 @@ export const MODULE = {
         tableColumns: [
             'name',
             'place',
+            'petrolRate',
+            'dieselRate',
             'createdBy',
             'createdAt',
             'updatedBy',
@@ -117,31 +122,86 @@ export const MODULE = {
             'actions'
         ]
     },
-    clients: {
-        backendRoute: 'petrolPump',
-        frontendRoute: 'petrolPumps',
-        pageTitle: 'Petrol Pumps',
+    customers: {
+        backendRoute: 'customer',
+        frontendRoute: 'customers',
+        pageTitle: 'Client/Customers/Site',
         tableColumns: [
             'name',
-            'address',
-            'description',
+            'place',
+            'email',
+            'phone',
+            'contact',
             'createdBy',
             'createdAt',
             'updatedBy',
             'updatedAt',
             'actions'
         ]
+    },
+    employees: {
+        backendRoute: 'employee',
+        frontendRoute: 'employees',
+        pageTitle: 'Employees',
+        tableColumns: [
+            'photo',
+            'name',
+            'gender',
+            'phone',
+            'designation',
+            'disabledon',
+            'joiningdate',
+            'status',
+            // 'createdBy',
+            // 'createdAt',
+            // 'updatedBy',
+            // 'updatedAt',
+            'actions'
+        ]
+    },
+    works: {
+        backendRoute: 'work',
+        frontendRoute: 'works',
+        pageTitle: 'Works',
+        tableColumns: [
+            'service',
+            'date',
+            'startime',
+            // 'endtime',
+            'customer',
+            // 'site',
+            // 'workers',
+            // 'rate',
+            'quantity',
+            'amount',
+            'invoiced',
+            // 'supervisor'
+            // 'createdBy',
+            // 'createdAt',
+            // 'updatedBy',
+            // 'updatedAt',
+            'actions'
+        ]
     }
 }
 
-// Vehicle Types
-/*  
-    Mover (Dozer)
-    Excavator (Large)
-    Excavator (Small)
-    Tractor
-    Bike
-    Car
-    Thresher Machine
-    Harvestor Machine
- */
+export const CONTACT_TYPE = {
+    BUSINESS: 'Business',
+    RELATIVE: 'Relative',
+    FRIEND: 'Friend',
+    ASSOCIATE: 'Associate',
+    CLIENT: 'Client',
+    CUSTOMER: 'Customer',
+    PARTY: 'Party',
+    EMPLOYEE: 'Employee'
+};
+
+export const VEHICLE_TYPE = {
+    CAR: 'Car',
+    BIKE: 'Bike',
+    TRACTOR: 'Tractor',
+    TRACK: 'Truck',
+    THRESHER: 'Thresher Machine',
+    DOZER:'Dozer',
+    POCLAIN: 'Poclain'
+};

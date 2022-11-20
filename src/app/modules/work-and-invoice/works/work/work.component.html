@@ -1,0 +1,208 @@
+<div id="work" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/work-and-invoice/works'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        Update Work | {{service.name}} | {{work._id}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Work
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Work Detail</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-work-button"
+                    [disabled]="workForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="onSubmit()">
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-work-button"
+                    [disabled]="workForm.invalid || workForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="onSubmit()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="workForm" [formGroup]="workForm" class="work w-100-p" fxLayout="column" fxFlex>
+
+                    <mat-tab-group>
+
+                        <mat-tab label="Service/Work Info">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+
+                                <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-label>Service</mat-label>
+                                    <mat-select matNativeControl required formControlName="service" 
+                                    (selectionChange)="onChangeService($event)">
+                                        <mat-option [value]="service._id" *ngFor="let service of services">
+                                            {{service.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Date of Work Done</mat-label>
+                                    <input matInput placeholder="Date of Work Done"
+                                           name="date"
+                                           formControlName="date"
+                                           required
+                                           type="date">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Start Time</mat-label>
+                                    <input matInput placeholder="Start Time"
+                                           name="startTime"
+                                           formControlName="startTime"
+                                           required
+                                           type="time">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>End Time</mat-label>
+                                    <input matInput placeholder="End Time"
+                                           name="endTime"
+                                           formControlName="endTime"
+                                           required
+                                           type="time">
+                                </mat-form-field>
+
+                            </div>
+
+                        </mat-tab>
+
+                        <mat-tab label="Customer/Site Info">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <!-- <div fxLayout="row wrap" fxLayoutAlign="start start">
+
+                                    <div *ngIf="work.images.length === 0"
+                                         class="work-image" fxlayout="row" fxLayoutAlign="center center">
+                                        <img class="media"
+                                             [src]="'assets/images/ecommerce/work-image-placeholder.png'">
+                                    </div>
+
+                                    <div *ngFor="let image of work.images">
+                                        <div *ngIf="work.images.length > 0"
+                                             class="work-image" fxlayout="row" fxLayoutAlign="center center">
+                                            <img class="media" [src]="image.url">
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-label>Customer/Client</mat-label>
+                                    <mat-select matNativeControl required formControlName="customer">
+                                        <mat-option [value]="customer._id" *ngFor="let customer of customers">{{customer.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Site/Place</mat-label>
+                                    <textarea matInput placeholder="Site/Place of work"
+                                              name="site"
+                                              formControlName="site"
+                                              rows="5">
+                                    </textarea>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Description</mat-label>
+                                    <textarea matInput placeholder="Description/Note"
+                                              name="description"
+                                              formControlName="description"
+                                              rows="5">
+                                    </textarea>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-label>Supervisor</mat-label>
+                                    <mat-select matNativeControl required formControlName="supervisor">
+                                        <mat-option [value]="contact._id" *ngFor="let contact of contacts">{{contact.firstName}} {{contact.lastName}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </mat-tab>
+
+                        <mat-tab label="Amount & Rate">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Rate{{service ? '/' + service.billingType : ''}}</mat-label>
+                                    <input matInput placeholder="Rate"
+                                           name="rate"
+                                           formControlName="rate"
+                                           type="number">
+                                    <span matPrefix>₹&nbsp;</span>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Quantity</mat-label>
+                                    <input matInput placeholder="Quantity"
+                                           name="quantity"
+                                           formControlName="quantity"
+                                           type="number"
+                                           (change)="onChangeQuantity($event)">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Amount/Rate</mat-label>
+                                    <input matInput placeholder="Amount/Rate"
+                                           name="total"
+                                           formControlName="total"
+                                           type="number">
+                                    <span matPrefix>₹&nbsp;</span>
+                                    <mat-hint align="start">This amount will be given additional and may not be considered as a wage in payment</mat-hint>
+                                </mat-form-field>
+
+                            </div>
+                        </mat-tab>
+
+                    </mat-tab-group>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

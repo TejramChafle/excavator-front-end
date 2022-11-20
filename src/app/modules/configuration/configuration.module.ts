@@ -16,16 +16,14 @@ import { ServiceFormDialogComponent } from './configuration-form/service-form/se
 import { TagFormDialogComponent } from './configuration-form/tag-form/tag-form.component';
 import { UserFormDialogComponent } from './configuration-form/user-form/user-form.component';
 import { VehicleFormDialogComponent } from './configuration-form/vehicle-form/vehicle-form.component';
-
+import { PetrolPumpFormDialogComponent } from './configuration-form/petrol-pump-form/petrol-pump-form.component';
+import { CustomerFormDialogComponent } from './configuration-form/customer-form/customer-form.component';
 
 const routes: Routes = [
     {
-        path: 'configuration',
-        component: ConfigurationComponent,
-        resolve: {
-            recordsWithPagination: DataService
-        },
-        canActivate: [AuthGuard]
+        path: '',
+        redirectTo: 'configuration/business',
+        pathMatch: 'full'
     },
     {
         path: 'configuration/business',
@@ -56,7 +54,9 @@ const routes: Routes = [
         ServiceFormDialogComponent,
         TagFormDialogComponent,
         UserFormDialogComponent,
-        VehicleFormDialogComponent
+        VehicleFormDialogComponent,
+        PetrolPumpFormDialogComponent,
+        CustomerFormDialogComponent
     ],
     imports: [
         RouterModule.forChild(routes),

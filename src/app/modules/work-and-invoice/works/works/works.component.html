@@ -1,0 +1,205 @@
+<div id="works" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    person
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Works
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #filter placeholder="Search for a work">
+                </div>
+            </div>
+            <!-- / SEARCH -->
+
+            <!-- ADD BUTTON -->
+            <button mat-raised-button
+                    [routerLink]="'/work-and-invoice/work'"
+                    class="add-work-button fuse-white mt-24 mt-md-0">
+                <span>ADD NEW WORK</span>
+            </button>
+            <!-- / ADD BUTTON -->
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <mat-table class="works-table"
+                       #table [dataSource]="dataSource"
+                       matSort
+                       [@animateStagger]="{value:'50'}"
+                       fusePerfectScrollbar>
+
+                <!-- Service Column -->
+                <ng-container matColumnDef="service">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Service</mat-header-cell>
+                    <mat-cell *matCellDef="let work">
+                        <p class="text-truncate">{{work.service?.name}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Date -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+                    <mat-cell *matCellDef="let work">
+                        <p class="text-truncate">{{work.date | date}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Start Time Column -->
+                <!-- <ng-container matColumnDef="startime">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Start Time</mat-header-cell>
+                    <mat-cell *matCellDef="let work" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{work.startTime}}
+                        </p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <!-- End Time Column -->
+                <!-- <ng-container matColumnDef="endtime">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>End Time</mat-header-cell>
+                    <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{work.endTime}}
+                        </p>
+                    </mat-cell>
+                </ng-container> -->
+                
+                <!-- Start & End Time -->
+                <ng-container matColumnDef="startime">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Time</mat-header-cell>
+                    <mat-cell *matCellDef="let work" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{work.startTime}} - {{work.endTime}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Customer Column -->
+                <ng-container matColumnDef="customer">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Customer</mat-header-cell>
+                    <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{work.customer.name}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Rate Column -->
+                <!-- <ng-container matColumnDef="rate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Rate</mat-header-cell>
+                    <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{work.rate }}
+                        </p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <!-- Quantity Column -->
+                <!-- <ng-container matColumnDef="quantity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</mat-header-cell>
+                    <mat-cell *matCellDef="let work">
+                        <p class="text-truncate">{{work.quantity}}</p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <ng-container matColumnDef="quantity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rate/Quantity</mat-header-cell>
+                    <mat-cell *matCellDef="let work">
+                        <p class="text-truncate">{{work.rate }}/{{work.quantity}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Amount Column -->
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Amount</mat-header-cell>
+                    <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{work.total}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Is Invoiced Column -->
+                <ng-container matColumnDef="invoiced">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Is Invoiced</mat-header-cell>
+                    <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
+                        <mat-icon *ngIf="work.isInvoiced" class="active-icon green-600 s-16">check</mat-icon>
+                        <mat-icon *ngIf="!work.isInvoiced" class="active-icon red-500 s-16">close</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Action Buttons Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef fxLayoutAlign="end center">Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let work">
+                        <div fxFlex="row" fxLayoutAlign="end center">
+                            <!-- Action button icon -->
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <!-- Action button dropdow options -->
+                            <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="change_history" (click)="editWork(work)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                </button>
+                                <!-- <button mat-menu-item aria-label="remove" (click)="disableWork(work)">
+                                    <mat-icon>person_off</mat-icon>
+                                    <span>Disable</span>
+                                </button> -->
+                                <button mat-menu-item aria-label="remove" (click)="deleteWork(work)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Remove</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="tableColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let work; columns: tableColumns;"
+                         class="work"
+                         matRipple>
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator 
+                #paginator [length]="_dataService.pagination.total"
+                [pageSize]="_dataService.pagination.limit"
+                [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                (page)="onPageChange($event)">
+            </mat-paginator>
+
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

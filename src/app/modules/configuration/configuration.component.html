@@ -1,55 +1,50 @@
-<div id="services" class="page-layout carded inner-scroll">
+<div id="configurations" class="page-layout carded fullwidth inner-scroll">
 
-    <!-- HEADER -->
-    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start"
-         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
-        <!-- APP TITLE -->
-        <div fxLayout="row" fxLayoutAlign="start center">
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
 
-            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="logo-icon mr-16"
-                          [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">perm_identity
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    perm_identity
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     {{pageTitle}}
                 </span>
             </div>
 
-        </div>
-        <!-- / APP TITLE -->
-        <!-- SEARCH -->
-        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-            <div class="search-wrapper mt-16 mt-sm-0">
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
                     <input [formControl]="searchInput" placeholder="Search for a {{pageTitle}}">
                 </div>
             </div>
-        </div>
-        <!-- / SEARCH -->
-    </div>
-    <!-- / HEADER -->
+            <!-- / SEARCH -->
 
-    <!-- CONTENT -->
-    <div class="content">
-        <!-- CENTER -->
-        <!-- pr-sm-92 -->
-        <div class="center p-24 pb-56" fusePerfectScrollbar>
-            <!-- CONTENT -->
-            <div class="content">
-                <!-- <service-list></service-list> -->
-                <configuration-list [module]="module"></configuration-list>
-            </div>
-            <!-- / CONTENT -->
+            <!-- ADD BUTTON -->
+            <button mat-raised-button (click)="newConfiguration()"
+                class="add-product-button fuse-white mt-24 mt-md-0">
+                <span>ADD NEW {{pageTitle | uppercase}}</span>
+            </button>
+            <!-- / ADD BUTTON -->
         </div>
-        <!-- / CENTER -->
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div class="content-card">
+            <configuration-list [module]="module"></configuration-list>
+        </div>
+        <!-- / CONTENT-->
     </div>
-    <!-- / CONTENT-->
 </div>
-
-<!-- ADD SERVICE BUTTON -->
-<button mat-fab class="accent" id="add-record-button" (click)="newConfiguration()" aria-label="add service"
-        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
-    <mat-icon>person_add</mat-icon>
-</button>
-<!-- / ADD SERVICE BUTTON -->

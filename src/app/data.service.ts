@@ -2,23 +2,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 
 // import { FuseUtils } from '@fuse/utils';
 // import { Record } from './record.model';
 
 import { BASE_URL, MODULE } from './app.config';
 import { AppService } from './app.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class DataService implements Resolve<any> {
     onRecordsChanged: BehaviorSubject<any>;
-    // onSelectedRecordsChanged: BehaviorSubject<any>;
+    onSelectedRecordsChanged: BehaviorSubject<any>;
     onRecordDataChanged: BehaviorSubject<any>;
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
-    records: Array<any>;
     pagination: any = {};
     record: any;
     selectedRecords: string[] = [];
@@ -44,7 +44,7 @@ export class DataService implements Resolve<any> {
     ) {
         // Set the defaults
         this.onRecordsChanged = new BehaviorSubject([]);
-        // this.onSelectedRecordsChanged = new BehaviorSubject([]);
+        this.onSelectedRecordsChanged = new BehaviorSubject([]);
         this.onRecordDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
@@ -62,8 +62,9 @@ export class DataService implements Resolve<any> {
      * @returns {Observable<any> | Promise<any> | any}
      */
     resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        const route = MODULE[_route.url[1].path].backendRoute;
-        console.log({route});
+        console.log({ _route });
+        const route = MODULE[_route.data['module'] ? _route.data['module'] : _route.url[1].path].backendRoute;
+        console.log({ route });
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getRecords(route),
@@ -99,7 +100,7 @@ export class DataService implements Resolve<any> {
         if (params && params.page) {
             url += '?page=' + params.page + '&limit=' + params.limit;
         } else {
-            url += '?page=1&limit=10';
+            url += '?page=1&limit=20';
         }
         if (params && params.name) {
             url += '&name=' + params.name;
@@ -111,7 +112,7 @@ export class DataService implements Resolve<any> {
         return new Promise((resolve, reject) => {
             this._httpClient.get(url)
                 .subscribe((response: any) => {
-                    console.log({response});
+                    console.log({ response });
                     // this.records = response.docs;
                     // delete response.docs;
                     this.pagination = response;
@@ -199,6 +200,29 @@ export class DataService implements Resolve<any> {
                     return reject;
                 });
         });
+    }
+
+
+    records(route, params?: any): Observable<any> {
+        let url = BASE_URL + route;
+        if (params && params.page) {
+            url += '?page=' + params.page + '&limit=' + params.limit;
+        } else {
+            url += '?page=1&limit=20';
+        }
+        if (params && params.name) {
+            url += '&name=' + params.name;
+        } else if (this.searchText && this.searchText.trim().length) {
+            url += '&name=' + this.searchText.trim();
+        }
+        url += '&businessId=' + this._appService.user.business._id;
+        url += '&sort_order=desc';
+        return this._httpClient.get(url).pipe(
+            catchError((error) => {
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        )
     }
 
 }

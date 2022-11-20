@@ -123,8 +123,9 @@ $typography: mat-typography-config(
 
 @import "src/app/main/angular-material-elements/example-viewer/example-viewer.theme";
 
-// @import "src/app/modules/configuration/users/users.theme";
-// @import "src/app/modules/configuration/services/service.theme";
+@import "src/app/modules/configuration/configuration.theme";
+@import "src/app/modules/manage/employee-management/employees/employees.theme";
+@import "src/app/modules/work-and-invoice/works/works/works.theme";
 
 // Define a mixin for easier access
 @mixin components-theme($theme) {
@@ -180,8 +181,9 @@ $typography: mat-typography-config(
     @include example-viewer-theme($theme);
 
     // Excavator
-    // @include users-theme($theme);
-    // @include services-theme($theme);
+    @include configuration-theme($theme);
+    @include employees-theme($theme);
+    @include works-theme($theme);
 }
 
 // -----------------------------------------------------------------------------------------------------

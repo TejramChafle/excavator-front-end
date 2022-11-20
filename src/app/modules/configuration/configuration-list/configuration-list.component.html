@@ -1,4 +1,5 @@
-<mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}" *ngIf="tableColumns">
+<mat-table class="configuration-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+    fusePerfectScrollbar *ngIf="tableColumns">
 
     <!-- SERVICE COLUMNS -->
     <div *ngIf="module === 'services'">
@@ -44,13 +45,13 @@
     <!-- USER COLUMNS -->
     <div *ngIf="module === 'users'">
         <!-- Avatar Column -->
-        <ng-container matColumnDef="avatar">
+        <!-- <ng-container matColumnDef="avatar">
             <mat-header-cell *matHeaderCellDef fxFlex="96px"></mat-header-cell>
             <mat-cell *matCellDef="let user" fxFlex="96px">
                 <img class="avatar" [alt]="user.name" [src]="user.avatar || 'assets/images/avatars/profile.jpg'" />
             </mat-cell>
-        </ng-container>
-        
+        </ng-container> -->
+
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -58,7 +59,7 @@
                 <p class="text-truncate font-weight-600">{{user.name}}</p>
             </mat-cell>
         </ng-container>
-        
+
         <!-- Role Column -->
         <ng-container matColumnDef="role">
             <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Role</mat-header-cell>
@@ -68,17 +69,17 @@
                 </p>
             </mat-cell>
         </ng-container>
-        
+
         <!-- Designation Column -->
-        <ng-container matColumnDef="designation">
+        <!-- <ng-container matColumnDef="designation">
             <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Designation</mat-header-cell>
             <mat-cell *matCellDef="let user" gt-sm fxShow.gt-md fxShow.gt-lg>
                 <p class="text-truncate">
                     {{user.designation}}
                 </p>
             </mat-cell>
-        </ng-container>
-        
+        </ng-container> -->
+
         <!-- Email Column -->
         <ng-container matColumnDef="email">
             <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
@@ -88,7 +89,7 @@
                 </p>
             </mat-cell>
         </ng-container>
-        
+
         <!-- Phone Column -->
         <ng-container matColumnDef="phone">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md fxShow.gt-lg>Phone</mat-header-cell>
@@ -98,7 +99,7 @@
                 </p>
             </mat-cell>
         </ng-container>
-        
+
         <!-- User Active Column -->
         <ng-container matColumnDef="active">
             <mat-header-cell *matHeaderCellDef fxShow.gt-lg fxShow.gt-md>Active</mat-header-cell>
@@ -212,27 +213,78 @@
         </ng-container>
 
         <!-- Petrol Rate -->
-        <!-- <ng-container matColumnDef="capacity">
-            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Capacity</mat-header-cell>
+        <ng-container matColumnDef="petrolRate">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Petrol Rate</mat-header-cell>
             <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
                 <p class="text-truncate">
-                    {{config.capacity}}
+                    {{config.petrolRate}} ₹/L
                 </p>
             </mat-cell>
-        </ng-container> -->
+        </ng-container>
 
-        <!-- Fuel -->
-        <!-- <ng-container matColumnDef="fuel">
-            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Fuel</mat-header-cell>
+        <!-- Diesel Rate -->
+        <ng-container matColumnDef="dieselRate">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Diesel Rate</mat-header-cell>
             <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
                 <p class="text-truncate">
-                    {{config.fuel}}
+                    {{config.dieselRate}} ₹/L
                 </p>
             </mat-cell>
-        </ng-container> -->
+        </ng-container>
     </div>
 
-    
+    <!-- VEHICLE COLUMNS -->
+    <div *ngIf="module === 'customers'">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let config">
+                <p class="text-truncate font-weight-600">{{config.name}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Fuel Type Column -->
+        <ng-container matColumnDef="place">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Place/Address</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.place}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Number -->
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Email</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.email}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Capacity -->
+        <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Phone</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.phone}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Fuel -->
+        <ng-container matColumnDef="contact">
+            <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Contact Person</mat-header-cell>
+            <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
+                <p class="text-truncate">
+                    {{config.owner?.firstName}} {{config.owner?.lastName}}
+                </p>
+            </mat-cell>
+        </ng-container>
+    </div>
+
+
     <!-- Created By Column -->
     <ng-container matColumnDef="createdBy">
         <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created By</mat-header-cell>
@@ -258,7 +310,8 @@
         <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created At</mat-header-cell>
         <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
             <p class="text-truncate">
-                {{config.createdAt | date : 'd MMM, y h:mm a'}}
+                {{config.createdAt | date}}
+                <!-- date : 'd MMM, y h:mm a' -->
             </p>
         </mat-cell>
     </ng-container>
@@ -268,14 +321,14 @@
         <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Updated At</mat-header-cell>
         <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
             <p class="text-truncate">
-                {{config.updatedAt | date : 'd MMM, y h:mm a'}}
+                {{config.updatedAt | date}}
             </p>
         </mat-cell>
     </ng-container>
 
     <!-- Action Buttons Column -->
     <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxLayoutAlign="end center">Actions</mat-header-cell>
         <mat-cell *matCellDef="let configuration">
             <div fxFlex="row" fxLayoutAlign="end center">
                 <!-- Action button icon -->
@@ -298,15 +351,19 @@
         </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="tableColumns; sticky:true"></mat-header-row>
 
-    <mat-row *matRowDef="let configuration; columns: tableColumns;" class="configuration"
-        (click)="editConfiguration(configuration)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+    <mat-row
+        *matRowDef="let configuration; columns: tableColumns;"
+        class="configuration" matRipple
+        [@animate]="{value:'*',params:{y:'100%'}}">
     </mat-row>
+    <!-- [@animate]="{value:'*',params:{y:'100%'}}" -->
+    <!-- (click)="editConfiguration(configuration)"  -->
 </mat-table>
 
 
 <!-- PAGINATION -->
-<mat-paginator [length]="_dataService.pagination.total" [pageSize]="_dataService.pagination.limit"
-    [pageSizeOptions]="[10, 20, 50, 100]" (page)="onPageChange($event)">
+<mat-paginator #paginator [length]="_dataService.pagination.total" [pageSize]="_dataService.pagination.limit"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]" (page)="onPageChange($event)">
 </mat-paginator>

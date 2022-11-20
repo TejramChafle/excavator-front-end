@@ -1,0 +1,45 @@
+<form [formGroup]="customerForm">
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Name</mat-label>
+            <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            <input name="name" formControlName="name" matInput required (change)="onSubmit(customerForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Place</mat-label>
+            <mat-icon matSuffix class="secondary-text">location</mat-icon>
+            <input name="place" formControlName="place" matInput required (change)="onSubmit(customerForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Owner</mat-label>
+            <mat-icon matSuffix class="secondary-text">person</mat-icon>
+            <mat-select matNativeControl formControlName="owner" (change)="onSubmit(customerForm)">
+                <mat-option [value]="owner._id" *ngFor="let owner of owners"> {{owner.firstName}} {{owner.lastName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Email</mat-label>
+            <mat-icon matSuffix class="secondary-text">filter_alt</mat-icon>
+            <input name="email" formControlName="email" matInput type="email" (change)="onSubmit(customerForm)">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Phone</mat-label>
+            <mat-icon matSuffix class="secondary-text">phone</mat-icon>
+            <input formControlName="phone" type="tel" matInput (change)="onSubmit(customerForm)">
+        </mat-form-field>
+    </div>
+
+</form>

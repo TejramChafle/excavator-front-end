@@ -1169,7 +1169,7 @@ export let navigation: FuseNavigation[] = [
                         title    : 'Site/Customer/Client',
                         type     : 'item',
                         icon     : 'person',
-                        url      : '/configuration/clients'
+                        url      : '/configuration/customers'
                     },
                     {
                         id       : 'services',
@@ -1209,7 +1209,7 @@ export let navigation: FuseNavigation[] = [
                 translate: 'NAV.CONTACTS',
                 type     : 'item',
                 icon     : 'contacts',
-                url      : '/configuration/contacts'
+                url      : '/manage/contacts'
             },
             {
                 id       : 'employee-management',
@@ -1224,7 +1224,7 @@ export let navigation: FuseNavigation[] = [
                         translate: 'NAV.EMPLOYEES',
                         type     : 'item',
                         icon     : 'business',
-                        url      : '/configuration/employees'
+                        url      : '/manage/employees'
                     },
                     {
                         id       : 'attendance',
@@ -1266,7 +1266,7 @@ export let navigation: FuseNavigation[] = [
                 translate: 'NAV.WORKS',
                 type     : 'item',
                 icon     : 'event_notice',
-                url      : '/configuration/works'
+                url      : '/work-and-invoice/works'
             },
             {
                 id       : 'invoices',
@@ -1327,7 +1327,15 @@ export let navigation: FuseNavigation[] = [
             },
             {
                 id       : 'incomes',
-                title    : 'Incomes',
+                title    : 'Revenue',
+                translate: 'NAV.INCOMES',
+                type     : 'collapsable',
+                icon     : 'add_to_queue',
+                url      : '/configuration/income'
+            },
+            {
+                id       : 'transactions',
+                title    : 'Transactions',
                 translate: 'NAV.INCOMES',
                 type     : 'collapsable',
                 icon     : 'add_to_queue',

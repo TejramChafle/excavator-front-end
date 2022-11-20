@@ -1,0 +1,190 @@
+<div id="employees" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    person
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Employees
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #filter placeholder="Search for a employee">
+                </div>
+            </div>
+            <!-- / SEARCH -->
+
+            <!-- ADD BUTTON -->
+            <button mat-raised-button
+                    [routerLink]="'/manage/employee'"
+                    class="add-employee-button fuse-white mt-24 mt-md-0">
+                <span>ADD NEW EMPLOYEE</span>
+            </button>
+            <!-- / ADD BUTTON -->
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <mat-table class="employees-table"
+                       #table [dataSource]="dataSource"
+                       matSort
+                       [@animateStagger]="{value:'50'}"
+                       fusePerfectScrollbar>
+
+                <!-- ID Column -->
+                <!-- <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                    <mat-cell *matCellDef="let employee">
+                        <p class="text-truncate">{{employee.id}}</p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <!-- Image Column -->
+                <ng-container matColumnDef="photo">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let employee">
+                        <img class="employee-image"
+                             *ngIf="employee.photo" [alt]="employee.firstName"
+                             [src]="employee.photo"/>
+                        <img *ngIf="!employee.photo" [alt]="employee.firstName"
+                             [src]="'assets/images/ecommerce/employee-image-placeholder.png'">
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let employee">
+                        <p class="text-truncate">{{employee.firstName}} {{employee.lastName}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Gender -->
+                <ng-container matColumnDef="gender">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
+                    <mat-cell *matCellDef="let employee">
+                        <p class="text-truncate">{{employee.gender}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Designation Column -->
+                <ng-container matColumnDef="designation">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Designation</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{employee.designation}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Phone Column -->
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Phone</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{employee.phone}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Joining Date Column -->
+                <ng-container matColumnDef="joiningdate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Joined Date</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{employee.dateOfJoin | date}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Disabled on date Column -->
+                <ng-container matColumnDef="disabledon">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Disabled On</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{employee.isActive ? '' : employee.disabledOn | date }}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Active Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Active</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
+                        <mat-icon *ngIf="employee.isActive" class="active-icon green-600 s-16">check</mat-icon>
+                        <mat-icon *ngIf="!employee.isActive" class="active-icon red-500 s-16">close</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Action Buttons Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef fxLayoutAlign="end center">Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let employee">
+                        <div fxFlex="row" fxLayoutAlign="end center">
+                            <!-- Action button icon -->
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <!-- Action button dropdow options -->
+                            <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="change_history" (click)="editEmployee(employee)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                </button>
+                                <button mat-menu-item aria-label="remove" (click)="disableEmployee(employee)">
+                                    <mat-icon>person_off</mat-icon>
+                                    <span>Disable</span>
+                                </button>
+                                <button mat-menu-item aria-label="remove" (click)="deleteEmployee(employee)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Remove</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="tableColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let employee; columns: tableColumns;"
+                         class="employee"
+                         matRipple>
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator 
+                #paginator [length]="_dataService.pagination.total"
+                [pageSize]="_dataService.pagination.limit"
+                [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                (page)="onPageChange($event)">
+            </mat-paginator>
+
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

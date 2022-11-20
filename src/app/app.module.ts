@@ -30,8 +30,16 @@ import { AppService } from './app.service';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
 import { AppInterceptor } from './app.interceptor';
 import { DataService } from './data.service';
+import { ManageContactsModule } from './modules/manage/contacts/contacts.module'; 
+import { AuthGuard } from './modules/authentication/guards/auth/auth.guard';
+import { WorkAndInvoiceModule } from './modules/work-and-invoice/work-and-invoice.module';
 
 const appRoutes: Routes = [
+    {
+        path      : '',
+        pathMatch: 'full',
+        redirectTo: 'apps/dashboards/project'
+    },
     {
         path        : 'apps',
         loadChildren: './main/apps/apps.module#AppsModule'
@@ -53,14 +61,24 @@ const appRoutes: Routes = [
         loadChildren: './main/angular-material-elements/angular-material-elements.module#AngularMaterialElementsModule'
     },
     {
+        path: 'configuration',
+        loadChildren: './modules/configuration/configuration.module#ConfigurationModule',
+        canActivate: [ AuthGuard ]
+    },
+    {
+        path: 'manage',
+        loadChildren: './modules/manage/manage.module#ManageModule',
+        canActivate: [ AuthGuard ]
+    },
+    {
+        path: 'work-and-invoice',
+        loadChildren: './modules/work-and-invoice/work-and-invoice.module#WorkAndInvoiceModule',
+        canActivate: [ AuthGuard ]
+    },
+    {
         path      : '**',
         redirectTo: 'apps/dashboards/project'
     },
-    {
-        path: 'configuration',
-        loadChildren: './modules/configuration/configuration.module#ConfigurationModule',
-        // canActivate: [ AuthGuard ]
-    }
 ];
 
 @NgModule({
@@ -100,7 +118,9 @@ const appRoutes: Routes = [
         LayoutModule,
         AppStoreModule,
         AuthModule,
-        ConfigurationModule
+        ConfigurationModule,
+        ManageContactsModule,
+        WorkAndInvoiceModule
     ],
     bootstrap   : [
         AppComponent
