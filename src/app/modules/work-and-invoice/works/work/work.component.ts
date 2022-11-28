@@ -10,6 +10,7 @@ import { Work } from './work.model';
 import { DataService } from 'app/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'app/app.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'work',

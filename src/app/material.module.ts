@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FuseAlertDialogModule } from '@fuse/components/alert-dialog/alert-dialog.module';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const modules = [
     MatButtonModule,
@@ -29,7 +30,8 @@ const modules = [
     MatSelectModule,
     MatDatepickerModule,
     MatTabsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
 ];
 
 @NgModule({

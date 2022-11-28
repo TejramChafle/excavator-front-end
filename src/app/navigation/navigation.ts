@@ -1272,9 +1272,10 @@ export let navigation: FuseNavigation[] = [
                 id       : 'invoices',
                 title    : 'Invoices',
                 translate: 'NAV.INVOICES',
-                type     : 'collapsable',
+                type     : 'item', // collapsable
                 icon     : 'receipt',
-                children : [
+                url      : '/work-and-invoice/invoices'
+                /* children : [
                     {
                         id       : 'employees',
                         title    : 'Employees',
@@ -1299,7 +1300,7 @@ export let navigation: FuseNavigation[] = [
                         icon     : 'local_atm',
                         url      : '/configuration/payments'
                     }
-                ]
+                ] */
             }
         ]
     },

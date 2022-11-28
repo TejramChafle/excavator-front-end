@@ -1,0 +1,524 @@
+<div id="invoice" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-16" [routerLink]="'/work-and-invoice/works'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2">
+                        Invoice {{invoice._id}}
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>To</span>
+                        <span>&nbsp; {{customer?.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <div class="btn-group">
+                <button mat-raised-button
+                    class="save-work-button"
+                    [disabled]="invoiceForm.invalid"
+                    *ngIf="invoice._id" (click)="onSubmit()">
+                <span>CREATE INVOICE</span>
+                </button>
+
+                <button mat-raised-button
+                        class="save-work-button"
+                        [disabled]="invoiceForm.invalid || invoiceForm.pristine"
+                        *ngIf="!invoice._id" (click)="onSubmit()">
+                    <span>UPDATE INVOICE</span>
+                </button>
+                
+                <button mat-raised-button class="save-work-button" (click)="print()">
+                    <span>PRINT INVOICE</span>
+                </button>
+            </div>
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+                <form name="invoiceForm" [formGroup]="invoiceForm" class="work w-100-p" fxLayout="column" fxFlex>
+                <mat-tab-group fxLayout="column" fxFlex>
+
+                    <mat-tab label="Invoice Details">
+
+                        <div class="invoice-details tab-content p-24" fusePerfectScrollbar>
+                            
+                            <!-- CUSTOMER SECTION -->
+                            <div class="section pb-24">
+                                <!-- Customer Section Title -->
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div fxLayout="row">
+                                        <mat-icon class="m-0 mr-16 secondary-text">account_circle</mat-icon>
+                                        <div class="h2 secondary-text">Customer</div>
+                                    </div>
+                                    <button mat-raised-button class="save-work-button" (click)="onUpdateCustomerInfo()">
+                                        <span>{{updateCustomerInfo ? 'SAVE' : 'EDIT'}}</span>
+                                    </button>
+                                </div>
+                                <!-- Customer Billing Info -->
+                                <div class="customer mb-32" *ngIf="!updateCustomerInfo">
+                                    <table class="simple">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                                        <!-- <img class="avatar" [src]="customer?.avatar"> -->
+                                                        <span class="name text-truncate">
+                                                            {{customer?.name}}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="email text-truncate">{{customer?.email}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="phone text-truncate">{{customer?.phone}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="company text-truncate">{{customer?.place}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Customer  -->
+                                <div class="section mb-32" [hidden]="!updateCustomerInfo">
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Invoice To</mat-label>
+                                        <input matInput placeholder="Invoice To"
+                                               name="invoiceToName"
+                                               formControlName="invoiceToName"
+                                               required
+                                               type="text">
+                                    </mat-form-field>
+    
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Invoice From</mat-label>
+                                        <input matInput placeholder="Invoice From"
+                                               name="invoiceFromName"
+                                               formControlName="invoiceFromName"
+                                               required
+                                               type="text">
+                                    </mat-form-field>
+    
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Invoice Brief</mat-label>
+                                        <input matInput placeholder="Invoice Name, for example: Invoice | July 2022"
+                                               name="invoiceBrief"
+                                               formControlName="invoiceBrief"
+                                               type="text">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <!-- INVOICE DATES -->
+                            <div class="section pb-48">
+                                <!-- Invoice status section -->
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div fxLayout="row">
+                                        <mat-icon class="m-0 mr-16 secondary-text">event</mat-icon>
+                                        <div class="h2 secondary-text">Invoice Dates</div>
+                                    </div>
+                                    <!-- <button mat-raised-button class="save-work-button" (click)="onUpdateStatusInfo()">
+                                        <span>{{updateStatusInfo ? 'SAVE' : 'EDIT'}}</span>
+                                    </button> -->
+                                </div>
+                                <div>
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Invoice Date</mat-label>
+                                        <input matInput placeholder="Invoice Date" name="date" formControlName="date" required
+                                            type="date">
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Expected Clearance Date</mat-label>
+                                        <input matInput placeholder="Expected Clearance Date" name="expectedClearanceDate" formControlName="expectedClearanceDate" required
+                                            type="date">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <!-- INVOICE STATUS -->
+                            <div class="section pb-48">
+                                <!-- Invoice status section -->
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div fxLayout="row">
+                                        <mat-icon class="m-0 mr-16 secondary-text">access_time</mat-icon>
+                                        <div class="h2 secondary-text">Invoice Status</div>
+                                    </div>
+                                    <button mat-raised-button class="save-work-button" (click)="onUpdateStatusInfo()">
+                                        <span>{{updateStatusInfo ? 'SAVE' : 'EDIT'}}</span>
+                                    </button>
+                                </div>
+                                <!-- Invoice status history table -->
+                                <table class="simple mb-32" *ngIf="invoice._id && invoice.statusHistory">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Updated On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let status of invoice.statusHistory">
+                                            <td>
+                                                <span class="status h6 p-4" [ngClass]="status.color">
+                                                    {{status.code}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    {{status.date | date}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- Invoice form -->
+                                <div *ngIf="updateStatusInfo">
+                                    <mat-form-field appearance="outline" class="w-100-p" >
+                                        <mat-label>Status</mat-label>
+                                        <mat-select formControlName="status" required>
+                                            <mat-option *ngFor="let status of invoiceStatuses" [value]="status.code">
+                                                {{status.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+    
+                                    <div *ngIf="updateStatusInfo && invoice._id">
+                                        <button mat-raised-button [disabled]="!invoiceForm.value.status">
+                                            UPDATE INVOICE STATUS
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="section pb-48">
+
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div fxLayout="row">
+                                        <mat-icon class="m-0 mr-16 secondary-text">attach_money</mat-icon>
+                                        <div class="h2 secondary-text">Payment</div>
+                                    </div>
+                                    <button mat-raised-button class="save-work-button" (click)="onUpdatePaymentInfo()">
+                                        <span>{{updatePaymentInfo ? 'SAVE' : 'EDIT'}}</span>
+                                    </button>
+                                </div>
+
+                                <div *ngIf="!invoice.transaction && !updatePaymentInfo" class="pb-48">
+                                    Payment information will be displayed here. Please save invoice and edit to update payment information.
+                                </div>
+
+                                <table class="simple" *ngIf="invoice.transaction">
+                                    <thead>
+                                        <tr>
+                                            <th>TransactionID</th>
+                                            <th>Method</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{invoice.transaction._id}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{invoice.transaction.mode}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{invoice.transaction.amount}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{invoice.transaction.date | date}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{invoice.transaction.status}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="section pb-48" *ngIf="updatePaymentInfo">
+                                    <form name="paymentForm" [formGroup]="paymentForm" class="work w-100-p" fxLayout="column" fxFlex>
+                                        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                            <mat-label>Payment Method</mat-label>
+                                            <mat-select matNativeControl required formControlName="method"
+                                            (selectionChange)="onChangePaymentMethod($event)">
+                                                <mat-option [value]="method.code" *ngFor="let method of paymentMethods">
+                                                    {{method.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    
+                                        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                            <mat-label>Amount</mat-label>
+                                            <input matInput placeholder="Amount" name="amount" formControlName="amount" required
+                                                type="number">
+                                        </mat-form-field>
+                                    
+                                        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                            <mat-label>Date</mat-label>
+                                            <input matInput name="date" formControlName="date" required type="date">
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                            <mat-label>Payment Status</mat-label>
+                                            <mat-select matNativeControl required formControlName="status">
+                                                <mat-option [value]="status.code" *ngFor="let status of paymentStatuses">
+                                                    {{status.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Work Log">
+                        <div class="works tab-content p-24" fusePerfectScrollbar>
+                            <table class="simple">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <!-- <th class="w-200">Name</th>
+                                        <th class="w-200">Site</th>
+                                        <th class="w-120">Rate</th>
+                                        <th class="w-80">Quantity</th>
+                                        <th class="w-80">Total</th>
+                                        <th class="w-50">Action</th> -->
+                                        <th >Name</th>
+                                        <th >Site</th>
+                                        <th>Rate</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th class="w-50">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="work-row" *ngFor="let work of invoice.works; let index=index">
+                                        <td>
+                                           <p class="text-truncate">{{index+1}}</p>
+                                        </td>
+                                        <td>
+                                            {{work.service?.name}}
+                                        </td>
+                                        <td>
+                                            {{work.site | titlecase}}
+                                        </td>
+                                        <td>
+                                            ₹{{work.rate | number}} / {{work.service?.billingType}}
+                                        </td>
+                                        <td>
+                                            {{work.quantity}}
+                                        </td>
+                                        <td>
+                                            ₹{{work.total | number}}
+                                        </td>
+                                        <td>
+                                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
+                                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                                            </button>
+                                            <!-- Action button dropdow options -->
+                                            <mat-menu #moreMenu="matMenu">
+                                                <button mat-menu-item aria-label="change_history" (click)="onEditWork(work)">
+                                                    <mat-icon>edit</mat-icon>
+                                                    <span>Edit</span>
+                                                </button>
+                                                <button mat-menu-item aria-label="remove" (click)="onDeleteWork(work, index)">
+                                                    <mat-icon>delete</mat-icon>
+                                                    <span>Remove</span>
+                                                </button>
+                                            </mat-menu>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Invoice">
+
+                        <div class="invoice tab-content p-24" fusePerfectScrollbar>
+
+                            <div id="invoice" class="compact page-layout blank" fxLayout="row" fusePerfectScrollbar>
+
+                                <div class="invoice-container">
+
+                                    <!-- INVOICE -->
+                                    <div class="card" id="invoice-print">
+
+                                        <div class="header">
+                                            <div class="invoice-date">{{invoice.date}}</div>
+
+                                            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+                                                <div class="client">
+                                                    <div class="invoice-number" fxLayout="row"
+                                                         fxLayoutAlign="start center">
+                                                        <span class="title">INVOICE</span>
+                                                        <span class="number">{{invoice._id}}</span>
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <div class="title">
+                                                            {{customer?.name}}
+                                                        </div>
+                                                        <div class="address">
+                                                            {{customer?.place}}
+                                                        </div>
+                                                        <div class="phone">{{customer?.phone}}</div>
+                                                        <div class="email">{{customer?.email}}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="issuer accent" fxLayout="row" fxLayoutAlign="start center">
+                                                    <div class="business-image">
+                                                        <img [src]="business.logo || 'assets/images/logos/fuse.svg'">
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <div class="title">{{business.name | uppercase}}</div>
+                                                        <div class="address">{{business.address | titlecase}}</div>
+                                                        <div class="phone">{{business.phone}}</div>
+                                                        <div class="email">{{business.email}}</div>
+                                                        <div class="website">www.fuseinc.com</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="content">
+
+                                            <table class="simple invoice-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SERVICE/PRODUCT</th>
+                                                        <th class="text-right">RATE</th>
+                                                        <th class="text-right">QUANTITY</th>
+                                                        <th class="text-right">TOTAL</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let work of invoice.works">
+                                                        <td>
+                                                            <div class="title">
+                                                                {{work.service?.name}}
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            {{work.rate}}
+                                                        </td>
+                                                        <td class="text-right">
+                                                            {{work.quantity}}
+                                                        </td>
+                                                        <td class="text-right">
+                                                            {{work.total}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <table class="simple invoice-table-footer">
+                                                <tbody>
+                                                    <tr class="subtotal" *ngIf="isTaxEnabled">
+                                                        <td>SUBTOTAL</td>
+                                                        <td>{{invoice.subtotal | currency:'INR':'symbol'}}</td>
+                                                    </tr>
+                                                    <tr class="tax" *ngIf="isTaxEnabled">
+                                                        <td>TAX</td>
+                                                        <td>{{invoice.tax | currency:'INR':'symbol'}}</td>
+                                                    </tr>
+                                                    <tr class="discount" *ngIf="isTaxEnabled">
+                                                        <td>DISCOUNT</td>
+                                                        <td>-{{invoice.discount | currency:'INR':'symbol'}}</td>
+                                                    </tr>
+                                                    <tr class="total">
+                                                        <td>TOTAL</td>
+                                                        <td>{{invoice.invoicedAmount | currency:'INR':'symbol'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="footer">
+                                            <div class="note">Please pay within 15 days. Thank you for your business.
+                                            </div>
+                                            <div fxLayout="row" fxLayoutAlign="start start">
+                                                <div class="logo">
+                                                    <img src="assets/images/logos/fuse.svg">
+                                                </div>
+                                                <div class="small-note">
+                                                    In condimentum malesuada efficitur. Mauris volutpat placerat auctor.
+                                                    Ut ac congue dolor. Quisque scelerisque lacus sed feugiat fermentum.
+                                                    Cras aliquet facilisis pellentesque. Nunc hendrerit quam at leo
+                                                    commodo, a suscipit tellus dapibus. Etiam at felis volutpat est
+                                                    mollis lacinia. Mauris placerat sem sit amet velit mollis, in
+                                                    porttitor ex finibus. Proin eu nibh id libero tincidunt lacinia et
+                                                    eget eros.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / INVOICE -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+</div>

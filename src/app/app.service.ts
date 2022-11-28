@@ -76,4 +76,16 @@ export class AppService {
         localStorage.clear();
         this._router.navigate(['auth/login']);
     }
+
+
+    // Convert date to string. Add if additional days are provided
+    dateInString(now: Date, days?: number) {
+        now = now || new Date();
+        if (days) {
+            now = new Date(now.setDate(now.getDate() + days))
+        }
+        const day = ("0" + now.getDate()).slice(-2);
+        const month = ("0" + (now.getMonth() + 1)).slice(-2);
+        return now.getFullYear() + "-" + (month) + "-" + (day);
+    }
 }

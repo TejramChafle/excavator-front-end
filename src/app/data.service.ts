@@ -83,7 +83,6 @@ export class DataService implements Resolve<any> {
                     });
                     this.recordsWithPagination = response;
                     resolve(response);
-
                 },
                 reject
             );
@@ -100,7 +99,7 @@ export class DataService implements Resolve<any> {
         if (params && params.page) {
             url += '?page=' + params.page + '&limit=' + params.limit;
         } else {
-            url += '?page=1&limit=20';
+            url += '?page=1&limit=10';
         }
         if (params && params.name) {
             url += '&name=' + params.name;
@@ -132,9 +131,9 @@ export class DataService implements Resolve<any> {
      *
      * @returns {Promise<any>}
      */
-    getRecordData(): Promise<any> {
+    getRecordData(route, _id): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/records-record/5725a6802d10e277a0f35724')
+            this._httpClient.get(BASE_URL + route + '/'+_id)
                 .subscribe((response: any) => {
                     this.record = response;
                     this.onRecordDataChanged.next(this.record);
@@ -223,6 +222,65 @@ export class DataService implements Resolve<any> {
                 return throwError(error);
             })
         )
+    }
+
+    /**
+     * Toggle selected record by id
+     *
+     * @param id
+     */
+     toggleSelectedRecord(id): void {
+        // First, check if we already have that record as selected...
+        if (this.selectedRecords.length > 0) {
+            const index = this.selectedRecords.indexOf(id);
+
+            if (index !== -1) {
+                this.selectedRecords.splice(index, 1);
+
+                // Trigger the next event
+                this.onSelectedRecordsChanged.next(this.selectedRecords);
+
+                // Return
+                return;
+            }
+        }
+
+        // If we don't have it, push as selected
+        this.selectedRecords.push(id);
+
+        // Trigger the next event
+        this.onSelectedRecordsChanged.next(this.selectedRecords);
+    }
+
+    /**
+     * Select records
+     *
+     * @param filterParameter
+     * @param filterValue
+     */
+     selectRecords(filterParameter?, filterValue?): void {
+        this.selectedRecords = [];
+
+        // If there is no filter, select all records
+        if (filterParameter === undefined || filterValue === undefined) {
+            this.selectedRecords = [];
+            this.recordsWithPagination.docs.map(record => {
+                this.selectedRecords.push(record._id);
+            });
+        }
+
+        // Trigger the next event
+        this.onSelectedRecordsChanged.next(this.selectedRecords);
+    }
+
+    /**
+     * Deselect records
+     */
+     deselectRecords(): void {
+        this.selectedRecords = [];
+
+        // Trigger the next event
+        this.onSelectedRecordsChanged.next(this.selectedRecords);
     }
 
 }

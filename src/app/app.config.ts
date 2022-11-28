@@ -164,6 +164,7 @@ export const MODULE = {
         frontendRoute: 'works',
         pageTitle: 'Works',
         tableColumns: [
+            'checkbox',
             'service',
             'date',
             'startime',
@@ -180,6 +181,21 @@ export const MODULE = {
             // 'createdAt',
             // 'updatedBy',
             // 'updatedAt',
+            'actions'
+        ]
+    },
+    invoices: {
+        backendRoute: 'invoice',
+        frontendRoute: 'invoices',
+        pageTitle: 'Invoices',
+        tableColumns: [
+            'id',
+            'invoiceTo',
+            'date',
+            'invoicedAmount',
+            'status',
+            'expectedClearanceDate',
+            // 'paymentStatus',
             'actions'
         ]
     }
@@ -205,3 +221,86 @@ export const VEHICLE_TYPE = {
     DOZER:'Dozer',
     POCLAIN: 'Poclain'
 };
+
+export const PAYMENT_METHODS = [
+    {
+        code: 'CHEQUE',
+        name: 'Cheque'
+    },
+    {
+        code: 'CASH',
+        name: 'Cash'
+    },
+    {
+        code: 'ACCOUNT_TRANSFER',
+        name: 'Account Transfer'
+    },
+    {
+        code: 'RTGS',
+        name: 'RTGS'
+    },
+    {
+        code: 'NEFT',
+        name: 'NEFT'
+    },
+    {
+        code: 'CREDIT/DEBIT_CARD',
+        name: 'Credit/Debit Card'
+    },
+    {
+        code: 'UPI',
+        name: 'UPI'
+    },
+    {
+        code: 'PAYTM_OTHER_WALLET',
+        name: 'PayTM/Other Wallet'
+    },
+];
+
+export const PAYMENT_STATUSES = [
+    {
+        code: 'PAID',
+        name: 'Paid',
+        color: 'green-500'
+    },
+    {
+        code: 'PDC',
+        name: 'PDC - Post Dated Cheque',
+        color: 'pink-500'
+    },
+    {
+        code: 'FAILED',
+        name: 'Failed',
+        color: 'red-500'
+    },
+    {
+        code: 'IN_PROGRESS',
+        name: 'In Progress'
+    },
+    {
+        code: 'AWAITING',
+        name: 'Awaiting',
+        color: 'orange-500'
+    },
+    {
+        code: 'CANCELED',
+        name: 'Canceled',
+        color: 'red-500'
+    },
+    {
+        code: 'PARTIALLY_PAID',
+        name: 'Partially Paid',
+        color: 'blue-500'
+    },
+    {
+        code: 'SCHEDULED',
+        name: 'Scheduled',
+        color: 'pink-500'
+    },
+    {
+        code: 'UNPAID',
+        name: 'Unpaid',
+        color: 'red-900'
+    }
+]
+

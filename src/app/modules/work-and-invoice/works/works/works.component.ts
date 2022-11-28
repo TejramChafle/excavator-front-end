@@ -37,6 +37,9 @@ export class WorksComponent implements OnInit {
     private _unsubscribeAll: Subject<any>;
 
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    hasSelectedRecords: boolean;
+    selectedRecords: any[];
+    checkboxes: {};
 
     constructor(
         public _dataService: DataService,
@@ -73,12 +76,33 @@ export class WorksComponent implements OnInit {
                 this.dataSource.filter = this.filter.nativeElement.value;
             }); */
 
+        // Assign columns to table
         this.tableColumns = MODULE.works.tableColumns;
+
+        // Keep track of change in records and update
         this._dataService.onRecordsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
                 this.dataSource = response.docs;
                 console.log('dataSource: ', this.dataSource);
+
+                this.checkboxes = {};
+                response.docs.map(record => {
+                    this.checkboxes[record._id] = false;
+                });
+            });
+
+        // Keep track of checkbox selections and update record
+        this._dataService.onSelectedRecordsChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(selectedRecords => {
+                for (const id in this.checkboxes) {
+                    if (!this.checkboxes.hasOwnProperty(id)) {
+                        continue;
+                    }
+                    this.checkboxes[id] = selectedRecords.includes(id);
+                }
+                this.hasSelectedRecords = selectedRecords.length > 0;
             });
     }
 
@@ -134,7 +158,7 @@ export class WorksComponent implements OnInit {
     /**
      * Disable Work
      */
-     disableWork(work): void {
+    disableWork(work): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -150,5 +174,14 @@ export class WorksComponent implements OnInit {
             }
             this.confirmDialogRef = null;
         });
+    }
+
+    /**
+     * On selected change
+     *
+     * @param recordId
+     */
+    onSelectedChange(recordId): void {
+        this._dataService.toggleSelectedRecord(recordId);
     }
 }
