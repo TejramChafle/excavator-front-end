@@ -68,41 +68,10 @@ export class InvoiceComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Subscribe to update invoice on changes
-        /* this._dataService.onRecordsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(invoice => {
-                this.invoice = new Invoice(invoice);
-            });
-
-        this.statusForm = this._formBuilder.group({
-            newStatus: ['']
-        }); */
-        // console.log('history.state: ', history.state);
-        // // Check if invoice contain works, if not navigate back to works page
-        // if (history.state.works === undefined) {
-        //     this._router.navigate(['/work-and-invoice/works']);
-        // }
         this.paymentForm = this.createPaymentForm();
         this.business = this._appService.user.business;
         const id = this._activatedRoute.snapshot.params['id'];
         if (id) {
-            // const invoice = history.state;
-            // console.log({invoice});
-
-            /* this._dataService.getRecordData('invoice', id).then((response) => {
-                console.log('getRecordData', response);
-                this.invoice = new Invoice(response);
-                console.log('invoice: ', this.invoice);
-                this.customer = response.invoiceTo;
-                this.invoiceForm = this.createInvoiceForm();
-                this.invoiceForm.patchValue({
-                    invoiceToName: this.customer.name,
-                    invoiceFromName: this.business.name
-                });
-                this.calculateInvoice();
-            }); */
-
             this._invoiceService.onInvoiceChanged.pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
                 console.log('invocie response', response);
@@ -130,7 +99,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                 date: new Date()
             }
             this.invoice = new Invoice(invoice);
-            console.log('invoice: ', this.invoice);
+            // console.log('invoice: ', this.invoice);
             this.invoiceForm = this.createInvoiceForm();
 
             // Set default values while creating invoice
@@ -143,7 +112,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
             });
             this.calculateInvoice();
         }
-        console.log('business', this.business);
+        // console.log('business', this.business);
     }
 
     /**
@@ -158,25 +127,6 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Update status
-     */
-    updateStatus(): void {
-        /* const newStatusId = Number.parseInt(this.statusForm.get('newStatus').value);
-
-        if (!newStatusId) {
-            return;
-        }
-
-        const newStatus = this.invoiceStatuses.find((status) => {
-            return status.id === newStatusId;
-        });
-
-        newStatus['date'] = new Date().toString();
- */
-        // this.invoice.status.unshift(newStatus);
-    }
 
     /**
      * Create invoice form
@@ -230,7 +180,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
             invoicedAmount: amount
         });
         this.invoice.invoicedAmount = amount;
-        console.log(this.invoiceForm.getRawValue());
+        // console.log(this.invoiceForm.getRawValue());
     }
 
     onEditWork(work) {
@@ -241,7 +191,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
         if (confirm('Are you sure you want to delete?')) {
             // If updaing invoice, we need to remove work and save changes
             if (this.invoice._id) {
-
+                console.log('this.invoice:', this.invoice);
             } else {
                 this.invoice.works.splice(index, 1);
             }
@@ -294,31 +244,23 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                 });
         } else {
             data.createdBy = this._appService.user._id;
+            if (data.hasOwnProperty('_id')) {
+                delete data._id;
+            }
             this._dataService.createRecord('invoice', data)
                 .then(() => {
 
                     // Trigger the subscription with new data
                     this._dataService.onRecordDataChanged.next(data);
 
-                    /* // Show the success message
-                    this._matSnackBar.open('Work added', 'OK', {
-                        verticalPosition: 'top',
-                        duration: 2000
-                    });
-
                     // Go back to previous page
-                    this._location.back(); */
+                    // this._location.back(); */
                     this._appService.handleMessage('Invoice created successfully.', 'Success');
                 });
         }
     }
 
-    print(): void {
-        let printContents, popupWin;
-        printContents = document.getElementById('invoice-print').innerHTML;
-        popupWin = window.open('', '_blank');
-        popupWin.document.open();
-        popupWin.document.write(printContents);
-        popupWin.document.close();
+    onPrintInvoice() {
+        this._router.navigate(['/work-and-invoice/invoice-print'], { state: { invoice: this.invoice } });
     }
 }

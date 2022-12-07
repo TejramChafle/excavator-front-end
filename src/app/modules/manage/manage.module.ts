@@ -5,6 +5,11 @@ import { MaterialModule } from '../../material.module';
 import { DataService } from 'app/data.service';
 import { EmployeesComponent } from './employee-management/employees/employees.component';
 import { EmployeeComponent } from './employee-management/employee/employee.component';
+import { AttendanceFormComponent } from './attendances/attendance-form/attendance-form.component';
+import { AttendancesComponent } from './attendances/attendances.component';
+import { CalendarComponent } from './attendances/calendar/calendar.component';
+import { CalendarService } from './attendances/calendar/calendar.service';
+import { CalendarModule } from './attendances/calendar/calendar.module';
 
 const routes: Routes = [
     {
@@ -30,18 +35,37 @@ const routes: Routes = [
     {
         path: 'employee',
         component: EmployeeComponent
+    },
+    /* {
+        path: 'attendances',
+        component: AttendancesComponent,
+        resolve: {
+            recordsWithPagination: DataService
+        },
+        data : { module : 'attendances' }
+    } */
+    {
+        path: 'attendances',
+        loadChildren: './attendances/calendar/calendar.module#CalendarModule'
     }
 ];
 
 @NgModule({
     declarations: [
         EmployeeComponent,
-        EmployeesComponent
+        EmployeesComponent,
+        AttendanceFormComponent,
+        AttendancesComponent,
+        // CalendarComponent
     ],
     imports: [
         RouterModule.forChild(routes),
         MaterialModule,
-        FuseSharedModule
+        FuseSharedModule,
+        CalendarModule
+    ],
+    entryComponents: [
+        AttendanceFormComponent
     ]
 })
 

@@ -11,17 +11,16 @@ import { Router } from '@angular/router';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { AppService } from 'app/app.service';
-import { AttendanceFormComponent } from '../../attendances/attendance-form/attendance-form.component';
 
 @Component({
-    selector: 'employees',
-    templateUrl: './employees.component.html',
-    styleUrls: ['./employees.component.scss'],
+    selector: 'attendances',
+    templateUrl: './attendances.component.html',
+    styleUrls: ['./attendances.component.scss'],
     animations: fuseAnimations,
     encapsulation: ViewEncapsulation.None
 })
 
-export class EmployeesComponent implements OnInit {
+export class AttendancesComponent implements OnInit {
     dataSource: Array<any>;
     tableColumns: Array<string>;
 
@@ -38,7 +37,6 @@ export class EmployeesComponent implements OnInit {
     private _unsubscribeAll: Subject<any>;
 
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    attendanceFormRef: MatDialogRef<AttendanceFormComponent>;
 
     constructor(
         public _dataService: DataService,
@@ -75,7 +73,7 @@ export class EmployeesComponent implements OnInit {
                 this.dataSource.filter = this.filter.nativeElement.value;
             }); */
 
-        this.tableColumns = MODULE.employees.tableColumns;
+        this.tableColumns = MODULE.attendances.tableColumns;
         this._dataService.onRecordsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
@@ -118,7 +116,7 @@ export class EmployeesComponent implements OnInit {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this._dataService.deleteRecord(MODULE.employees.backendRoute, employee);
+                this._dataService.deleteRecord(MODULE.attendances.backendRoute, employee);
             }
             this.confirmDialogRef = null;
         });
@@ -134,73 +132,23 @@ export class EmployeesComponent implements OnInit {
     }
 
     /**
-     * Update the enable/disable status of employee
+     * Disable Employee
      */
-     updateEnableDisable(employee): void {
+     disableEmployee(employee): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
 
-         this.confirmDialogRef.componentInstance.confirmMessage = employee.active
-             ? 'Are you sure you want to disable? The disabled employee will not appear is attendance and payment list.'
-             : 'Are you sure you want to enable. The enabled employee will appear on attendance and payment list.';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to disable? The disabled employee will not appear is attendance and payment list.';
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                if (employee.active) {
-                    employee.disabledOn = new Date();
-                } else {
-                    employee.enabledOn = new Date();
-                }
+                employee.isActive = false;
+                employee.disabledOn = new Date();
                 employee.updatedBy = this._appService.user._id;
-                employee.active = !employee.active;
-                this._dataService.updateRecord(MODULE.employees.backendRoute, employee);
+                this._dataService.updateRecord(MODULE.attendances.backendRoute, employee);
             }
             this.confirmDialogRef = null;
         });
-    }
-
-
-    markAttendace(employee) {
-        this.attendanceFormRef = this._matDialog.open(AttendanceFormComponent, {
-            disableClose: false,
-            panelClass: 'event-form-dialog',
-            data: {
-                employee
-            }
-        });
-
-        this.attendanceFormRef.afterClosed().subscribe(result => {
-            if (result) {
-                const data = result.getRawValue();
-                console.log({result, data});
-                const param = {
-                    employee: employee._id,
-                    startDate: data.start,
-                    endDate: data.end,
-                    startTime: data.startTime,
-                    endTime: data.endTime,
-                    allDay: data.allDay,
-                    location: data.meta.location,
-                    notes: data.meta.notes,
-                    business: this._appService.user.business._id,
-                    createdBy: this._appService.user._id,
-                    updatedBy: this._appService.user._id
-                }
-                this._dataService.createRecordButNoRefresh(MODULE.attendances.backendRoute, param).then((response) => {
-                    console.log({ response });
-                    this._appService.handleMessage(
-                        'Marked attendance of employee ' + employee.firstName + ' ' + employee.lastName,
-                        'Success!'
-                    );
-                });
-            }
-            this.attendanceFormRef = null;
-        });
-    }
-
-    // For view attendance, navigate to calender to show the attendance in calender view
-    onViewAttendace(employee) {
-        this._router.navigate(['/manage/attendances', employee._id]);
     }
 }

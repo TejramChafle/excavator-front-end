@@ -18,6 +18,7 @@ export class Invoice {
     status: string;
     expectedClearanceDate: Date;
     transaction: any;
+    statusHistory: [];
     /**
      * Constructor
      *
@@ -41,5 +42,7 @@ export class Invoice {
         this.status = invoice.status;
         this.expectedClearanceDate = invoice.expectedClearanceDate;
         this.transaction = invoice.transaction;
+        this.statusHistory = invoice.statusHistory;
+        this.date = invoice.date;
     }
 }

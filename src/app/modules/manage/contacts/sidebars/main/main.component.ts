@@ -27,7 +27,7 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy {
     constructor(
         private _contactsService: ContactsService,
         private _dataService: DataService,
-        private _appService: AppService
+        public _appService: AppService
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();

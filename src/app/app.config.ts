@@ -26,8 +26,8 @@ export const MODULE = {
             'rate',
             'billingType',
             'description',
-            'createdBy',
-            'createdAt',
+            // 'createdBy',
+            // 'createdAt',
             'updatedBy',
             'updatedAt',
             'actions'
@@ -45,8 +45,8 @@ export const MODULE = {
             'email',
             'phone',
             'active',
-            'createdBy',
-            'createdAt',
+            // 'createdBy',
+            // 'createdAt',
             'updatedBy',
             'updatedAt',
             'actions'
@@ -59,8 +59,8 @@ export const MODULE = {
         tableColumns: [
             'name',
             'purpose',
-            'createdBy',
-            'createdAt',
+            // 'createdBy',
+            // 'createdAt',
             'updatedBy',
             'updatedAt',
             'actions'
@@ -76,8 +76,8 @@ export const MODULE = {
             'number',
             'capacity',
             'fuel',
-            'createdBy',
-            'createdAt',
+            // 'createdBy',
+            // 'createdAt',
             'updatedBy',
             'updatedAt',
             'actions'
@@ -115,8 +115,8 @@ export const MODULE = {
             'place',
             'petrolRate',
             'dieselRate',
-            'createdBy',
-            'createdAt',
+            // 'createdBy',
+            // 'createdAt',
             'updatedBy',
             'updatedAt',
             'actions'
@@ -132,8 +132,8 @@ export const MODULE = {
             'email',
             'phone',
             'contact',
-            'createdBy',
-            'createdAt',
+            // 'createdBy',
+            // 'createdAt',
             'updatedBy',
             'updatedAt',
             'actions'
@@ -196,6 +196,18 @@ export const MODULE = {
             'status',
             'expectedClearanceDate',
             // 'paymentStatus',
+            'actions'
+        ]
+    },
+    attendances: {
+        backendRoute: 'employee/attendance',
+        frontendRoute: 'attendances',
+        pageTitle: 'Attendances',
+        tableColumns: [
+            'date',
+            'total', // total employee present
+            'updatedBy',
+            'updatedAt',
             'actions'
         ]
     }

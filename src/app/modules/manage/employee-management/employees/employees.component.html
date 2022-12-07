@@ -68,8 +68,9 @@
                         <img class="employee-image"
                              *ngIf="employee.photo" [alt]="employee.firstName"
                              [src]="employee.photo"/>
-                        <img *ngIf="!employee.photo" [alt]="employee.firstName"
-                             [src]="'assets/images/ecommerce/employee-image-placeholder.png'">
+                        <img class="employee-image"
+                            *ngIf="!employee.photo" [alt]="employee.firstName"
+                             [src]="'assets/images/avatars/profile.jpg'">
                     </mat-cell>
                 </ng-container>
 
@@ -133,8 +134,8 @@
                 <ng-container matColumnDef="status">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Active</mat-header-cell>
                     <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
-                        <mat-icon *ngIf="employee.isActive" class="active-icon green-600 s-16">check</mat-icon>
-                        <mat-icon *ngIf="!employee.isActive" class="active-icon red-500 s-16">close</mat-icon>
+                        <mat-icon *ngIf="employee.active" class="active-icon green-600 s-16">check</mat-icon>
+                        <mat-icon *ngIf="!employee.active" class="active-icon red-500 s-16">close</mat-icon>
                     </mat-cell>
                 </ng-container>
 
@@ -150,13 +151,22 @@
                             </button>
                             <!-- Action button dropdow options -->
                             <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="attendance" (click)="markAttendace(employee)"
+                                    *ngIf="employee.active">
+                                    <mat-icon>event</mat-icon>
+                                    Mark Attendance
+                                </button>
+                                <button mat-menu-item aria-label="attendance" (click)="onViewAttendace(employee)"
+                                    *ngIf="employee.active">
+                                    <mat-icon>event</mat-icon>
+                                    Attendance View
+                                </button>
                                 <button mat-menu-item aria-label="change_history" (click)="editEmployee(employee)">
                                     <mat-icon>edit</mat-icon>
                                     <span>Edit</span>
                                 </button>
-                                <button mat-menu-item aria-label="remove" (click)="disableEmployee(employee)">
-                                    <mat-icon>person_off</mat-icon>
-                                    <span>Disable</span>
+                                <button mat-menu-item aria-label="remove" (click)="updateEnableDisable(employee)">
+                                    <mat-icon>person_off</mat-icon>{{employee.active ? 'Disable' : 'Enable' }}
                                 </button>
                                 <button mat-menu-item aria-label="remove" (click)="deleteEmployee(employee)">
                                     <mat-icon>delete</mat-icon>

@@ -44,6 +44,7 @@ export class AppService {
         // If the user token is expired, redirect user to lock page to enter the password
         if (response.status === 401 && response.error.message === 'jwt expired') {
             this._router.navigate(['auth/lock']);
+            // this.logout();
         } else {
             this.handleMessage(response.error.message || response.message, response.statusText);
         }

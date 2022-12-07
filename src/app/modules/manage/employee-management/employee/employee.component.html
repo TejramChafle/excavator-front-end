@@ -96,7 +96,6 @@
                                     <input matInput placeholder="Date Of Birth"
                                            name="dateOfBirth"
                                            formControlName="dateOfBirth"
-                                           required
                                            type="date">
                                 </mat-form-field>
 
@@ -135,7 +134,8 @@
                                     <textarea matInput placeholder="Address"
                                               name="address"
                                               formControlName="address"
-                                              rows="5">
+                                              rows="5"
+                                              required>
                                     </textarea>
                                 </mat-form-field>
 
@@ -145,7 +145,8 @@
                                            name="phone"
                                            formControlName="phone"
                                            required
-                                           type="tel">
+                                           type="tel"
+                                           maxlength="10">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
@@ -153,7 +154,8 @@
                                     <input matInput placeholder="Alternate Phone"
                                            name="alternatePhone"
                                            formControlName="alternatePhone"
-                                           type="tel">
+                                           type="tel"
+                                           maxlength="10">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
@@ -162,7 +164,8 @@
                                            name="emergencyPhone"
                                            formControlName="emergencyPhone"
                                            required
-                                           type="tel">
+                                           type="tel"
+                                           maxlength="10">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
@@ -202,7 +205,7 @@
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                     <mat-label>Wage Per day</mat-label>
-                                    <input matInput placeholder="Wage Per day"
+                                    <input matInput placeholder="0.00"
                                            name="wagePerDay"
                                            formControlName="wagePerDay"
                                            type="number">
@@ -211,7 +214,7 @@
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                     <mat-label>Wage Per Month</mat-label>
-                                    <input matInput placeholder="Wage Per Month"
+                                    <input matInput placeholder="0.00"
                                            name="wagePerMonth"
                                            formControlName="wagePerMonth"
                                            type="number">
@@ -220,7 +223,7 @@
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                     <mat-label>Wage Per Year</mat-label>
-                                    <input matInput placeholder="Wage Per Year"
+                                    <input matInput placeholder="0.00"
                                            name="wagePerYear"
                                            formControlName="wagePerYear"
                                            type="number">

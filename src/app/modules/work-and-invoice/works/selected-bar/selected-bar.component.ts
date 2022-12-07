@@ -136,4 +136,8 @@ export class RecordsSelectedBarComponent implements OnInit, OnDestroy
             } });
         }
     }
+
+    deleteSelectedContacts() {
+        console.log('deleteSelectedContacts');
+    }
 }

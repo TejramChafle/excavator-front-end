@@ -59,7 +59,7 @@ export class LockComponent implements OnInit {
      */
     ngOnInit(): void {
         this.lockForm = this._formBuilder.group({
-            username: new FormControl({ value: this._appService.user.username, disabled: true }, Validators.required),
+            username: new FormControl({ value: this._appService.user.email, disabled: true }, Validators.required),
             password: new FormControl('', Validators.required)
         });
     }

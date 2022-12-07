@@ -21,7 +21,7 @@
                 <div fxLayout="column" fxLayoutAlign="start start"
                      [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2">
-                        Invoice {{invoice._id}}
+                        Invoice {{invoice._id | slice : - 10}}
                     </div>
                     <div class="subtitle secondary-text">
                         <span>To</span>
@@ -34,20 +34,25 @@
             <div class="btn-group">
                 <button mat-raised-button
                     class="save-work-button"
-                    [disabled]="invoiceForm.invalid"
-                    *ngIf="invoice._id" (click)="onSubmit()">
-                <span>CREATE INVOICE</span>
+                    [disabled]="invoiceForm.invalid || invoiceForm.pristine"
+                    *ngIf="!invoice._id" (click)="onSubmit()">
+                    <mat-icon class="mr-8">add_note</mat-icon>
+                    CREATE INVOICE
                 </button>
 
-                <button mat-raised-button
+                <!-- <button mat-raised-button
                         class="save-work-button"
                         [disabled]="invoiceForm.invalid || invoiceForm.pristine"
-                        *ngIf="!invoice._id" (click)="onSubmit()">
+                        *ngIf="invoice._id" (click)="onSubmit()">
                     <span>UPDATE INVOICE</span>
-                </button>
+                </button> -->
                 
-                <button mat-raised-button class="save-work-button" (click)="print()">
-                    <span>PRINT INVOICE</span>
+                <button mat-raised-button
+                    class="save-work-button"
+                    (click)="onPrintInvoice()"
+                    *ngIf="invoice._id">
+                    <mat-icon class="mr-8">print</mat-icon>
+                    PRINT INVOICE
                 </button>
             </div>
 
@@ -74,8 +79,9 @@
                                         <mat-icon class="m-0 mr-16 secondary-text">account_circle</mat-icon>
                                         <div class="h2 secondary-text">Customer</div>
                                     </div>
-                                    <button mat-raised-button class="save-work-button" (click)="onUpdateCustomerInfo()">
-                                        <span>{{updateCustomerInfo ? 'SAVE' : 'EDIT'}}</span>
+                                    <button mat-raised-button color="accent" class="save-work-button" (click)="updateCustomerInfo = !updateCustomerInfo">
+                                        <mat-icon class="mr-8">{{updateCustomerInfo ? 'cancel' : 'edit'}}</mat-icon>
+                                        {{updateCustomerInfo ? 'CANCEL' : 'EDIT'}}
                                     </button>
                                 </div>
                                 <!-- Customer Billing Info -->
@@ -140,6 +146,11 @@
                                                formControlName="invoiceBrief"
                                                type="text">
                                     </mat-form-field>
+
+                                    <button mat-raised-button color="primary" [disabled]="!invoiceForm.value.status" (click)="onUpdateCustomerInfo()">
+                                        <mat-icon class="mr-8">update</mat-icon>
+                                        UPDATE CUSTOMER INFO
+                                    </button>
                                 </div>
                             </div>
 
@@ -178,8 +189,9 @@
                                         <mat-icon class="m-0 mr-16 secondary-text">access_time</mat-icon>
                                         <div class="h2 secondary-text">Invoice Status</div>
                                     </div>
-                                    <button mat-raised-button class="save-work-button" (click)="onUpdateStatusInfo()">
-                                        <span>{{updateStatusInfo ? 'SAVE' : 'EDIT'}}</span>
+                                    <button mat-raised-button color="accent" class="save-work-button" (click)="updateStatusInfo = !updateStatusInfo">
+                                        <mat-icon class="mr-8">{{updateStatusInfo ? 'cancel' : 'edit'}}</mat-icon>
+                                        {{updateStatusInfo ? 'CANCEL' : 'EDIT'}}
                                     </button>
                                 </div>
                                 <!-- Invoice status history table -->
@@ -217,8 +229,9 @@
                                     </mat-form-field>
     
                                     <div *ngIf="updateStatusInfo && invoice._id">
-                                        <button mat-raised-button [disabled]="!invoiceForm.value.status">
-                                            UPDATE INVOICE STATUS
+                                        <button mat-raised-button color="primary" [disabled]="!invoiceForm.value.status" (click)="onUpdateStatusInfo()">
+                                            <mat-icon class="mr-8">update</mat-icon>
+                                            UPDATE STATUS
                                         </button>
                                     </div>
                                 </div>
@@ -232,8 +245,9 @@
                                         <mat-icon class="m-0 mr-16 secondary-text">attach_money</mat-icon>
                                         <div class="h2 secondary-text">Payment</div>
                                     </div>
-                                    <button mat-raised-button class="save-work-button" (click)="onUpdatePaymentInfo()">
-                                        <span>{{updatePaymentInfo ? 'SAVE' : 'EDIT'}}</span>
+                                    <button mat-raised-button color="accent" class="save-work-button" (click)="updatePaymentInfo = !updatePaymentInfo">
+                                        <mat-icon class="mr-8">{{updatePaymentInfo ? 'cancel' : 'edit'}}</mat-icon>
+                                        {{updatePaymentInfo ? 'CANCEL' : 'EDIT'}}
                                     </button>
                                 </div>
 
@@ -241,7 +255,7 @@
                                     Payment information will be displayed here. Please save invoice and edit to update payment information.
                                 </div>
 
-                                <table class="simple" *ngIf="invoice.transaction">
+                                <table class="simple" *ngIf="invoice.transaction && !updatePaymentInfo">
                                     <thead>
                                         <tr>
                                             <th>TransactionID</th>
@@ -255,7 +269,7 @@
                                         <tr>
                                             <td>
                                                 <span class="text-truncate">
-                                                    {{invoice.transaction._id}}
+                                                    {{invoice.transaction._id | slice : - 10}}
                                                 </span>
                                             </td>
                                             <td>
@@ -265,7 +279,7 @@
                                             </td>
                                             <td>
                                                 <span class="text-truncate">
-                                                    {{invoice.transaction.amount}}
+                                                    {{invoice.transaction.amount | currency:'INR':'symbol'}}
                                                 </span>
                                             </td>
                                             <td>
@@ -283,7 +297,7 @@
                                 </table>
 
                                 <div class="section pb-48" *ngIf="updatePaymentInfo">
-                                    <form name="paymentForm" [formGroup]="paymentForm" class="work w-100-p" fxLayout="column" fxFlex>
+                                    <form name="paymentForm" [formGroup]="paymentForm" class="work w-100-p" fxLayout="column">
                                         <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                             <mat-label>Payment Method</mat-label>
                                             <mat-select matNativeControl required formControlName="method"
@@ -313,6 +327,10 @@
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
+                                        <button mat-raised-button color="primary" class="save-work-button" (click)="onUpdatePaymentInfo()">
+                                            <mat-icon class="mr-8">update</mat-icon>
+                                            {{invoice.transaction ? 'SUBMIT' : 'UPDATE'}}
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -357,7 +375,7 @@
                                             {{work.quantity}}
                                         </td>
                                         <td>
-                                            ₹{{work.total | number}}
+                                            {{work.total | currency:'INR':'symbol'}}
                                         </td>
                                         <td>
                                             <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
@@ -386,25 +404,27 @@
                         <div class="invoice tab-content p-24" fusePerfectScrollbar>
 
                             <div id="invoice" class="compact page-layout blank" fxLayout="row" fusePerfectScrollbar>
-
+                        
                                 <div class="invoice-container">
-
+                        
                                     <!-- INVOICE -->
                                     <div class="card" id="invoice-print">
-
+                        
                                         <div class="header">
-                                            <div class="invoice-date">{{invoice.date}}</div>
-
-                                            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+                                            <div class="invoice-date">{{invoice.date | date}}</div>
+                        
+                                            <div class="invoice-header" fxLayout="row" fxLayoutAlign="space-between stretch">
                                                 <div class="client">
                                                     <div class="invoice-number" fxLayout="row"
                                                          fxLayoutAlign="start center">
                                                         <span class="title">INVOICE</span>
-                                                        <span class="number">{{invoice._id}}</span>
+                                                        <span class="number">{{invoice._id | slice : - 10}}</span>
                                                     </div>
-
+                        
                                                     <div class="info">
-                                                        <div class="title">
+                                                        <br>
+                                                        <span class="title">BILLED TO,</span>
+                                                        <div>
                                                             {{customer?.name}}
                                                         </div>
                                                         <div class="address">
@@ -414,29 +434,33 @@
                                                         <div class="email">{{customer?.email}}</div>
                                                     </div>
                                                 </div>
-
+                        
                                                 <div class="issuer accent" fxLayout="row" fxLayoutAlign="start center">
-                                                    <div class="business-image">
+                                                    <div class="logo">
+                                                        <!-- class="business-image" -->
                                                         <img [src]="business.logo || 'assets/images/logos/fuse.svg'">
                                                     </div>
-
+                        
                                                     <div class="info">
                                                         <div class="title">{{business.name | uppercase}}</div>
                                                         <div class="address">{{business.address | titlecase}}</div>
                                                         <div class="phone">{{business.phone}}</div>
                                                         <div class="email">{{business.email}}</div>
-                                                        <div class="website">www.fuseinc.com</div>
+                                                        <div class="pan">{{business.panNo | uppercase}}</div>
+                                                        <div class="tagline">{{business.tagline}}</div>
+                                                        <!-- <div class="website">www.fuseinc.com</div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
+                        
                                         <div class="content">
-
+                        
                                             <table class="simple invoice-table">
                                                 <thead>
                                                     <tr>
                                                         <th>SERVICE/PRODUCT</th>
+                                                        <th>SITE/PLACE</th>
                                                         <th class="text-right">RATE</th>
                                                         <th class="text-right">QUANTITY</th>
                                                         <th class="text-right">TOTAL</th>
@@ -445,9 +469,10 @@
                                                 <tbody>
                                                     <tr *ngFor="let work of invoice.works">
                                                         <td>
-                                                            <div class="title">
-                                                                {{work.service?.name}}
-                                                            </div>
+                                                            {{work.service?.name}}
+                                                        </td>
+                                                        <td>
+                                                            {{work.site | titlecase}}
                                                         </td>
                                                         <td class="text-right">
                                                             {{work.rate}}
@@ -461,7 +486,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-
+                        
                                             <table class="simple invoice-table-footer">
                                                 <tbody>
                                                     <tr class="subtotal" *ngIf="isTaxEnabled">
@@ -483,7 +508,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-
+                        
                                         <div class="footer">
                                             <div class="note">Please pay within 15 days. Thank you for your business.
                                             </div>
@@ -492,19 +517,16 @@
                                                     <img src="assets/images/logos/fuse.svg">
                                                 </div>
                                                 <div class="small-note">
-                                                    In condimentum malesuada efficitur. Mauris volutpat placerat auctor.
-                                                    Ut ac congue dolor. Quisque scelerisque lacus sed feugiat fermentum.
-                                                    Cras aliquet facilisis pellentesque. Nunc hendrerit quam at leo
-                                                    commodo, a suscipit tellus dapibus. Etiam at felis volutpat est
-                                                    mollis lacinia. Mauris placerat sem sit amet velit mollis, in
-                                                    porttitor ex finibus. Proin eu nibh id libero tincidunt lacinia et
-                                                    eget eros.
+                                                    An invoice is generated based on an agreement between the service provider and the customer. Henceforth, no adjustments
+                                                    in price will be made. The standard payment method includes Cheque, Online Bank Account Transfer, UPI, and Cash. The
+                                                    paid amount is subject to GST and hence no return, partial/full can be made. The late payment might attract additional
+                                                    charges as a penalty.
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- / INVOICE -->
-
+                        
                                 </div>
                             </div>
                         </div>

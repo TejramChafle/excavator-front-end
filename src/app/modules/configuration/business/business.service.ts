@@ -56,7 +56,10 @@ export class BusinessService implements Resolve<any>
                     this.business = response;
                     this.onBusinessChanged.next(this.business);
                     resolve(response);
-                }, reject);
+                }, (error) => {
+                    this._appService.handleError(error);
+                    return reject;
+                });
         });
     }
 

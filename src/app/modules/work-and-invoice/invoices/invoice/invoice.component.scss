@@ -114,6 +114,18 @@
                                                 max-width: none;
                                             }
                                         }
+                                        .tagline {
+                                            // background-color: cadetblue;
+                                            // padding: 5px 10px;
+                                            // margin-left: -10px;
+                                            margin-top: 10px;
+                                        }
+                                        
+                                        .title {
+                                            font-size: 24px;
+                                            font-weight: lighter;
+                                            margin-bottom: 10px;
+                                        }
                                     }
                                 }
 
@@ -200,8 +212,8 @@
                                             &.total {
 
                                                 td {
-                                                    padding: 24px 8px;
-                                                    border-top: 1px solid rgba(0, 0, 0, 0.12);
+                                                    padding: 16px 8px;
+                                                    // border-top: 1px solid rgba(0, 0, 0, 0.12);
                                                     font-size: 35px;
                                                     font-weight: 300;
                                                     color: rgba(0, 0, 0, 1);

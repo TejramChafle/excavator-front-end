@@ -61,8 +61,11 @@
                 <ng-container matColumnDef="checkbox">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let work">
-                        <mat-checkbox [(ngModel)]="checkboxes[work._id]" (ngModelChange)="onSelectedChange(work._id)"
-                                        (click)="$event.stopPropagation()">
+                        <mat-checkbox
+                            [(ngModel)]="checkboxes[work._id]"
+                            (ngModelChange)="onSelectedChange(work._id)"
+                            (click)="$event.stopPropagation()"
+                            [hidden]="work.invoiceId">
                         </mat-checkbox>
                     </mat-cell>
                 </ng-container>
@@ -144,7 +147,7 @@
                 <ng-container matColumnDef="quantity">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Rate/Quantity</mat-header-cell>
                     <mat-cell *matCellDef="let work">
-                        <p class="text-truncate">{{work.rate }}/{{work.quantity}}</p>
+                        <p class="text-truncate">{{work.rate | currency:'INR':'symbol'}}/{{work.quantity}}</p>
                     </mat-cell>
                 </ng-container>
 
@@ -153,7 +156,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Amount</mat-header-cell>
                     <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
                         <p class="text-truncate">
-                            {{work.total}}
+                            {{work.total | currency:'INR':'symbol'}}
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -162,8 +165,9 @@
                 <ng-container matColumnDef="invoiced">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Invoice</mat-header-cell>
                     <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
-                        <mat-icon *ngIf="work.invoiceId" class="active-icon green-600 s-16">check</mat-icon>
-                        <mat-icon *ngIf="!work.invoiceId" class="active-icon red-500 s-16">close</mat-icon>
+                        <a *ngIf="work.invoiceId" class="text-truncate" [routerLink]="'/work-and-invoice/invoice/'+work.invoiceId">
+                            {{work.invoiceId | slice : - 10}}
+                        </a>
                     </mat-cell>
                 </ng-container>
 

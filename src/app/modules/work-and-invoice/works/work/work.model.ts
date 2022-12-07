@@ -16,6 +16,7 @@ export class Work {
     total: string;
     description: string;
     invoice: string;
+    vehicle: string;
 
     /**
      * Constructor
@@ -40,5 +41,6 @@ export class Work {
         this.total = work.total;
         this.description = work.description;
         this.invoice = work.invoice;
+        this.vehicle = work.vehicle;
     }
 }

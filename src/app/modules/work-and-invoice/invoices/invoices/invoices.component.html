@@ -59,7 +59,7 @@
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice #</mat-header-cell>
                     <mat-cell *matCellDef="let invoice">
-                        <p class="text-truncate">{{invoice._id}}</p>
+                        <p class="text-truncate">{{invoice._id | slice : - 10}}</p>
                     </mat-cell>
                 </ng-container>
 

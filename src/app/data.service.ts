@@ -262,12 +262,14 @@ export class DataService implements Resolve<any> {
         this.selectedRecords = [];
 
         // If there is no filter, select all records
-        if (filterParameter === undefined || filterValue === undefined) {
-            this.selectedRecords = [];
-            this.recordsWithPagination.docs.map(record => {
-                this.selectedRecords.push(record._id);
-            });
-        }
+         if (filterParameter === undefined || filterValue === undefined) {
+             this.selectedRecords = [];
+             this.recordsWithPagination.docs.map(record => {
+                 if (!record.invoiceId) {
+                     this.selectedRecords.push(record._id);
+                 }
+             });
+         }
 
         // Trigger the next event
         this.onSelectedRecordsChanged.next(this.selectedRecords);
@@ -281,6 +283,24 @@ export class DataService implements Resolve<any> {
 
         // Trigger the next event
         this.onSelectedRecordsChanged.next(this.selectedRecords);
+    }
+
+    /**
+     * Create a new record
+     *
+     * @param record
+     * @returns {Promise<any>}
+     */
+     createRecordButNoRefresh(route, record): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient.post(BASE_URL + route, { ...record })
+                .subscribe(response => {
+                    resolve(response);
+                }, (error) => {
+                    this._appService.handleError(error);
+                    return reject;
+                });
+        });
     }
 
 }

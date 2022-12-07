@@ -77,7 +77,7 @@ works {
         }
 
         .mat-column-id {
-            flex: 0 1 84px;
+            flex: 0 1 50px;
         }
 
         .mat-column-photo {
@@ -129,6 +129,20 @@ works {
 
         .active-icon {
             border-radius: 50%;
+        }
+
+        a {
+            // padding: 2px 5px;
+            color: inherit;
+            // max-width: 150px;
+            // white-space: nowrap;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            // text-decoration: none;
+        }
+
+        .mat-column-checkbox {
+            flex: 0 1 75px;
         }
     }
 }

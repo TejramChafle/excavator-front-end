@@ -1,0 +1,169 @@
+<div id="attendances" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    event
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Attendances
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <!-- <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #filter placeholder="Search for a attendance">
+                </div>
+            </div> -->
+            <!-- / SEARCH -->
+
+            <!-- ADD BUTTON -->
+            <!-- <button mat-raised-button
+                    (click)="addAttendance()"
+                    class="add-attendance-button fuse-white mt-24 mt-md-0">
+                <span>ADD NEW ATTENDANCE</span>
+            </button> -->
+            <!-- / ADD BUTTON -->
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <mat-table class="attendances-table"
+                       #table [dataSource]="dataSource"
+                       matSort
+                       [@animateStagger]="{value:'50'}"
+                       fusePerfectScrollbar>
+
+                <!-- Attendance Date Column -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Attendance Date</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{attendance.date | date}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Attendance Marked Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Status</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance" fxHide fxShow.gt-xs>
+                        <mat-icon *ngIf="attendance.marked" class="active-icon green-600 s-16">check</mat-icon>
+                        <mat-icon *ngIf="!attendance.marked" class="active-icon red-500 s-16">close</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Total Attendance</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance" gt-sm fxShow.gt-md fxShow.gt-lg>
+                        <p class="text-truncate">
+                            {{attendance.total}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Created By Column -->
+                <!-- <ng-container matColumnDef="createdBy">
+                    <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created By</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance" gt-sm fxShow.gt-md fxShow.gt-lg>
+                        <p class="text-truncate">
+                            {{attendance.createdBy?.name | titlecase}}
+                        </p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <!-- Updated By Column -->
+                <ng-container matColumnDef="updatedBy">
+                    <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Updated By</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance" gt-sm fxShow.gt-md fxShow.gt-lg>
+                        <p class="text-truncate">
+                            {{attendance.updatedBy?.name | titlecase}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Created At Column -->
+                <!-- <ng-container matColumnDef="createdAt">
+                    <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created At</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance" gt-sm fxShow.gt-md fxShow.gt-lg>
+                        <p class="text-truncate">
+                            {{attendance.createdAt | date}}
+                        </p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <!-- Updated At Column -->
+                <ng-container matColumnDef="updatedAt">
+                    <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Updated At</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance" gt-sm fxShow.gt-md fxShow.gt-lg>
+                        <p class="text-truncate">
+                            {{attendance.updatedAt | date}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Action Buttons Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef fxLayoutAlign="end center">Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let attendance">
+                        <div fxFlex="row" fxLayoutAlign="end center">
+                            <!-- Action button icon -->
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <!-- Action button dropdow options -->
+                            <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="change_history" (click)="editAttendance(attendance)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                </button>
+                                <button mat-menu-item aria-label="remove" (click)="deleteAttendance(attendance)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Remove</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="tableColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let attendance; columns: tableColumns;"
+                         class="attendance"
+                         matRipple>
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator 
+                #paginator [length]="_dataService.pagination.total"
+                [pageSize]="_dataService.pagination.limit"
+                [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                (page)="onPageChange($event)">
+            </mat-paginator>
+
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

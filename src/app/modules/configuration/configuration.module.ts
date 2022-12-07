@@ -20,11 +20,11 @@ import { PetrolPumpFormDialogComponent } from './configuration-form/petrol-pump-
 import { CustomerFormDialogComponent } from './configuration-form/customer-form/customer-form.component';
 
 const routes: Routes = [
-    {
+    /* {
         path: '',
         redirectTo: 'configuration/business',
         pathMatch: 'full'
-    },
+    }, */
     {
         path: 'configuration/business',
         component: BusinessComponent,

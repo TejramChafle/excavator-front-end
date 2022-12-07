@@ -1232,7 +1232,7 @@ export let navigation: FuseNavigation[] = [
                         translate: 'NAV.ATTENDANCE',
                         type     : 'item',
                         icon     : 'group',
-                        url      : '/configuration/attendance'
+                        url      : '/manage/attendances'
                     },
                     {
                         id       : 'payments',

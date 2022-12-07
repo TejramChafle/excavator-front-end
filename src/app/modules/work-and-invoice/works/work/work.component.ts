@@ -28,6 +28,7 @@ export class WorkComponent implements OnInit, OnDestroy {
     customers: Array<any>;
     contacts: Array<any>;
     services: Array<any>;
+    vehicles: Array<any>;
     service: any;
 
     // Private
@@ -84,6 +85,7 @@ export class WorkComponent implements OnInit, OnDestroy {
         this.getCustomers();
         this.getServices();
         this.getSupervisor();
+        this.getVehicles();
     }
 
     getCustomers() {
@@ -104,6 +106,13 @@ export class WorkComponent implements OnInit, OnDestroy {
         this._dataService.records('service', { contactType: 'Customer' }).subscribe((response) => {
             console.log({ services: response });
             this.services = response.docs;
+        });
+    }
+
+    getVehicles() {
+        this._dataService.records('vehicle', {}).subscribe((response) => {
+            console.log({ vehicles: response });
+            this.vehicles = response.docs;
         });
     }
 
@@ -141,7 +150,8 @@ export class WorkComponent implements OnInit, OnDestroy {
             quantity: [this.work.quantity],
             total: [this.work.total],
             description: [this.work.description],
-            active: [this.work.active]
+            active: [this.work.active],
+            vehicle: [this.work.vehicle]
         });
     }
 
@@ -203,5 +213,12 @@ export class WorkComponent implements OnInit, OnDestroy {
             const total = this.workForm.value.rate * this.workForm.value.quantity;
             this.workForm.patchValue({ total });
         }
+    }
+    
+    // Assign the place by default for the selected customer
+    onChangeCustomer(event) {
+        const customer = this.customers.find((customer) => customer._id === event.value);
+        console.log(event, customer);
+        this.workForm.patchValue({ site: customer.place });
     }
 }

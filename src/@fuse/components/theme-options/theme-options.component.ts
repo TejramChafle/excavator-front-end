@@ -103,7 +103,6 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                console.log({config});
                 // Update the stored config
                 this.fuseConfig = config;
 

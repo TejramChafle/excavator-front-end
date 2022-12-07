@@ -9,6 +9,7 @@ import { RecordsSelectedBarComponent } from './works/selected-bar/selected-bar.c
 import { InvoiceComponent } from './invoices/invoice/invoice.component';
 import { InvoicesComponent } from './invoices/invoices/invoices.component';
 import { InvoiceService } from './invoices/invoice/invoice.service';
+import { InvoicePrintComponent } from './invoices/invoice-print/invoice-print.component';
 
 const routes: Routes = [
     {
@@ -44,6 +45,17 @@ const routes: Routes = [
     {
         path: 'invoice',
         component: InvoiceComponent
+    },
+    {
+        path: 'invoice-print/:id',
+        component: InvoicePrintComponent,
+        resolve: {
+            invoice: InvoiceService
+        }
+    },
+    {
+        path: 'invoice-print',
+        component: InvoicePrintComponent
     }
 ];
 
@@ -53,7 +65,8 @@ const routes: Routes = [
         WorksComponent,
         RecordsSelectedBarComponent,
         InvoiceComponent,
-        InvoicesComponent
+        InvoicesComponent,
+        InvoicePrintComponent
     ],
     imports: [
         RouterModule.forChild(routes),

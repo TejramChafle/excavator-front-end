@@ -22,7 +22,6 @@ export class AppInterceptor implements HttpInterceptor {
         } else {
             this._router.navigate(['/auth/login']);
         }
-        console.log({request});
         return next.handle(request);
     }
 }

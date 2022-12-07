@@ -1,13 +1,13 @@
 @import "src/@fuse/scss/fuse";
 
-invoices {
+attendances {
 
-    #invoices {
+    #attendances {
 
         .top-bg {
 
-            @include media-breakpoint('xs') {
-                height: 224px;
+            @include media-breakpoint('lt-md') {
+                height: 256px;
             }
         }
 
@@ -44,24 +44,17 @@ invoices {
                     }
                 }
 
-                @include media-breakpoint('xs') {
+                @include media-breakpoint('lt-md') {
                     padding: 8px 0;
-                    height: 160px !important;
-                    min-height: 160px !important;
-                    max-height: 160px !important;
+                    height: 192px !important;
+                    min-height: 192px !important;
+                    max-height: 192px !important;
                 }
             }
         }
     }
 
-    .mat-tab-group,
-    .mat-tab-body-wrapper,
-    .tab-content {
-        flex: 1 1 auto;
-        max-width: 100%;
-    }
-
-    .invoices-table {
+    .attendances-table {
         flex: 1 1 auto;
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         overflow: auto;
@@ -71,7 +64,7 @@ invoices {
             min-height: 64px;
         }
 
-        .order {
+        .employee {
             position: relative;
             cursor: pointer;
             height: 84px;
@@ -84,25 +77,40 @@ invoices {
         }
 
         .mat-column-id {
-            flex: 0 1 125px;
-        }
-
-        .mat-column-invoiceTo {
-            flex: 0 1 250px;
-        }
-
-        .mat-column-image {
             flex: 0 1 84px;
+        }
 
-            .product-image {
-                width: 52px;
-                height: 52px;
-                border: 1px solid rgba(0, 0, 0, .12);
+        .mat-column-photo {
+            flex: 0 1 120px;
+
+            .employee-image {
+                width: 65px;
+                height: 65px;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+                padding: 2px;
+                object-fit: cover; 
             }
         }
 
-        .mat-column-buttons {
+        .mat-column-category {
+            flex: 0 1 240px;
+        }
+
+        .mat-column-price {
+            flex: 0 1 160px;
+        }
+
+        .mat-column-name {
+            flex: 0 1 250px;
+        }
+
+        .mat-column-active {
             flex: 0 1 80px;
+        }
+
+        .mat-column-actions {
+            flex: 0 1 75px;
         }
 
         .quantity-indicator {

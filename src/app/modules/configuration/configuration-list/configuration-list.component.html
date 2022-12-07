@@ -286,14 +286,14 @@
 
 
     <!-- Created By Column -->
-    <ng-container matColumnDef="createdBy">
+    <!-- <ng-container matColumnDef="createdBy">
         <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created By</mat-header-cell>
         <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
             <p class="text-truncate">
                 {{config.createdBy?.name | titlecase}}
             </p>
         </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Updated By Column -->
     <ng-container matColumnDef="updatedBy">
@@ -306,15 +306,14 @@
     </ng-container>
 
     <!-- Created At Column -->
-    <ng-container matColumnDef="createdAt">
+    <!-- <ng-container matColumnDef="createdAt">
         <mat-header-cell *matHeaderCellDef gt-sm fxShow.gt-md fxShow.gt-lg>Created At</mat-header-cell>
         <mat-cell *matCellDef="let config" gt-sm fxShow.gt-md fxShow.gt-lg>
             <p class="text-truncate">
                 {{config.createdAt | date}}
-                <!-- date : 'd MMM, y h:mm a' -->
             </p>
         </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Updated At Column -->
     <ng-container matColumnDef="updatedAt">
