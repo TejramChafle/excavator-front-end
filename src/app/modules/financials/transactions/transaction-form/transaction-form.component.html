@@ -1,0 +1,74 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar class="mat-accent m-0">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">Update Payment Information</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-16 pb-0 m-0" fusePerfectScrollbar>
+        <form name="transactionForm" [formGroup]="transactionForm" class="w-100-p" fxLayout="column" fxFlex>
+            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label>Payment Method</mat-label>
+                <mat-select matNativeControl required formControlName="mode">
+                    <mat-option [value]="method.code" *ngFor="let method of methods">
+                        {{method.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="Amount" name="amount" formControlName="amount" required
+                    type="number">
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label>Date</mat-label>
+                <input matInput name="date" formControlName="date" required type="date">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label>Payment Status</mat-label>
+                <mat-select matNativeControl required formControlName="status">
+                    <mat-option [value]="status.code" *ngFor="let status of statuses">
+                        {{status.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action ==='edit'"
+                mat-button color="primary"
+                class="mr-8"
+                (click)="matDialogRef.close(['delete',transactionForm])"
+                aria-label="Delete"
+                matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'"
+                mat-button color="primary"
+                class="save-button"
+                (click)="onSubmit()"
+                [disabled]="transactionForm.invalid"
+                aria-label="ADD">
+            UPDATE
+        </button>
+
+        <button *ngIf="action === 'edit'"
+                mat-button color="primary"
+                class="save-button"
+                (click)="matDialogRef.close(['save', transactionForm])"
+                [disabled]="transactionForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>

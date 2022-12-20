@@ -303,4 +303,22 @@ export class DataService implements Resolve<any> {
         });
     }
 
+    /**
+     * Update record but no refresh
+     *
+     * @param record
+     * @returns {Promise<any>}
+     */
+    updateRecordButNoRefresh(route, record): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient.put(BASE_URL + route + '/' + record._id, { ...record })
+                .subscribe(response => {
+                    resolve(response);
+                }, (error) => {
+                    this._appService.handleError(error);
+                    return reject;
+                });
+        });
+    }
+
 }

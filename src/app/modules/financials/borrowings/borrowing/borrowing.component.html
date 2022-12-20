@@ -1,0 +1,153 @@
+<div id="borrowing" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/financials/borrowings'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{borrowing.purpose}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Borrowing
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Borrowing Detail</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-borrowing-button"
+                    [disabled]="borrowingForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="onSubmit()">
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-borrowing-button"
+                    [disabled]="borrowingForm.invalid || borrowingForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="onSubmit()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="borrowingForm" [formGroup]="borrowingForm" class="borrowing w-100-p" fxLayout="column" fxFlex>
+
+                    <!-- Person from/to borrowing happened -->
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Person</mat-label>
+                        <mat-select matNativeControl required formControlName="person">
+                            <mat-option [value]="contact._id" *ngFor="let contact of contacts">
+                                {{contact.firstName}} {{contact.lastName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint align="start">
+                            The person is coming from contacts list. If the person does not exist in list, please add manually and it will start appearing here.
+                        </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Purpose</mat-label>
+                        <mat-select matNativeControl required formControlName="purpose">
+                            <mat-option [value]="purpose.code" *ngFor="let purpose of purposes">
+                                {{purpose.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Type</mat-label>
+                        <mat-select matNativeControl required formControlName="type">
+                            <mat-option [value]="type.code" *ngFor="let type of types">
+                                {{type.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Date</mat-label>
+                        <input matInput placeholder="DD/MM/YYYY"
+                               name="date"
+                               required
+                               formControlName="date"
+                               [matDatepicker]="startDatePicker"
+                               [max]="maxDate">
+                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                        <mat-label>Amount</mat-label>
+                        <input matInput placeholder="0.00"
+                               name="amount"
+                               required
+                               formControlName="amount"
+                               type="number"
+                               [max]="999999">
+                        <span matPrefix>₹&nbsp;</span>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Payment Method</mat-label>
+                        <mat-select matNativeControl required formControlName="mode">
+                            <mat-option [value]="method.code" *ngFor="let method of methods">
+                                {{method.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Scheduled Return Date</mat-label>
+                        <input matInput placeholder="DD/MM/YYYY"
+                               name="date"
+                               formControlName="scheduledReturnDate"
+                               [matDatepicker]="scheduledReturnDate"
+                               [min]="maxDate">
+                        <mat-datepicker-toggle matSuffix [for]="scheduledReturnDate"></mat-datepicker-toggle>
+                        <mat-datepicker #scheduledReturnDate></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput placeholder="Description/Note"
+                                  name="description"
+                                  formControlName="description"
+                                  rows="5">
+                        </textarea>
+                    </mat-form-field>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

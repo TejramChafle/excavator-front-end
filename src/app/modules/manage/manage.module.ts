@@ -3,12 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { MaterialModule } from '../../material.module';
 import { DataService } from 'app/data.service';
-import { EmployeesComponent } from './employee-management/employees/employees.component';
-import { EmployeeComponent } from './employee-management/employee/employee.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeComponent } from './employees/employee/employee.component';
 import { AttendanceFormComponent } from './attendances/attendance-form/attendance-form.component';
 import { AttendancesComponent } from './attendances/attendances.component';
-import { CalendarComponent } from './attendances/calendar/calendar.component';
-import { CalendarService } from './attendances/calendar/calendar.service';
 import { CalendarModule } from './attendances/calendar/calendar.module';
 
 const routes: Routes = [
@@ -26,11 +24,7 @@ const routes: Routes = [
     },
     {
         path: 'employee/:id',
-        component: EmployeeComponent,
-        /* resolve: {
-            recordsWithPagination: DataService
-        },
-        data : { module : 'employees' } */
+        component: EmployeeComponent
     },
     {
         path: 'employee',

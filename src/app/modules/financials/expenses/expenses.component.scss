@@ -1,8 +1,8 @@
 @import "src/@fuse/scss/fuse";
 
-employees {
+expenses {
 
-    #employees {
+    #expenses {
 
         .top-bg {
 
@@ -11,9 +11,9 @@ employees {
             }
         }
 
-        > .center {
+        >.center {
 
-            > .header {
+            >.header {
 
                 .search-wrapper {
                     width: 100%;
@@ -54,7 +54,7 @@ employees {
         }
     }
 
-    .employees-table {
+    .expenses-table {
         flex: 1 1 auto;
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         overflow: auto;
@@ -64,7 +64,7 @@ employees {
             min-height: 64px;
         }
 
-        .employee {
+        .expense {
             position: relative;
             cursor: pointer;
             height: 84px;
@@ -83,13 +83,13 @@ employees {
         .mat-column-photo {
             flex: 0 1 120px;
 
-            .employee-image {
+            .expense-image {
                 width: 65px;
                 height: 65px;
                 border: 2px solid #ddd;
                 border-radius: 4px;
                 padding: 2px;
-                object-fit: cover; 
+                object-fit: cover;
             }
         }
 
@@ -121,7 +121,7 @@ employees {
             border-radius: 4px;
             margin-right: 8px;
 
-            & + span {
+            &+span {
                 display: inline-block;
                 vertical-align: middle;
             }

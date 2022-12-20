@@ -151,6 +151,7 @@
                             </button>
                             <!-- Action button dropdow options -->
                             <mat-menu #moreMenu="matMenu">
+                                
                                 <button mat-menu-item aria-label="attendance" (click)="markAttendace(employee)"
                                     *ngIf="employee.active">
                                     <mat-icon>event</mat-icon>
@@ -159,8 +160,11 @@
                                 <button mat-menu-item aria-label="attendance" (click)="onViewAttendace(employee)"
                                     *ngIf="employee.active">
                                     <mat-icon>event</mat-icon>
-                                    Attendance View
+                                    View Attendance
                                 </button>
+
+                                <mat-divider></mat-divider>
+
                                 <button mat-menu-item aria-label="change_history" (click)="editEmployee(employee)">
                                     <mat-icon>edit</mat-icon>
                                     <span>Edit</span>

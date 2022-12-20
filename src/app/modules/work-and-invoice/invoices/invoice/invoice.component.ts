@@ -12,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from 'app/app.service';
 import { PAYMENT_METHODS, PAYMENT_STATUSES } from 'app/app.config';
 import { InvoiceService } from './invoice.service';
+import { TransactionFormComponent } from '../../../financials/transactions/transaction-form/transaction-form.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'invoice',
@@ -50,7 +52,8 @@ export class InvoiceComponent implements OnInit, OnDestroy {
         private _formBuilder: FormBuilder,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
-        private _invoiceService: InvoiceService
+        private _invoiceService: InvoiceService,
+        public _matDialog: MatDialog
     ) {
         // Set the defaults
         // this.invoice = new Invoice();
@@ -203,7 +206,22 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     }
 
     onUpdatePaymentInfo() {
-        this.updatePaymentInfo = !this.updatePaymentInfo;
+        // this.updatePaymentInfo = !this.updatePaymentInfo;
+         let transactionFormRef = this._matDialog.open(TransactionFormComponent, {
+            disableClose: false,
+            panelClass: 'event-form-dialog',
+            data: {
+                transaction: this.invoice.transaction
+            }
+        });
+
+        transactionFormRef.afterClosed().subscribe(result => {
+            console.log({'transaction result': result});
+            if (result.status) {
+                this.invoice.transaction = result.response;
+                transactionFormRef = null;
+            }
+        });
     }
 
     onUpdateStatusInfo() {

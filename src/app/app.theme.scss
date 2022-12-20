@@ -124,9 +124,12 @@ $typography: mat-typography-config(
 @import "src/app/main/angular-material-elements/example-viewer/example-viewer.theme";
 
 @import "src/app/modules/configuration/configuration.theme";
-@import "src/app/modules/manage/employee-management/employees/employees.theme";
+@import "src/app/modules/manage/employees/employees.theme";
 @import "src/app/modules/work-and-invoice/works/works/works.theme";
 @import "src/app/modules/work-and-invoice/invoices/invoices/invoices.theme";
+@import "src/app/modules/financials/transactions/transactions.theme";
+@import "src/app/modules/financials/expenses/expenses.theme";
+@import "src/app/modules/financials/borrowings/borrowings.theme";
 
 // Define a mixin for easier access
 @mixin components-theme($theme) {
@@ -186,6 +189,9 @@ $typography: mat-typography-config(
     @include employees-theme($theme);
     @include works-theme($theme);
     @include invoices-theme($theme);
+    @include transactions-theme($theme);
+    @include expenses-theme($theme);
+    @include borrowings-theme($theme);
 }
 
 // -----------------------------------------------------------------------------------------------------

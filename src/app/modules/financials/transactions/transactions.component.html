@@ -1,0 +1,176 @@
+<div id="transactions" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    dvr
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Transactions
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #filter placeholder="Search for a transaction">
+                </div>
+            </div>
+            <!-- / SEARCH -->
+
+            <!-- ADD BUTTON -->
+            <!-- <button mat-raised-button
+                    [routerLink]="'/manage/transaction'"
+                    class="add-transaction-button fuse-white mt-24 mt-md-0">
+                <span>ADD NEW EMPLOYEE</span>
+            </button> -->
+            <!-- / ADD BUTTON -->
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <mat-table class="transactions-table"
+                       #table [dataSource]="dataSource"
+                       matSort
+                       [@animateStagger]="{value:'50'}"
+                       fusePerfectScrollbar>
+
+                <!-- ID Column -->
+                <!-- <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction">
+                        <p class="text-truncate">{{transaction.id}}</p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <!-- Source Column -->
+                <ng-container matColumnDef="source">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Source</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction">
+                        <p class="text-truncate">{{transaction.source}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Category -->
+                <ng-container matColumnDef="category">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction">
+                        <p class="text-truncate">{{transaction.category}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Mode Column -->
+                <ng-container matColumnDef="mode">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Mode</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{transaction.mode}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Amount Column -->
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Amount</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{transaction.amount}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Date Column -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Date</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{transaction.date | date}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Status</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{transaction.status}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Employee Column -->
+                <ng-container matColumnDef="employee">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Employee</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
+                            {{transaction.employee?.firstName}} {{transaction.employee?.lastName}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Action Buttons Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef fxLayoutAlign="end center">Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let transaction">
+                        <div fxFlex="row" fxLayoutAlign="end center">
+                            <!-- Action button icon -->
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <!-- Action button dropdow options -->
+                            <mat-menu #moreMenu="matMenu">
+
+                                <button mat-menu-item aria-label="change_history" (click)="editTransaction(transaction)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                </button>
+                                <button mat-menu-item aria-label="remove" (click)="deleteTransaction(transaction)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Remove</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="tableColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let transaction; columns: tableColumns;"
+                         class="transaction"
+                         matRipple>
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator 
+                #paginator [length]="_dataService.pagination.total"
+                [pageSize]="_dataService.pagination.limit"
+                [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                (page)="onPageChange($event)">
+            </mat-paginator>
+
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

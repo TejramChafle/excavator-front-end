@@ -12,7 +12,7 @@
                         today
                     </mat-icon>
                     <span class="logo-text" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                        Calendar
+                        <span *ngIf="employee">{{ employee.firstName + ' ' + employee.lastName }}</span> Attendace
                     </span>
                 </div>
 
@@ -76,7 +76,8 @@
         </div>
 
         <!-- ADD EVENT BUTTON -->
-        <button mat-fab class="add-event-button mat-accent" (click)="addEvent()" aria-label="Add event"
+        <button mat-fab class="add-event-button mat-accent"
+            *ngIf="employee" (click)="onClickAdd()" aria-label="Add event"
                 [@animate]="{value:'*',params:{delay:'300ms',scale:'0.2'}}">
             <mat-icon>add</mat-icon>
         </button>

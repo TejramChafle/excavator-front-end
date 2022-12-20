@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { AppService } from 'app/app.service';
-import { AttendanceFormComponent } from '../../attendances/attendance-form/attendance-form.component';
+import { AttendanceFormComponent } from '../attendances/attendance-form/attendance-form.component';
 
 @Component({
     selector: 'employees',
@@ -171,31 +171,10 @@ export class EmployeesComponent implements OnInit {
         });
 
         this.attendanceFormRef.afterClosed().subscribe(result => {
+            console.log({'attendance result': result});
             if (result) {
-                const data = result.getRawValue();
-                console.log({result, data});
-                const param = {
-                    employee: employee._id,
-                    startDate: data.start,
-                    endDate: data.end,
-                    startTime: data.startTime,
-                    endTime: data.endTime,
-                    allDay: data.allDay,
-                    location: data.meta.location,
-                    notes: data.meta.notes,
-                    business: this._appService.user.business._id,
-                    createdBy: this._appService.user._id,
-                    updatedBy: this._appService.user._id
-                }
-                this._dataService.createRecordButNoRefresh(MODULE.attendances.backendRoute, param).then((response) => {
-                    console.log({ response });
-                    this._appService.handleMessage(
-                        'Marked attendance of employee ' + employee.firstName + ' ' + employee.lastName,
-                        'Success!'
-                    );
-                });
+                this.attendanceFormRef = null;
             }
-            this.attendanceFormRef = null;
         });
     }
 

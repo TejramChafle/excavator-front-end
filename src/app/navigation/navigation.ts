@@ -1213,7 +1213,7 @@ export let navigation: FuseNavigation[] = [
             },
             {
                 id       : 'employee-management',
-                title    : 'Employee Management',
+                title    : 'Employees',
                 translate: 'NAV.EMPLOYEE_MANAGEMENT',
                 type     : 'collapsable',
                 icon     : 'people',
@@ -1305,8 +1305,8 @@ export let navigation: FuseNavigation[] = [
         ]
     },
     {
-        id       : 'revenue',
-        title    : 'Revenue Managenent',
+        id       : 'financials',
+        title    : 'Financials',
         translate: 'NAV.REVENUE_MANAGENENT',
         type     : 'group',
         children : [
@@ -1316,39 +1316,39 @@ export let navigation: FuseNavigation[] = [
                 translate: 'NAV.BORROWINGS',
                 type     : 'item',
                 icon     : 'attach_money',
-                url      : '/configuration/borrowings'
+                url      : '/financials/borrowings'
             },
             {
                 id       : 'expenses',
                 title    : 'Expenses',
                 translate: 'NAV.EXPENSES',
-                type     : 'collapsable',
+                type     : 'item',
                 icon     : 'local_mall',
-                url      : '/configuration/expenses'
+                url      : '/financials/expenses'
             },
             {
                 id       : 'incomes',
                 title    : 'Revenue',
                 translate: 'NAV.INCOMES',
-                type     : 'collapsable',
+                type     : 'item',
                 icon     : 'add_to_queue',
-                url      : '/configuration/income'
+                url      : '/financials/incomes'
             },
             {
                 id       : 'transactions',
                 title    : 'Transactions',
                 translate: 'NAV.INCOMES',
-                type     : 'collapsable',
-                icon     : 'add_to_queue',
-                url      : '/configuration/income'
+                type     : 'item',
+                icon     : 'dvr',
+                url      : '/financials/transactions'
             },
             {
                 id       : 'balance-sheet',
                 title    : 'Balance Sheet',
                 translate: 'NAV.BALANCE_SHEET',
-                type     : 'collapsable',
+                type     : 'item',
                 icon     : 'insert_chart',
-                url      : '/configuration/balance-sheet'
+                url      : '/financials/balance-sheet'
             }
         ]
     }

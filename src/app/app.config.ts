@@ -210,6 +210,55 @@ export const MODULE = {
             'updatedAt',
             'actions'
         ]
+    },
+    transactions: {
+        backendRoute: 'transaction',
+        frontendRoute: 'transactions',
+        pageTitle: 'Transactions',
+        tableColumns: [
+            'source', // INVOICE, EMPLOYEE_PAYMENT, FUEL_LOG, FARM_INCOME, OTHER_INCOME, MAINTENANCE, EXPENDITURE
+            'category', // INCOME, SPENDING, BORROWING, LENDING
+            'mode', // Payment mode: CASH | ONLINE ACCOUNT TRANSFER | BANK ACCOUNT TRANSFER, UPI, CREDIT/DEBIT CARD, PAYTM, CHEQUE, RTGS, NEFT, DD, OTHER-EWALLET
+            'amount',
+            'date',
+            'status', // Payment status: PAID | PDC | FAILED | IN PROGRESS | AWAITING | CANCELED | PARTIALLY PAID | SCHEDULED | UNPAID
+            'employee',
+            // 'updatedBy',
+            // 'updatedAt',
+            'actions'
+        ]
+    },
+    expenses: {
+        backendRoute: 'expenditure',
+        frontendRoute: 'expenses',
+        pageTitle: 'Expenses',
+        tableColumns: [
+            'date',
+            'place',
+            'purpose',
+            'amount',
+            'transaction',
+            // 'updatedBy',
+            // 'updatedAt',
+            'actions'
+        ]
+    },
+    borrowings: {
+        backendRoute: 'borrowing',
+        frontendRoute: 'borrowings',
+        pageTitle: 'Borrowings',
+        tableColumns: [
+            'person',
+            'date',
+            'type',
+            'purpose',
+            'amount',
+            'transaction',
+            'scheduledReturnDate',
+            // 'updatedBy',
+            // 'updatedAt',
+            'actions'
+        ]
     }
 }
 
@@ -314,5 +363,57 @@ export const PAYMENT_STATUSES = [
         name: 'Unpaid',
         color: 'red-900'
     }
-]
+];
+
+export const EXPENSE_PURPOSES = [
+    {
+        name: 'Farm',
+        code: 'FARM'
+    },
+    {
+        name: 'Vehicle Maintanance',
+        code: 'VEHICLE_MAINTANCE'
+    },
+    {
+        name: 'Household',
+        code: 'HOUSEHOLD'
+    },
+    {
+        name: 'Grocery',
+        code: 'GROCERY'
+    },
+    {
+        name: 'Market',
+        code: 'MARKET'
+    },
+    {
+        name: 'Pocket Money',
+        code: 'POCKET_MONEY'
+    },
+    {
+        name: 'Insurance',
+        code: 'INSURANCE'
+    },
+    {
+        name: 'Electric Bill',
+        code: 'ELECTRIC_BILL'
+    },
+    {
+        name: 'Hospital',
+        code: 'HOSPITAL'
+    }
+];
+
+export const BORROWING_TYPES = [
+    {
+        name: 'Borrowed',
+        code: 'BORROWED'
+    },
+    {
+        name: 'Lend',
+        code: 'LEND'
+    }
+];
+
+
 

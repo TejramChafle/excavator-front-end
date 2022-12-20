@@ -19,7 +19,8 @@ export class AttendanceModel {
     draggable?: boolean;
     meta?: {
         location: string,
-        notes: string
+        notes: string,
+        _id: string
     };
     startTime: String;
     endTime: String;
@@ -48,9 +49,10 @@ export class AttendanceModel {
         this.cssClass = data.cssClass;
         this.meta = {
             location: data.meta && data.meta.location,
-            notes: data.meta && data.meta.notes
+            notes: data.meta && data.meta.notes,
+            _id: data.meta._id
         };
-        this.startTime = '10:00';
-        this.endTime = '19:00';
+        this.startTime = data.startTime;
+        this.endTime = data.endTime;
     }
 }

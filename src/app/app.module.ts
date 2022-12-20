@@ -33,6 +33,7 @@ import { DataService } from './data.service';
 import { ManageContactsModule } from './modules/manage/contacts/contacts.module'; 
 import { AuthGuard } from './modules/authentication/guards/auth/auth.guard';
 import { WorkAndInvoiceModule } from './modules/work-and-invoice/work-and-invoice.module';
+import { FinancialsModule } from './modules/financials/financials.module';
 
 const appRoutes: Routes = [
     {
@@ -76,9 +77,14 @@ const appRoutes: Routes = [
         canActivate: [ AuthGuard ]
     },
     {
+        path: 'financials',
+        loadChildren: './modules/financials/financials.module#FinancialsModule',
+        canActivate: [ AuthGuard ]
+    },
+    {
         path      : '**',
         redirectTo: 'apps/dashboards/project'
-    },
+    }
 ];
 
 @NgModule({
@@ -120,7 +126,8 @@ const appRoutes: Routes = [
         AuthModule,
         ConfigurationModule,
         ManageContactsModule,
-        WorkAndInvoiceModule
+        WorkAndInvoiceModule,
+        FinancialsModule
     ],
     bootstrap   : [
         AppComponent

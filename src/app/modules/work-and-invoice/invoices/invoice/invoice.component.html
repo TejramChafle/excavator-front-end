@@ -245,17 +245,17 @@
                                         <mat-icon class="m-0 mr-16 secondary-text">attach_money</mat-icon>
                                         <div class="h2 secondary-text">Payment</div>
                                     </div>
-                                    <button mat-raised-button color="accent" class="save-work-button" (click)="updatePaymentInfo = !updatePaymentInfo">
-                                        <mat-icon class="mr-8">{{updatePaymentInfo ? 'cancel' : 'edit'}}</mat-icon>
-                                        {{updatePaymentInfo ? 'CANCEL' : 'EDIT'}}
+                                    <button mat-raised-button color="accent" class="save-work-button" (click)="onUpdatePaymentInfo()">
+                                        <mat-icon class="mr-8">edit</mat-icon>
+                                        EDIT
                                     </button>
                                 </div>
 
-                                <div *ngIf="!invoice.transaction && !updatePaymentInfo" class="pb-48">
+                                <div *ngIf="!invoice.transaction" class="pb-48">
                                     Payment information will be displayed here. Please save invoice and edit to update payment information.
                                 </div>
 
-                                <table class="simple" *ngIf="invoice.transaction && !updatePaymentInfo">
+                                <table class="simple" *ngIf="invoice.transaction">
                                     <thead>
                                         <tr>
                                             <th>TransactionID</th>
@@ -296,7 +296,7 @@
                                     </tbody>
                                 </table>
 
-                                <div class="section pb-48" *ngIf="updatePaymentInfo">
+                                <div class="section pb-48" *ngIf="false">
                                     <form name="paymentForm" [formGroup]="paymentForm" class="work w-100-p" fxLayout="column">
                                         <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                             <mat-label>Payment Method</mat-label>

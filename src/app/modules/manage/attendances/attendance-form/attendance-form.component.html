@@ -94,7 +94,7 @@
         <button *ngIf="action !== 'edit'"
                 mat-button color="primary"
                 class="save-button"
-                (click)="matDialogRef.close(eventForm)"
+                (click)="onSubmit()"
                 [disabled]="eventForm.invalid"
                 aria-label="ADD">
             ADD

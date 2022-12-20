@@ -5,6 +5,9 @@ import { CalendarEvent } from 'angular-calendar';
 
 import { MatColors } from '@fuse/mat-colors';
 import { AttendanceModel } from '../attendance.model';
+import { MODULE } from '../../../../app.config';
+import { AppService } from 'app/app.service';
+import { DataService } from 'app/data.service';
 
 @Component({
     selector: 'attendance-form',
@@ -30,7 +33,9 @@ export class AttendanceFormComponent {
     constructor(
         public matDialogRef: MatDialogRef<AttendanceFormComponent>,
         @Inject(MAT_DIALOG_DATA) private _data: any,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private _appService: AppService,
+        private _dataService: DataService
     ) {
         this.event = _data.event;
         this.action = _data.action;
@@ -53,7 +58,10 @@ export class AttendanceFormComponent {
                 start: new Date(),
                 end: new Date(),
                 title: _data.employee.firstName + ' ' + _data.employee.lastName,
-                allDay: false
+                allDay: false,
+                meta: {
+                    _id: _data.employee._id
+                }
             });
         }
 
@@ -93,6 +101,32 @@ export class AttendanceFormComponent {
     onChangeStartDate(event) {
         this.eventForm.patchValue({
             end: new Date(event.value.toDate())
+        });
+    }
+
+    onSubmit() {
+        const data = this.eventForm.getRawValue();
+        console.log({data});
+        const param = {
+            employee: this._data.employee._id,
+            startDate: data.start,
+            endDate: data.end,
+            startTime: data.startTime,
+            endTime: data.endTime,
+            allDay: data.allDay,
+            location: data.meta.location,
+            notes: data.meta.notes,
+            business: this._appService.user.business._id,
+            createdBy: this._appService.user._id,
+            updatedBy: this._appService.user._id
+        }
+        this._dataService.createRecordButNoRefresh(MODULE.attendances.backendRoute, param).then((response) => {
+            console.log({ response });
+            this._appService.handleMessage(
+                'Marked attendance of employee ' + this._data.employee.firstName + ' ' + this._data.employee.lastName,
+                'Success!'
+            );
+            this.matDialogRef.close(true);
         });
     }
 }
