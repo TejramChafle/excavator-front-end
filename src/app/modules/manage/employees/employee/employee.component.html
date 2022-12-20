@@ -1,0 +1,352 @@
+<div id="employee" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/manage/employees'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div class="employee-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    <img *ngIf="employee.photo" [src]="employee.photo">
+                    <img *ngIf="!employee.photo" [src]="'assets/images/avatars/profile.jpg'">
+                </div>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{employee.firstName}} {{employee.lastName}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Employee
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Employee Detail</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-employee-button"
+                    [disabled]="employeeForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="onSubmit()">
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-employee-button"
+                    [disabled]="employeeForm.invalid || employeeForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="onSubmit()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="employeeForm" [formGroup]="employeeForm" class="employee w-100-p" fxLayout="column" fxFlex>
+
+                    <mat-tab-group>
+
+                        <mat-tab label="Personal Info">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>First Name</mat-label>
+                                    <input matInput placeholder="First Name"
+                                           name="firstName"
+                                           formControlName="firstName"
+                                           required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput placeholder="Last Name"
+                                           name="lastName"
+                                           formControlName="lastName"
+                                           required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-label>Gender</mat-label>
+                                    <mat-select matNativeControl required formControlName="gender">
+                                        <mat-option value="Male">Male</mat-option>
+                                        <mat-option value="Female">Female</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Date Of Birth</mat-label>
+                                    <input matInput placeholder="Date Of Birth"
+                                           name="dateOfBirth"
+                                           formControlName="dateOfBirth"
+                                           type="date">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Photo</mat-label>
+                                    <input matInput placeholder="Photo"
+                                           name="photo"
+                                           formControlName="photo">
+                                </mat-form-field>
+
+                            </div>
+
+                        </mat-tab>
+
+                        <mat-tab label="Contact Info">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <!-- <div fxLayout="row wrap" fxLayoutAlign="start start">
+
+                                    <div *ngIf="employee.images.length === 0"
+                                         class="employee-image" fxlayout="row" fxLayoutAlign="center center">
+                                        <img class="media"
+                                             [src]="'assets/images/ecommerce/employee-image-placeholder.png'">
+                                    </div>
+
+                                    <div *ngFor="let image of employee.images">
+                                        <div *ngIf="employee.images.length > 0"
+                                             class="employee-image" fxlayout="row" fxLayoutAlign="center center">
+                                            <img class="media" [src]="image.url">
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Address</mat-label>
+                                    <textarea matInput placeholder="Address"
+                                              name="address"
+                                              formControlName="address"
+                                              rows="5"
+                                              required>
+                                    </textarea>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput placeholder="Phone"
+                                           name="phone"
+                                           formControlName="phone"
+                                           required
+                                           type="tel"
+                                           maxlength="10">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Alternate Phone</mat-label>
+                                    <input matInput placeholder="Alternate Phone"
+                                           name="alternatePhone"
+                                           formControlName="alternatePhone"
+                                           type="tel"
+                                           maxlength="10">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Emergency Phone</mat-label>
+                                    <input matInput placeholder="Emergency Phone"
+                                           name="emergencyPhone"
+                                           formControlName="emergencyPhone"
+                                           required
+                                           type="tel"
+                                           maxlength="10">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="Email"
+                                           name="email"
+                                           formControlName="email"
+                                           type="email">
+                                </mat-form-field>
+                            </div>
+
+                        </mat-tab>
+
+                        <mat-tab label="Office Detail">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+
+                                <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-label>Designation</mat-label>
+                                    <mat-select matNativeControl required formControlName="designation">
+                                        <mat-option value="Operator">Operator</mat-option>
+                                        <mat-option value="Driver">Driver</mat-option>
+                                        <mat-option value="Helper">Helper</mat-option>
+                                        <mat-option value="Labour">Labour</mat-option>
+                                        <mat-option value="Supervisor">Supervisor</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Date of Join</mat-label>
+                                    <input matInput placeholder="Email"
+                                           name="dateOfJoin"
+                                           formControlName="dateOfJoin"
+                                           type="date">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Wage Per day</mat-label>
+                                    <input matInput placeholder="0.00"
+                                           name="wagePerDay"
+                                           formControlName="wagePerDay"
+                                           type="number">
+                                    <span matPrefix>₹&nbsp;</span>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Wage Per Month</mat-label>
+                                    <input matInput placeholder="0.00"
+                                           name="wagePerMonth"
+                                           formControlName="wagePerMonth"
+                                           type="number">
+                                    <span matPrefix>₹&nbsp;</span>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Wage Per Year</mat-label>
+                                    <input matInput placeholder="0.00"
+                                           name="wagePerYear"
+                                           formControlName="wagePerYear"
+                                           type="number">
+                                    <span matPrefix>₹&nbsp;</span>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Incentive</mat-label>
+                                    <input matInput placeholder="Incentive"
+                                           name="incentive"
+                                           formControlName="incentive"
+                                           type="number">
+                                    <span matPrefix>₹&nbsp;</span>
+                                    <mat-hint align="start">
+                                        This amount will be given additional and may not be considered as a wage in payment
+                                    </mat-hint>
+                                </mat-form-field>
+
+                            </div>
+                        </mat-tab>
+
+                        <mat-tab label="Medical Detail">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+
+                                <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-label>Blood Group</mat-label>
+                                    <mat-select matNativeControl required formControlName="bloodGroup">
+                                        <mat-option value="A+">A+</mat-option>
+                                        <mat-option value="A-">A-</mat-option>
+                                        <mat-option value="B+">B+</mat-option>
+                                        <mat-option value="B-">B-</mat-option>
+                                        <mat-option value="AB+">AB+</mat-option>
+                                        <mat-option value="AB-">AB-</mat-option>
+                                        <mat-option value="O+">O+</mat-option>
+                                        <mat-option value="O-">O-</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Insurance Name</mat-label>
+                                    <input matInput placeholder="Insurance Name"
+                                           name="insuranceName"
+                                           formControlName="insuranceName"
+                                           type="text">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Insurance Number</mat-label>
+                                    <input matInput placeholder="Insurance Number"
+                                           name="insuranceNumber"
+                                           formControlName="insuranceNumber"
+                                           type="text">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Insurance Premium</mat-label>
+                                    <input matInput placeholder="Insurance Premium"
+                                           name="insurancePremium"
+                                           formControlName="insurancePremium"
+                                           type="number">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Insurance Amount</mat-label>
+                                    <input matInput placeholder="Insurance Amount"
+                                           name="insuranceAmount"
+                                           formControlName="insuranceAmount"
+                                           type="number">
+                                </mat-form-field>
+
+                            </div>
+
+                        </mat-tab>
+
+                        <mat-tab label="Banking Detail">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Bank Name</mat-label>
+                                    <input matInput placeholder="Bank Name"
+                                           name="bankName"
+                                           formControlName="bankName">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>IFSC Code</mat-label>
+                                    <input matInput placeholder="IFSC Code"
+                                           name="ifscCode"
+                                           formControlName="ifscCode">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Account Number</mat-label>
+                                    <input matInput placeholder="Account Number"
+                                           name="accountNumber"
+                                           formControlName="accountNumber"
+                                           type="number">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>UPI ID</mat-label>
+                                    <input matInput placeholder="UPI ID"
+                                           name="upiId"
+                                           formControlName="upiId">
+                                </mat-form-field>
+
+                            </div>
+
+                        </mat-tab>
+
+                    </mat-tab-group>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
