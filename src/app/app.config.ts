@@ -1,5 +1,6 @@
 export const BASE_URL = 'http://localhost:3000/';
 // export const BASE_URL = 'https://excavator-back-end.herokuapp.com/';
+// export const BASE_URL = 'https://excavator-back-end.onrender.com/';
 
 export const WORKING_SHIFT = [
     'Day',
@@ -259,6 +260,41 @@ export const MODULE = {
             // 'updatedAt',
             'actions'
         ]
+    },
+    revenues: {
+        backendRoute: 'revenue',
+        frontendRoute: 'revenues',
+        pageTitle: 'Revenues',
+        tableColumns: [
+            'source',
+            'date',
+            'customer',
+            'amount',
+            'transaction',
+            // 'updatedBy',
+            // 'updatedAt',
+            'actions'
+        ]
+    },
+    fuels: {
+        backendRoute: 'fuel',
+        frontendRoute: 'fuels',
+        pageTitle: 'Fuel Log',
+        tableColumns: [
+            'date',
+            'fuel',
+            'petrolPump',
+            'rate',
+            'volume',
+            'total',
+            'vehicle',
+            'employee',
+            'invoice',
+            'transaction',
+            // 'updatedBy',
+            // 'updatedAt',
+            'actions'
+        ]
     }
 }
 
@@ -412,6 +448,25 @@ export const BORROWING_TYPES = [
     {
         name: 'Lend',
         code: 'LEND'
+    }
+];
+
+export const REVENUE_SOURCES = [
+    {
+        name: 'Farm',
+        code: 'FARM'
+    },
+    {
+        name: 'Rent',
+        code: 'RENT'
+    },
+    {
+        name: 'Invoice',
+        code: 'INVOICE'
+    },
+    {
+        name: 'Other',
+        code: 'OTHER'
     }
 ];
 

@@ -1327,12 +1327,12 @@ export let navigation: FuseNavigation[] = [
                 url      : '/financials/expenses'
             },
             {
-                id       : 'incomes',
+                id       : 'revenues',
                 title    : 'Revenue',
                 translate: 'NAV.INCOMES',
                 type     : 'item',
                 icon     : 'add_to_queue',
-                url      : '/financials/incomes'
+                url      : '/financials/revenues'
             },
             {
                 id       : 'transactions',
@@ -1355,6 +1355,6 @@ export let navigation: FuseNavigation[] = [
 ];
 
 // merge fuze menu in main navigation menu to show on non-prod environments 
-if (!environment.production) {
+if (environment.production) {
     navigation = [...navigation, ...fuzeMenu];
 }

@@ -130,6 +130,7 @@ $typography: mat-typography-config(
 @import "src/app/modules/financials/transactions/transactions.theme";
 @import "src/app/modules/financials/expenses/expenses.theme";
 @import "src/app/modules/financials/borrowings/borrowings.theme";
+@import "src/app/modules/financials/revenues/revenues.theme";
 
 // Define a mixin for easier access
 @mixin components-theme($theme) {
@@ -192,6 +193,7 @@ $typography: mat-typography-config(
     @include transactions-theme($theme);
     @include expenses-theme($theme);
     @include borrowings-theme($theme);
+    @include revenues-theme($theme);
 }
 
 // -----------------------------------------------------------------------------------------------------

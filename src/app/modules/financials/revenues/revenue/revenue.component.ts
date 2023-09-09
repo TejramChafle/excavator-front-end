@@ -6,29 +6,28 @@ import { Subject } from 'rxjs';
 
 import { fuseAnimations } from '@fuse/animations';
 
-import { Borrowing } from './borrowing.model';
+import { Revenue } from './revenue.model';
 import { DataService } from 'app/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'app/app.service';
-import { BORROWING_TYPES, EXPENSE_PURPOSES, MODULE, PAYMENT_METHODS } from 'app/app.config';
+import { REVENUE_SOURCES, MODULE, PAYMENT_METHODS } from 'app/app.config';
 
 @Component({
-    selector: 'borrowing',
-    templateUrl: './borrowing.component.html',
-    styleUrls: ['./borrowing.component.scss'],
+    selector: 'revenue',
+    templateUrl: './revenue.component.html',
+    styleUrls: ['./revenue.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
 
-export class BorrowingComponent implements OnInit, OnDestroy {
-    borrowing: Borrowing;
+export class RevenueComponent implements OnInit, OnDestroy {
+    revenue: Revenue;
     pageType: string;
-    borrowingForm: FormGroup;
+    revenueForm: FormGroup;
     methods = PAYMENT_METHODS;
-    purposes = EXPENSE_PURPOSES;
-    types = BORROWING_TYPES;
+    sources = REVENUE_SOURCES;
     maxDate: Date;
-    contacts: [];
+    customers = [];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -50,7 +49,7 @@ export class BorrowingComponent implements OnInit, OnDestroy {
         private _appService: AppService
     ) {
         // Set the default
-        this.borrowing = new Borrowing({});
+        this.revenue = new Revenue({});
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -66,19 +65,19 @@ export class BorrowingComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         const id = this._activatedRoute.snapshot.params['id'];
         if (id) {
-            this.borrowing = new Borrowing(history.state);
+            this.revenue = new Revenue(history.state);
             this.pageType = 'edit';
         } else {
             this.pageType = 'new';
-            this.borrowing = new Borrowing({});
+            this.revenue = new Revenue({});
         }
-        this.borrowingForm = this.createBorrowingForm();
+        this.revenueForm = this.createRevenueForm();
 
         // Set the max date for datepicker
         this.maxDate = new Date();
 
-        // Get the contacts for persons list
-        this.getContacts();
+        // Get customer list
+        this.getCustomers();
     }
 
     /**
@@ -95,39 +94,37 @@ export class BorrowingComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Create borrowing form
+     * Create revenue form
      *
      * @returns {FormGroup}
      */
-    createBorrowingForm(): FormGroup {
+    createRevenueForm(): FormGroup {
         return this._formBuilder.group({
-            _id: [this.borrowing._id],
-            purpose: [this.borrowing.purpose],
-            type: [this.borrowing.type],
-            date: [this.borrowing.date],
-            scheduledReturnDate: [this.borrowing.scheduledReturnDate],
-            description: [this.borrowing.description],
-            person: [this.borrowing.person ? this.borrowing.person._id: null],
-            transaction: [this.borrowing.transaction],
-            active: [this.borrowing.active],
-            amount: [this.borrowing.amount],
-            mode: [this.borrowing.mode]
+            _id: [this.revenue._id],
+            source: [this.revenue.source],
+            date: [this.revenue.date],
+            description: [this.revenue.description],
+            customer: [this.revenue.customer ? this.revenue.customer._id : null],
+            transaction: [this.revenue.transaction],
+            active: [this.revenue.active],
+            amount: [this.revenue.amount],
+            mode: [this.revenue.mode]
         });
     }
 
     /**
-     * Create/Update borrowing
+     * Create/Update revenue
      */
     onSubmit(): void {
-        const formdata = this.borrowingForm.getRawValue();
+        const formdata = this.revenueForm.getRawValue();
         const data = { 
             ...formdata,
             transaction: {
                 _id: formdata.transaction,
                 amount: formdata.amount,
                 mode: formdata.mode,
-                source: 'BORROWING',
-                category: formdata.type === 'BORROWED' ? 'BORROWED' : 'LEND',
+                source: 'REVENUE',
+                category: 'INCOME',
                 date: formdata.date,
                 status: 'PAID'
             },
@@ -138,14 +135,14 @@ export class BorrowingComponent implements OnInit, OnDestroy {
         console.log({ data });
 
         if (data._id) {
-            this._dataService.updateRecord(MODULE.borrowings.backendRoute, data)
+            this._dataService.updateRecord(MODULE.revenues.backendRoute, data)
                 .then(() => {
 
                     // Trigger the subscription with new data
                     this._dataService.onRecordDataChanged.next(data);
 
                     // Show the success message
-                    this._matSnackBar.open('Borrowing information saved', 'OK', {
+                    this._matSnackBar.open('Revenue information saved', 'OK', {
                         verticalPosition: 'top',
                         duration: 2000
                     });
@@ -155,14 +152,14 @@ export class BorrowingComponent implements OnInit, OnDestroy {
                 });
         } else {
             data.createdBy = this._appService.user._id;
-            this._dataService.createRecordButNoRefresh(MODULE.borrowings.backendRoute, data)
+            this._dataService.createRecordButNoRefresh(MODULE.revenues.backendRoute, data)
                 .then(() => {
 
                     // Trigger the subscription with new data
                     // this._dataService.onRecordDataChanged.next(data);
 
                     // Show the success message
-                    this._matSnackBar.open('Borrowing added', 'OK', {
+                    this._matSnackBar.open('Revenue added', 'OK', {
                         verticalPosition: 'top',
                         duration: 2000
                     });
@@ -173,10 +170,10 @@ export class BorrowingComponent implements OnInit, OnDestroy {
         }
     }
 
-    getContacts() {
-        this._dataService.records('contact', {}).subscribe((response) => {
-            console.log({ contacts: response });
-            this.contacts = response.docs;
+    getCustomers() {
+        this._dataService.records('customer', {}).subscribe((response) => {
+            console.log({ customers: response });
+            this.customers = response.docs;
         });
     }
 }

@@ -9,6 +9,8 @@ import { ExpensesComponent } from './expenses/expenses.component';
 import { ExpenseComponent } from './expenses/expense/expense.component';
 import { BorrowingComponent } from './borrowings/borrowing/borrowing.component';
 import { BorrowingsComponent } from './borrowings/borrowings.component';
+import { RevenuesComponent } from './revenues/revenues.component';
+import { RevenueComponent } from './revenues/revenue/revenue.component';
 
 const routes: Routes = [
     {
@@ -50,6 +52,22 @@ const routes: Routes = [
     {
         path: 'borrowing/:id',
         component: BorrowingComponent
+    },
+    {
+        path: 'revenues',
+        component: RevenuesComponent,
+        resolve: {
+            recordsWithPagination: DataService
+        },
+        data : { module : 'revenues' }
+    },
+    {
+        path: 'revenue',
+        component: RevenueComponent
+    },
+    {
+        path: 'revenue/:id',
+        component: RevenueComponent
     }
 ];
 
@@ -60,7 +78,9 @@ const routes: Routes = [
         ExpensesComponent,
         ExpenseComponent,
         BorrowingComponent,
-        BorrowingsComponent
+        BorrowingsComponent,
+        RevenueComponent,
+        RevenuesComponent
     ],
     imports: [
         RouterModule.forChild(routes),

@@ -1,0 +1,129 @@
+<div id="revenue" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/financials/revenues'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{revenue.purpose}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Revenue
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Revenue Detail</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-revenue-button"
+                    [disabled]="revenueForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="onSubmit()">
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-revenue-button"
+                    [disabled]="revenueForm.invalid || revenueForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="onSubmit()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="revenueForm" [formGroup]="revenueForm" class="revenue w-100-p" fxLayout="column" fxFlex>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Source</mat-label>
+                        <mat-select matNativeControl required formControlName="source">
+                            <mat-option [value]="source.code" *ngFor="let source of sources">
+                                {{source.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Customer</mat-label>
+                        <mat-select matNativeControl formControlName="customer">
+                            <mat-option [value]="customer._id" *ngFor="let customer of customers">
+                                {{customer.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Date</mat-label>
+                        <input matInput placeholder="DD/MM/YYYY"
+                               name="date"
+                               required
+                               formControlName="date"
+                               [matDatepicker]="startDatePicker"
+                               [max]="maxDate">
+                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                        <mat-label>Amount</mat-label>
+                        <input matInput placeholder="0.00"
+                               name="amount"
+                               required
+                               formControlName="amount"
+                               type="number"
+                               [max]="999999">
+                        <span matPrefix>₹&nbsp;</span>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Payment Method</mat-label>
+                        <mat-select matNativeControl required formControlName="mode">
+                            <mat-option [value]="method.code" *ngFor="let method of methods">
+                                {{method.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput placeholder="Description/Note"
+                                  name="description"
+                                  formControlName="description"
+                                  rows="5">
+                        </textarea>
+                    </mat-form-field>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

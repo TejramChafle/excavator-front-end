@@ -92,7 +92,7 @@
                     <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Amount</mat-header-cell>
                     <mat-cell *matCellDef="let transaction" fxHide fxShow.gt-md>
                         <p class="text-truncate">
-                            {{transaction.amount}}
+                            ₹{{transaction.amount | number}}
                         </p>
                     </mat-cell>
                 </ng-container>

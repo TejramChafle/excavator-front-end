@@ -49,9 +49,10 @@ export class BusinessService implements Resolve<any>
      * @returns {Promise<any>}
      */
     getBusiness(): Promise<any> {
-        const bId = this._appService.user.business._id;
+        const bId = this._appService.user ? this._appService.user.business._id : null;
         return new Promise((resolve, reject) => {
-            this._httpClient.get(BASE_URL + 'business/' + bId)
+            if (bId) {
+                this._httpClient.get(BASE_URL + 'business/' + bId)
                 .subscribe((response: any) => {
                     this.business = response;
                     this.onBusinessChanged.next(this.business);
@@ -60,6 +61,9 @@ export class BusinessService implements Resolve<any>
                     this._appService.handleError(error);
                     return reject;
                 });
+            } else {
+                resolve(this.business);
+            }
         });
     }
 

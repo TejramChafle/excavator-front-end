@@ -62,7 +62,7 @@ export class BusinessComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(business => {
                 console.log({ business });
-                if (business) {
+                if (business && business._id) {
                     this.business = new Business(business);
                     this.pageType = 'edit';
                 } else {

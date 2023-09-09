@@ -105,7 +105,11 @@ export class CalendarComponent implements OnInit {
      * Set events
      */
     setEvents(): void {
-        this.events = this._calendarService.events.map(item => {
+        // filter the list to avoid the null employees
+        const filtered = this._calendarService.events.filter((event) => {
+            return event.employee !== null;
+        })
+        this.events = filtered.map(item => {
             item.actions = this.actions;
             return new AttendanceModel({
                 start: new Date(item.startDate),

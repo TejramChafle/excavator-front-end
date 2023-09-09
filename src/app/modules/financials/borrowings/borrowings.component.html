@@ -37,7 +37,7 @@
             <button mat-raised-button
                     [routerLink]="'/financials/borrowing'"
                     class="add-borrowing-button fuse-white mt-24 mt-md-0">
-                <span>ADD NEW EXPENSE</span>
+                <span>ADD NEW BORROWING</span>
             </button>
             <!-- / ADD BUTTON -->
 
@@ -108,7 +108,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Amount</mat-header-cell>
                     <mat-cell *matCellDef="let borrowing" fxHide fxShow.gt-xs>
                         <p class="text-truncate">
-                            {{borrowing.transaction.amount}}
+                            ₹{{borrowing.transaction.amount | number}}
                         </p>
                     </mat-cell>
                 </ng-container>
