@@ -166,7 +166,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Invoice</mat-header-cell>
                     <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
                         <a *ngIf="work.invoiceId" class="text-truncate" [routerLink]="'/work-and-invoice/invoice/'+work.invoiceId">
-                            {{work.invoiceId | slice : - 10}}
+                            {{_appService.hexToNumber(work.invoiceId | slice : - 10)}}
                         </a>
                     </mat-cell>
                 </ng-container>

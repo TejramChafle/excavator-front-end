@@ -89,4 +89,10 @@ export class AppService {
         const month = ("0" + (now.getMonth() + 1)).slice(-2);
         return now.getFullYear() + "-" + (month) + "-" + (day);
     }
+
+
+    // Return number string from hex string
+    hexToNumber(_id): string {
+        return parseInt(_id, 16).toString();
+    }
 }

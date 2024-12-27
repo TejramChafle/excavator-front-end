@@ -10,6 +10,7 @@ import { InvoiceComponent } from './invoices/invoice/invoice.component';
 import { InvoicesComponent } from './invoices/invoices/invoices.component';
 import { InvoiceService } from './invoices/invoice/invoice.service';
 import { InvoicePrintComponent } from './invoices/invoice-print/invoice-print.component';
+import { InvoiceSectionComponent } from './invoices/invoice-section/invoice-section.component';
 
 const routes: Routes = [
     {
@@ -66,7 +67,8 @@ const routes: Routes = [
         RecordsSelectedBarComponent,
         InvoiceComponent,
         InvoicesComponent,
-        InvoicePrintComponent
+        InvoicePrintComponent,
+        InvoiceSectionComponent
     ],
     imports: [
         RouterModule.forChild(routes),

@@ -13,8 +13,11 @@
             <mat-label>Type</mat-label>
             <mat-icon matSuffix class="secondary-text">commute</mat-icon>
             <mat-select matNativeControl required formControlName="type" (change)="onSubmit(vehicleForm)">
-                <mat-option value="tractor"> Tractor</mat-option>
-                <mat-option value="bike"> Bike</mat-option>
+                <mat-option value="dozer">Dozer</mat-option>
+                <mat-option value="truck">Truck</mat-option>
+                <mat-option value="tractor">Tractor</mat-option>
+                <mat-option value="bike">Bike</mat-option>
+                <mat-option value="car"> Car</mat-option>
             </mat-select>
         </mat-form-field>
     </div>

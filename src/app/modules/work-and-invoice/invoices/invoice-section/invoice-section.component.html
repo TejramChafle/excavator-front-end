@@ -1,0 +1,136 @@
+<div class="invoice-container">
+                        
+    <!-- INVOICE -->
+    <div class="card" id="invoice-print">
+        <b>Invoice</b>
+        <div class="header">
+            <div class="biller">
+                <div class="title">{{business.name | uppercase}}</div>
+                <div class="address">{{business.address | titlecase}}</div>
+                <div class="phone">Phone: {{business.phone}}, {{business.alternatePhone}}</div>
+                <div class="email">Email: {{business.email}}</div>
+                <div class="pan">PAN: {{business.panNo | uppercase}}</div>
+                <div class="tagline">{{business.tagline}}</div>
+                <!-- <div class="website">www.fuseinc.com</div> -->
+            </div>
+            <br>
+            <div class="bill-no-and-date">
+                <!-- <div>#INV-{{invoice._id | slice : - 10}}</div> -->
+                <div>#INV-{{_appService.hexToNumber(invoice._id | slice : - 10)}}</div>
+                <div class="invoice-date">Invoice Date: <b>{{invoice.date |date:'d MMM, y'}}</b></div>
+            </div>
+            <div class="bill-to">
+                <span class="note">Bill To: </span><b>{{customer?.name}}, {{customer?.place}}</b>
+            </div>
+
+        </div>
+
+        <div class="content">
+            
+            <table class="simple invoice-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th style="width: 20%;">DATE</th>
+                        <th style="width: 30%;">PERTICULARS</th>
+                        <th class="text-right">RATE</th>
+                        <th class="text-right">QTY</th>
+                        <th class="text-right">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let work of invoice.works; let index = index">
+                        <td>{{ index + 1 }}</td>
+                        <td>
+                            {{work.date | date:'d MMM, y'}}
+                        </td>
+                        <td>
+                            {{work.service?.name}}
+                        </td>
+                        <td class="text-right">
+                            {{work.rate  | currency:'INR':'symbol'}}/{{work.service?.billingType}}
+                        </td>
+                        <td class="text-right">
+                            {{work.quantity}}
+                        </td>
+                        <td class="text-right">
+                            {{work.total | currency:'INR':'symbol'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="simple invoice-table-footer">
+                <tbody>
+                    <tr class="subtotal" *ngIf="isTaxEnabled">
+                        <td>SUBTOTAL</td>
+                        <td>{{invoice.subtotal | currency:'INR':'symbol'}}</td>
+                    </tr>
+                    <tr class="tax" *ngIf="isTaxEnabled">
+                        <td>TAX</td>
+                        <td>{{invoice.tax | currency:'INR':'symbol'}}</td>
+                    </tr>
+                    <tr class="discount" *ngIf="isTaxEnabled">
+                        <td>DISCOUNT</td>
+                        <td>-{{invoice.discount | currency:'INR':'symbol'}}</td>
+                    </tr>
+                    <tr class="total">
+                        <td>TOTAL</td>
+                        <td>{{invoice.invoicedAmount | currency:'INR':'symbol'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Thank you and sign -->
+        <div class="thanks-section">
+            <div>
+                <!-- Thank you! -->
+                <table class="">
+                    <thead>
+                        <tr>
+                            <th>PAY TO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bank</td>
+                            <td class="pl-10">HDFC Bank, Ramtek Branch</td>
+                        </tr>
+                        <tr>
+                            <td>A/C Number</td>
+                            <td class="pl-10">50100761597169</td>
+                        </tr>
+                        <tr>
+                            <td>IFSC Code</td>
+                            <td class="pl-10">HDFC0009155</td>
+                        </tr>
+                        <tr>
+                            <td>A/C Holder Name</td>
+                            <td class="pl-10">Sanchit Khemraj Chafle</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="thanks-section_sign">
+                Authorized Person<br>
+                <b>{{business.owner.name}}</b>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="footer">
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <div class="small-note">
+                    An invoice is generated based on an agreement between the service provider and the customer. Henceforth, no adjustments
+                    in price will be made. The standard payment method includes Cheque, Online Bank Account Transfer, UPI, and Cash. The
+                    paid amount is subject to GST and hence no return, partial/full can be made. The late payment might attract additional
+                    charges as a penalty.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / INVOICE -->
+
+</div>

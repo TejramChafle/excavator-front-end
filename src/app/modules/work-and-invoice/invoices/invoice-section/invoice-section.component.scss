@@ -1,0 +1,182 @@
+.invoice-container {
+    padding: 0 !important;
+
+    .card {
+        width: 100%;
+        min-width: 0;
+        background: none;
+        padding: 0;
+        box-shadow: none;
+
+        .header {
+
+            .invoice-date {
+                margin-bottom: 16pt;
+            }
+
+            .issuer {
+                padding-right: 0;
+                margin-right: 0;
+            }
+
+            .biller {
+                text-align: center;
+                line-height: 1.5;
+                .title {
+                    font-size: 35px;
+                    font-weight: 600;
+                }
+
+                .tagline {
+                    width: fit-content;
+                    border: 1.5px solid gray;
+                    padding: 8px 15px;
+                    margin: 15px auto;
+                    border-radius: 5px;
+                }
+            }
+
+            .bill-no-and-date {
+                display: flex;
+                align-items: stretch;
+
+                .invoice-date {
+                    flex-grow: 6;
+                    text-align: right;
+                }
+            }
+        }
+
+        .content {
+
+            .invoice-table {
+                margin-top: 16pt;
+
+                thead {
+
+                    tr {
+
+                        th {
+                            font-size: 10pt;
+                            max-width: 60pt;
+                            &:first-child {
+                                padding-left: 0;
+                                width: 6%;
+                            }
+
+                            &:last-child {
+                                padding-right: 0;
+                            }
+                            color: black !important;
+                        }
+                    }
+                }
+
+                tbody {
+
+                    tr {
+
+                        td {
+                            font-size: 14px;
+                            &:first-child {
+                                padding-left: 0;
+                            }
+
+                            &:last-child {
+                                padding-right: 0;
+                            }
+                            color: black !important;
+                        }
+                    }
+                }
+
+                .title {
+                    font-size: 10pt;
+                }
+
+                .detail {
+                    margin-top: 4pt;
+                    font-size: 9pt;
+                    max-width: none;
+                }
+            }
+
+            .invoice-table-footer {
+                margin: 16pt 0;
+
+                tr {
+
+                    td {
+                        font-size: 13pt;
+                        padding: 4pt 4pt;
+
+                        &:first-child {
+                            text-align: left;
+                            padding-left: 0;
+                        }
+
+                        &:last-child {
+                            padding-right: 0;
+                        }
+                    }
+
+                    &.discount {
+
+                        td {
+                            padding-bottom: 16pt;
+                        }
+                    }
+
+                    &.total {
+
+                        td {
+                            padding: 16pt 4pt 0 4pt;
+                            font-size: 16pt;
+
+                            &:first-child {
+                                padding-left: 0;
+                            }
+
+                            &:last-child {
+                                padding-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .footer {
+
+            .note {
+                font-size: 10pt;
+                margin-bottom: 8pt;
+            }
+
+            .logo {
+                margin-right: 8pt;
+            }
+
+            .small-note {
+                font-size: 8pt;
+                line-height: normal;
+            }
+        }
+
+        .thanks-section {
+            display: flex;
+            margin: 80px auto 50px;
+            &_text {
+                font-size: 36px;
+            }
+            &_sign {
+                flex-grow: 6;
+                text-align: end;
+            }
+            .pl-10 {
+                padding-left: 10px;
+                font-weight: 700;
+            }
+        }
+    }
+}

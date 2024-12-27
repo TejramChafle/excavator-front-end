@@ -34,9 +34,9 @@
             <div class="btn-group">
                 <button mat-raised-button
                     class="save-work-button"
-                    [disabled]="invoiceForm.invalid || invoiceForm.pristine"
+                    [disabled]="invoiceForm.invalid"
                     *ngIf="!invoice._id" (click)="onSubmit()">
-                    <mat-icon class="mr-8">add_note</mat-icon>
+                    <mat-icon class="mr-8">add</mat-icon>
                     CREATE INVOICE
                 </button>
 
@@ -169,14 +169,24 @@
                                 <div>
                                     <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                         <mat-label>Invoice Date</mat-label>
-                                        <input matInput placeholder="Invoice Date" name="date" formControlName="date" required
-                                            type="date">
+                                        <input matInput placeholder="Invoice Date"
+                                            name="date"
+                                            formControlName="date"
+                                            required
+                                           [matDatepicker]="invoiceDatePicker">
+                                           <mat-datepicker-toggle matSuffix [for]="invoiceDatePicker"></mat-datepicker-toggle>
+                                           <mat-datepicker #invoiceDatePicker></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                         <mat-label>Expected Clearance Date</mat-label>
-                                        <input matInput placeholder="Expected Clearance Date" name="expectedClearanceDate" formControlName="expectedClearanceDate" required
-                                            type="date">
+                                        <input matInput placeholder="Expected Clearance Date"
+                                            name="expectedClearanceDate"
+                                            formControlName="expectedClearanceDate"
+                                            required
+                                           [matDatepicker]="expectedClearanceDatePicker">
+                                           <mat-datepicker-toggle matSuffix [for]="expectedClearanceDatePicker"></mat-datepicker-toggle>
+                                           <mat-datepicker #expectedClearanceDatePicker></mat-datepicker>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -245,7 +255,7 @@
                                         <mat-icon class="m-0 mr-16 secondary-text">attach_money</mat-icon>
                                         <div class="h2 secondary-text">Payment</div>
                                     </div>
-                                    <button mat-raised-button color="accent" class="save-work-button" (click)="onUpdatePaymentInfo()">
+                                    <button mat-raised-button color="accent" class="save-work-button" (click)="onUpdatePaymentInfo()" *ngIf="invoice?._id">
                                         <mat-icon class="mr-8">edit</mat-icon>
                                         EDIT
                                     </button>
@@ -316,7 +326,12 @@
                                     
                                         <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                             <mat-label>Date</mat-label>
-                                            <input matInput name="date" formControlName="date" required type="date">
+                                            <input matInput name="date"
+                                                formControlName="date"
+                                                required
+                                                [matDatepicker]="invoiceDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="invoiceDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #invoiceDatePicker></mat-datepicker>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
@@ -405,129 +420,9 @@
 
                             <div id="invoice" class="compact page-layout blank" fxLayout="row" fusePerfectScrollbar>
                         
-                                <div class="invoice-container">
-                        
-                                    <!-- INVOICE -->
-                                    <div class="card" id="invoice-print">
-                        
-                                        <div class="header">
-                                            <div class="invoice-date">{{invoice.date | date}}</div>
-                        
-                                            <div class="invoice-header" fxLayout="row" fxLayoutAlign="space-between stretch">
-                                                <div class="client">
-                                                    <div class="invoice-number" fxLayout="row"
-                                                         fxLayoutAlign="start center">
-                                                        <span class="title">INVOICE</span>
-                                                        <span class="number">{{invoice._id | slice : - 10}}</span>
-                                                    </div>
-                        
-                                                    <div class="info">
-                                                        <br>
-                                                        <span class="title">BILLED TO,</span>
-                                                        <div>
-                                                            {{customer?.name}}
-                                                        </div>
-                                                        <div class="address">
-                                                            {{customer?.place}}
-                                                        </div>
-                                                        <div class="phone">{{customer?.phone}}</div>
-                                                        <div class="email">{{customer?.email}}</div>
-                                                    </div>
-                                                </div>
-                        
-                                                <div class="issuer accent" fxLayout="row" fxLayoutAlign="start center">
-                                                    <div class="logo">
-                                                        <!-- class="business-image" -->
-                                                        <img [src]="business.logo || 'assets/images/logos/fuse.svg'">
-                                                    </div>
-                        
-                                                    <div class="info">
-                                                        <div class="title">{{business.name | uppercase}}</div>
-                                                        <div class="address">{{business.address | titlecase}}</div>
-                                                        <div class="phone">{{business.phone}}</div>
-                                                        <div class="email">{{business.email}}</div>
-                                                        <div class="pan">{{business.panNo | uppercase}}</div>
-                                                        <div class="tagline">{{business.tagline}}</div>
-                                                        <!-- <div class="website">www.fuseinc.com</div> -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                        
-                                        <div class="content">
-                        
-                                            <table class="simple invoice-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SERVICE/PRODUCT</th>
-                                                        <th>SITE/PLACE</th>
-                                                        <th class="text-right">RATE</th>
-                                                        <th class="text-right">QUANTITY</th>
-                                                        <th class="text-right">TOTAL</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let work of invoice.works">
-                                                        <td>
-                                                            {{work.service?.name}}
-                                                        </td>
-                                                        <td>
-                                                            {{work.site | titlecase}}
-                                                        </td>
-                                                        <td class="text-right">
-                                                            {{work.rate}}
-                                                        </td>
-                                                        <td class="text-right">
-                                                            {{work.quantity}}
-                                                        </td>
-                                                        <td class="text-right">
-                                                            {{work.total}}
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                        
-                                            <table class="simple invoice-table-footer">
-                                                <tbody>
-                                                    <tr class="subtotal" *ngIf="isTaxEnabled">
-                                                        <td>SUBTOTAL</td>
-                                                        <td>{{invoice.subtotal | currency:'INR':'symbol'}}</td>
-                                                    </tr>
-                                                    <tr class="tax" *ngIf="isTaxEnabled">
-                                                        <td>TAX</td>
-                                                        <td>{{invoice.tax | currency:'INR':'symbol'}}</td>
-                                                    </tr>
-                                                    <tr class="discount" *ngIf="isTaxEnabled">
-                                                        <td>DISCOUNT</td>
-                                                        <td>-{{invoice.discount | currency:'INR':'symbol'}}</td>
-                                                    </tr>
-                                                    <tr class="total">
-                                                        <td>TOTAL</td>
-                                                        <td>{{invoice.invoicedAmount | currency:'INR':'symbol'}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                        
-                                        <div class="footer">
-                                            <div class="note">Please pay within 15 days. Thank you for your business.
-                                            </div>
-                                            <div fxLayout="row" fxLayoutAlign="start start">
-                                                <div class="logo">
-                                                    <img src="assets/images/logos/fuse.svg">
-                                                </div>
-                                                <div class="small-note">
-                                                    An invoice is generated based on an agreement between the service provider and the customer. Henceforth, no adjustments
-                                                    in price will be made. The standard payment method includes Cheque, Online Bank Account Transfer, UPI, and Cash. The
-                                                    paid amount is subject to GST and hence no return, partial/full can be made. The late payment might attract additional
-                                                    charges as a penalty.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- / INVOICE -->
-                        
-                                </div>
+                                
+
+                                <invoice-section [business]="business" [customer]="customer" [invoice]="invoice"></invoice-section>
                             </div>
                         </div>
                     </mat-tab>
