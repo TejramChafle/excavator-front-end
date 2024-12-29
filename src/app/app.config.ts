@@ -168,7 +168,7 @@ export const MODULE = {
             'checkbox',
             'service',
             'date',
-            'startime',
+            // 'startime',
             // 'endtime',
             'customer',
             // 'site',
@@ -195,7 +195,7 @@ export const MODULE = {
             'date',
             'invoicedAmount',
             'status',
-            'expectedClearanceDate',
+            // 'expectedClearanceDate',
             // 'paymentStatus',
             'actions'
         ]
@@ -210,7 +210,10 @@ export const MODULE = {
             'updatedBy',
             'updatedAt',
             'actions'
-        ]
+        ],
+        path: {
+            multiAttendence: '/multiple'
+        }
     },
     transactions: {
         backendRoute: 'transaction',

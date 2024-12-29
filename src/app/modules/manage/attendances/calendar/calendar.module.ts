@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select'
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -55,6 +56,7 @@ const routes: Routes = [
         MatSlideToggleModule,
         MatToolbarModule,
         MatTooltipModule,
+        MatSelectModule,
 
         AngularCalendarModule.forRoot({
             provide   : DateAdapter,
@@ -83,6 +85,7 @@ const routes: Routes = [
         MatTooltipModule,
         AngularCalendarModule,
         ColorPickerModule,
+        MatSelectModule
     ]
 })
 export class CalendarModule

@@ -95,4 +95,9 @@ export class AppService {
     hexToNumber(_id): string {
         return parseInt(_id, 16).toString();
     }
+
+    // add 000 in the beginning of invoice number
+    formattedInvoiceNumber(invoiceNumber) {
+        return String(invoiceNumber).padStart(6, '0');
+    }
 }

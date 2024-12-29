@@ -16,7 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FuseAlertDialogModule } from '@fuse/components/alert-dialog/alert-dialog.module';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatListModule, MatSlideToggleModule } from '@angular/material';
 import { MatDividerModule } from '@angular/material/divider'
 
 const modules = [
@@ -35,7 +35,8 @@ const modules = [
     MatSnackBarModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    MatDividerModule
+    MatDividerModule,
+    MatListModule
 ];
 
 @NgModule({

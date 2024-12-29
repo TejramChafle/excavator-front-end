@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'app/data.service';
 import { AttendanceFormComponent } from '../attendance-form/attendance-form.component';
 import { AttendanceModel } from '../attendance.model';
+import { AttendanceMultipleComponent } from '../attendence-multiple/attendence-multiple.component';
 
 @Component({
     selector: 'calendar',
@@ -33,6 +34,7 @@ export class CalendarComponent implements OnInit {
     view: string;
     viewDate: Date;
     employee: any;
+    employees: any[];
 
     constructor(
         private _matDialog: MatDialog,
@@ -65,6 +67,9 @@ export class CalendarComponent implements OnInit {
          * Get events from service/server
          */
         this.setEvents();
+ 
+        this.employees = this._dataService.employees || JSON.parse(localStorage.getItem('employees'));
+        console.log(this.employees);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -293,6 +298,29 @@ export class CalendarComponent implements OnInit {
                 attendanceFormRef = null;
             }
         });
+    }
+
+    // This will mark the attence of multiple selected employees for day
+    markAttendence() {
+        let attendanceFormRef = this._matDialog.open(AttendanceMultipleComponent, {
+            disableClose: false,
+            panelClass: 'event-form-dialog',
+            data: {
+                employees: this._dataService.employees || JSON.parse(localStorage.getItem('employees'))
+            }
+        });
+
+        attendanceFormRef.afterClosed().subscribe(result => {
+            if (result) {
+                attendanceFormRef = null;
+                this.refresh.next(true);
+            }
+        });
+    }
+
+    // Based on selection of the employee from dropdown options, get the attendence records for the selected month
+    onChangeEmployee(event) {
+        this._calendarService.getEvents(event.value._id);
     }
 }
 

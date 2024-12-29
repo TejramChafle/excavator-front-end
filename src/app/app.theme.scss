@@ -335,3 +335,42 @@ body.theme-pink-dark {
 
     @include fuse-color-classes($palettes);
 }
+
+
+.status {
+    font-size: 13px;
+    font-weight: 300;
+    padding: 4px 6px;
+    text-decoration: none;
+}
+
+.entered {
+    // background-color: #ba68c8 !important;
+    background-color: #607d8b !important;
+    color: white !important;
+}
+
+.shared {
+    background-color: #9c27b0 !important;
+    color: white !important;
+}
+
+.approved {
+    background-color: #2196f3 !important;
+    color: white !important;
+}
+
+.payment-error {
+    background-color: #ff9800 !important;
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.cancelled {
+    background-color: #b71c1c !important;
+    color: white !important;
+}
+
+.paid {
+    background-color: #4caf50 !important;
+    color: white !important;
+}

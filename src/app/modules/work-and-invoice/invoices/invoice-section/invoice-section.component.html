@@ -15,8 +15,7 @@
             </div>
             <br>
             <div class="bill-no-and-date">
-                <!-- <div>#INV-{{invoice._id | slice : - 10}}</div> -->
-                <div>#INV-{{_appService.hexToNumber(invoice._id | slice : - 10)}}</div>
+                <div class="invoice-number">#INV-{{_appService.formattedInvoiceNumber(invoice.invoiceNumber)}}</div>
                 <div class="invoice-date">Invoice Date: <b>{{invoice.date |date:'d MMM, y'}}</b></div>
             </div>
             <div class="bill-to">
@@ -42,7 +41,7 @@
                     <tr *ngFor="let work of invoice.works; let index = index">
                         <td>{{ index + 1 }}</td>
                         <td>
-                            {{work.date | date:'d MMM, y'}}
+                            {{work.date | date:'dd MMM, y'}}
                         </td>
                         <td>
                             {{work.service?.name}}

@@ -80,6 +80,8 @@ export class EmployeesComponent implements OnInit {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
                 this.dataSource = response.docs;
+                this._dataService.employees = this.dataSource;
+                localStorage.setItem('employees', JSON.stringify(this.dataSource));
                 console.log('dataSource: ', this.dataSource);
             });
     }

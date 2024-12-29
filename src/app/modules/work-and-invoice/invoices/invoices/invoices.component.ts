@@ -9,6 +9,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from 'app/data.service';
 import { MODULE } from 'app/app.config';
 import { Router } from '@angular/router';
+import { AppService } from 'app/app.service';
 
 @Component({
     selector: 'invoices',
@@ -40,7 +41,8 @@ export class InvoicesComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _dataService: DataService,
-        private _router: Router
+        private _router: Router,
+        public _appService: AppService
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();

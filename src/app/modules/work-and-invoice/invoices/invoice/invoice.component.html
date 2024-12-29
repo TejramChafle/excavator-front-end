@@ -21,7 +21,7 @@
                 <div fxLayout="column" fxLayoutAlign="start start"
                      [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2">
-                        Invoice {{invoice._id | slice : - 10}}
+                        Invoice {{_appService.formattedInvoiceNumber(invoice.invoiceNumber)}}
                     </div>
                     <div class="subtitle secondary-text">
                         <span>To</span>
@@ -221,7 +221,7 @@
                                             </td>
                                             <td>
                                                 <span>
-                                                    {{status.date | date}}
+                                                    {{status.date | date:'dd MMM, y'}}
                                                 </span>
                                             </td>
                                         </tr>
@@ -294,7 +294,7 @@
                                             </td>
                                             <td>
                                                 <span class="text-truncate">
-                                                    {{invoice.transaction.date | date}}
+                                                    {{invoice.transaction.date | date:'dd MMM, y'}}
                                                 </span>
                                             </td>
                                             <td>

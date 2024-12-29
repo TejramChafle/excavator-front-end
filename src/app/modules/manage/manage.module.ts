@@ -8,6 +8,7 @@ import { EmployeeComponent } from './employees/employee/employee.component';
 import { AttendanceFormComponent } from './attendances/attendance-form/attendance-form.component';
 import { AttendancesComponent } from './attendances/attendances.component';
 import { CalendarModule } from './attendances/calendar/calendar.module';
+import { AttendanceMultipleComponent } from './attendances/attendence-multiple/attendence-multiple.component';
 
 const routes: Routes = [
     {
@@ -50,7 +51,8 @@ const routes: Routes = [
         EmployeesComponent,
         AttendanceFormComponent,
         AttendancesComponent,
-        // CalendarComponent
+        // CalendarComponent,
+        AttendanceMultipleComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -59,7 +61,8 @@ const routes: Routes = [
         CalendarModule
     ],
     entryComponents: [
-        AttendanceFormComponent
+        AttendanceFormComponent,
+        AttendanceMultipleComponent
     ]
 })
 

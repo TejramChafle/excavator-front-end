@@ -2,6 +2,7 @@
 export class Invoice {
     _id: string;
     works: Array<any>;
+    invoiceNumber: Number;
     invoiceTo: string;
     invoiceToName: string;
     business: string;
@@ -44,5 +45,6 @@ export class Invoice {
         this.transaction = invoice.transaction;
         this.statusHistory = invoice.statusHistory;
         this.date = invoice.date;
+        this.invoiceNumber = invoice.invoiceNumber;
     }
 }

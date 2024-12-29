@@ -33,6 +33,8 @@ export class DataService implements Resolve<any> {
         total: number
     };
 
+    employees: any[];
+
     /**
      * Constructor
      *
