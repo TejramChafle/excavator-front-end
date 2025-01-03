@@ -40,6 +40,7 @@ export class WorksComponent implements OnInit {
     hasSelectedRecords: boolean;
     selectedRecords: any[];
     checkboxes: {};
+    isSearching = false;
 
     constructor(
         public _dataService: DataService,
@@ -59,22 +60,6 @@ export class WorksComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
-
-        /* fromEvent(this.filter.nativeElement, 'keyup')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(150),
-                distinctUntilChanged()
-            )
-            .subscribe(() => {
-                if ( !this.dataSource )
-                {
-                    return;
-                }
-
-                this.dataSource.filter = this.filter.nativeElement.value;
-            }); */
 
         // Assign columns to table
         this.tableColumns = MODULE.works.tableColumns;
@@ -150,7 +135,7 @@ export class WorksComponent implements OnInit {
     // Load data on page change
     onPageChange(page) {
         console.log(page);
-        this._dataService.getRecords(MODULE.customers.backendRoute, { page: page.pageIndex + 1, limit: page.pageSize }).then(result => {
+        this._dataService.getRecords(MODULE.works.backendRoute, { page: page.pageIndex + 1, limit: page.pageSize }).then(result => {
             console.log('on page change : ', result);
         });
     }
@@ -183,5 +168,15 @@ export class WorksComponent implements OnInit {
      */
     onSelectedChange(recordId): void {
         this._dataService.toggleSelectedRecord(recordId);
+    }
+
+
+    onSearch(data) {
+        console.log({searching: data});
+    }
+
+    onClickBack() {
+        this.isSearching = false;
+        console.log('back')
     }
 }

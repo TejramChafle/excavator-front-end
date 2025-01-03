@@ -102,9 +102,9 @@
 
                                 <mat-form-field appearance="outline" class="w-100-p">
                                     <mat-label>Vehicle</mat-label>
-                                    <mat-select matNativeControl required formControlName="vehicle">
+                                    <mat-select matNativeControl formControlName="vehicle">
                                         <mat-option [value]="vehicle._id" *ngFor="let vehicle of vehicles">
-                                            {{vehicle.name}}
+                                            {{vehicle.name}} {{vehicle.number}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

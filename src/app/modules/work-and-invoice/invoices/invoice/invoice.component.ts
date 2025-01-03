@@ -225,7 +225,31 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     }
 
     onUpdateStatusInfo() {
-        this.updateStatusInfo = !this.updateStatusInfo;
+        // this.updateStatusInfo = !this.updateStatusInfo;
+        let data = this.invoiceForm.getRawValue();
+        console.log(this.invoice);
+        this.invoice.statusHistory.push({
+            code: data.status,
+            date: new Date()
+        });
+        data.statusHistory = this.invoice.statusHistory;
+        console.log('formdata:', data);
+        this._dataService.updateRecord('invoice', data)
+                .then(() => {
+
+                    // Trigger the subscription with new data
+                    this._dataService.onRecordDataChanged.next(data);
+
+                    /* // Show the success message
+                    this._matSnackBar.open('Work information saved', 'OK', {
+                        verticalPosition: 'top',
+                        duration: 2000
+                    });
+
+                    // Go back to previous page
+                    this._location.back(); */
+                    this._appService.handleMessage('Invoice status updated successfully.', 'Success');
+                });
     }
 
     onChangePaymentMethod() {

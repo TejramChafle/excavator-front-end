@@ -11,6 +11,7 @@ import { DataService } from 'app/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'app/app.service';
 import { takeUntil } from 'rxjs/operators';
+import { AppCache } from 'app/app.cache';
 
 @Component({
     selector: 'work',
@@ -48,7 +49,8 @@ export class WorkComponent implements OnInit, OnDestroy {
         private _location: Location,
         private _matSnackBar: MatSnackBar,
         private _activatedRoute: ActivatedRoute,
-        private _appService: AppService
+        private _appService: AppService,
+        private _appCache: AppCache
     ) {
         // Set the default
         this.work = new Work({});
@@ -82,38 +84,27 @@ export class WorkComponent implements OnInit, OnDestroy {
         }
         this.workForm = this.createWorkForm();
 
+        // Get the required metadata
         this.getCustomers();
         this.getServices();
         this.getSupervisor();
         this.getVehicles();
     }
 
-    getCustomers() {
-        this._dataService.records('customer', {}).subscribe((response) => {
-            console.log({ customers: response });
-            this.customers = response.docs;
-        });
+    async getCustomers() {
+        this.customers =  await this._appCache.getCustomers();
     }
 
-    getSupervisor() {
-        this._dataService.records('contact', { contactType: 'Customer' }).subscribe((response) => {
-            console.log({ contacts: response });
-            this.contacts = response.docs;
-        });
+    async getServices() {
+        this.services = await this._appCache.getServices();
     }
 
-    getServices() {
-        this._dataService.records('service', { contactType: 'Customer' }).subscribe((response) => {
-            console.log({ services: response });
-            this.services = response.docs;
-        });
+    async getSupervisor() {
+        this.contacts = await this._appCache.getSupervisor();
     }
 
-    getVehicles() {
-        this._dataService.records('vehicle', {}).subscribe((response) => {
-            console.log({ vehicles: response });
-            this.vehicles = response.docs;
-        });
+    async getVehicles() {
+        this.vehicles = await this._appCache.getVehicles();
     }
 
     /**

@@ -215,8 +215,8 @@
                                     <tbody>
                                         <tr *ngFor="let status of invoice.statusHistory">
                                             <td>
-                                                <span class="status h6 p-4" [ngClass]="status.color">
-                                                    {{status.code}}
+                                                <span class="status h6 p-4" ngClass="{{status.code | lowercase}}">
+                                                    {{status.code | titlecase}}
                                                 </span>
                                             </td>
                                             <td>
@@ -233,7 +233,7 @@
                                         <mat-label>Status</mat-label>
                                         <mat-select formControlName="status" required>
                                             <mat-option *ngFor="let status of invoiceStatuses" [value]="status.code">
-                                                {{status.name}}
+                                                {{status.name | titlecase}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -248,6 +248,7 @@
 
                             </div>
 
+                            <!-- PAYMENT STATUS -->
                             <div class="section pb-48">
 
                                 <div class="pb-16" fxLayout="row" fxLayoutAlign="space-between center">
@@ -279,7 +280,7 @@
                                         <tr>
                                             <td>
                                                 <span class="text-truncate">
-                                                    {{invoice.transaction._id | slice : - 10}}
+                                                    {{invoice.transaction._id | slice : - 10 | uppercase}}
                                                 </span>
                                             </td>
                                             <td>
@@ -298,8 +299,8 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <span class="text-truncate">
-                                                    {{invoice.transaction.status}}
+                                                <span class="text-truncate status" ngClass="{{invoice.transaction.status | lowercase}}">
+                                                    {{invoice.transaction.status | titlecase}}
                                                 </span>
                                             </td>
                                         </tr>

@@ -59,9 +59,7 @@
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice #</mat-header-cell>
                     <mat-cell *matCellDef="let invoice">
-                        <!-- <p class="text-truncate">{{invoice._id | slice : - 10}}</p> -->
-                        <!-- <p class="text-truncate">{{_appService.formattedInvoiceNumber(invoice.invoiceNumber)}}</p> -->
-                        <a class="text-truncate" [routerLink]="'/work-and-invoice/invoice/'+invoice._id">
+                        <a class="text-truncate invoice-number-btn" [routerLink]="'/work-and-invoice/invoice/'+invoice._id">
                             {{_appService.formattedInvoiceNumber(invoice.invoiceNumber)}}
                         </a>
                     </mat-cell>
@@ -106,14 +104,14 @@
                 </ng-container>
 
                 <!-- Expected On Column -->
-                <!-- <ng-container matColumnDef="expectedClearanceDate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Expected On</mat-header-cell>
+                <ng-container matColumnDef="invoiceUpdatedOn">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Updated On</mat-header-cell>
                     <mat-cell *matCellDef="let invoice">
                         <p class="text-truncate">
-                            {{invoice.expectedClearancedate | date:'d MMM, y'}}
+                            {{invoice.statusHistory[invoice.statusHistory.length-1]?.date | date:'dd MMM, y'}}
                         </p>
                     </mat-cell>
-                </ng-container> -->
+                </ng-container>
 
                 <!-- Payment Status Column -->
                 <!-- <ng-container matColumnDef="paymentStatus">

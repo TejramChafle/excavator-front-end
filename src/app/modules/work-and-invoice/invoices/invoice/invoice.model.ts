@@ -19,7 +19,7 @@ export class Invoice {
     status: string;
     expectedClearanceDate: Date;
     transaction: any;
-    statusHistory: [];
+    statusHistory: any[];
     /**
      * Constructor
      *

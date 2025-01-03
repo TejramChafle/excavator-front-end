@@ -81,6 +81,7 @@ export class DataService implements Resolve<any> {
 
                     this.onFilterChanged.subscribe(filter => {
                         this.filterBy = filter;
+                        console.log(this.filterBy);
                         this.getRecords(route);
                     });
                     this.recordsWithPagination = response;
@@ -110,6 +111,15 @@ export class DataService implements Resolve<any> {
         }
         url += '&businessId=' + this._appService.user.business._id;
         url += '&sort_order=desc';
+
+        if (this.filterBy) {
+            Object.keys(this.filterBy).forEach((key) => {
+                if (this.filterBy[key] !== null) {
+                    url += '&' + key + '=' + this.filterBy[key];
+                }
+            });
+        }
+
         return new Promise((resolve, reject) => {
             this._httpClient.get(url)
                 .subscribe((response: any) => {

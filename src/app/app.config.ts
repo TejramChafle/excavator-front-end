@@ -197,6 +197,7 @@ export const MODULE = {
             'status',
             // 'expectedClearanceDate',
             // 'paymentStatus',
+            'invoiceUpdatedOn',
             'actions'
         ]
     },

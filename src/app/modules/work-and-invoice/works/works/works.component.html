@@ -24,22 +24,25 @@
             </div>
             <!-- / APP TITLE -->
 
-            <!-- SEARCH -->
-            <div class="search-wrapper mx-32 mx-md-0">
-                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon>search</mat-icon>
-                    <input #filter placeholder="Search for a work">
-                </div>
-            </div>
-            <!-- / SEARCH -->
+            <div class="btn-group" fxLayout="row" fxLayoutAlign="end center">
+                <!-- SEARCH BUTTON -->
+                <button mat-raised-button
+                        class="add-work-button fuse-white mt-24 mt-md-0"
+                        (click)="isSearching = true">
+                    <mat-icon class="mr-8">search</mat-icon>
+                    <span>SEARCH</span>
+                </button>
+                <!-- / SEARCH BUTTON -->
 
-            <!-- ADD BUTTON -->
-            <button mat-raised-button
-                    [routerLink]="'/work-and-invoice/work'"
-                    class="add-work-button fuse-white mt-24 mt-md-0">
-                <span>ADD NEW WORK</span>
-            </button>
-            <!-- / ADD BUTTON -->
+                <!-- ADD BUTTON -->
+                <button mat-raised-button
+                        [routerLink]="'/work-and-invoice/work'"
+                        class="add-work-button fuse-white mt-24 mt-md-0">
+                    <mat-icon class="mr-8">add</mat-icon>
+                    <span>ADD NEW WORK</span>
+                </button>
+                <!-- / ADD BUTTON -->
+            </div>
 
         </div>
         <!-- / HEADER -->
@@ -47,6 +50,11 @@
         <!-- SELECTED BAR -->
         <selected-bar class="accent-600" *ngIf="hasSelectedRecords" [@slideInTop]></selected-bar>
         <!-- / SELECTED BAR -->
+
+        <!-- SEARCH BAR -->
+        <search-bar class="accent-600" *ngIf="isSearching" [@slideInTop] (onSearch)="onSearch($event)"
+            (backIsClicked)="onClickBack()">
+        </search-bar>
 
         <!-- CONTENT CARD -->
         <div class="content-card">
@@ -163,11 +171,13 @@
 
                 <!-- Is Invoiced Column -->
                 <ng-container matColumnDef="invoiced">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Invoice</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Invoice #</mat-header-cell>
                     <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
-                        <a *ngIf="work.invoiceId" class="text-truncate" [routerLink]="'/work-and-invoice/invoice/'+work.invoiceId">
+                        <button mat-raised-button *ngIf="work.invoiceNumber"
+                            [routerLink]="'/work-and-invoice/invoice/'+work.invoiceId"
+                            class="invoice-number-btn fuse-white">
                             {{_appService.formattedInvoiceNumber(work.invoiceNumber)}}
-                        </a>
+                        </button>
                     </mat-cell>
                 </ng-container>
 
