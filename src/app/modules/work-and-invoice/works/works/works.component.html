@@ -52,7 +52,9 @@
         <!-- / SELECTED BAR -->
 
         <!-- SEARCH BAR -->
-        <search-bar class="accent-600" *ngIf="isSearching" [@slideInTop] (onSearch)="onSearch($event)"
+        <search-bar class="accent-600"
+            *ngIf="isSearching" [@slideInTop]
+            [searchingFor] = "'WORK'"
             (backIsClicked)="onClickBack()">
         </search-bar>
 
@@ -129,7 +131,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Customer</mat-header-cell>
                     <mat-cell *matCellDef="let work" fxHide fxShow.gt-xs>
                         <p class="text-truncate">
-                            {{work.customer.name}}
+                            {{work.customer?.name}}
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -223,9 +225,9 @@
                 #paginator [length]="_dataService.pagination.total"
                 [pageSize]="_dataService.pagination.limit"
                 [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                [pageIndex]="_dataService.pagination.page-1"
                 (page)="onPageChange($event)">
             </mat-paginator>
-
         </div>
         <!-- / CONTENT CARD -->
     </div>

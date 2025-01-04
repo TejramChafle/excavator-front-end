@@ -1,8 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { fuseAnimations } from '@fuse/animations';
 import { takeUntil } from 'rxjs/internal/operators';
@@ -33,6 +32,7 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    isSearching = false;
 
     /**
      * Constructor
@@ -80,5 +80,16 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
     deleteInvoice(invoice) {
         //TODO
+    }
+
+    onClickBack() {
+        this.isSearching = false;
+    }
+
+    // Load data on page change
+    onPageChange(page) {
+        this._dataService.getRecords(MODULE.invoices.backendRoute, { page: page.pageIndex + 1, limit: page.pageSize }).then(result => {
+            // console.log('on page change : ', result);
+        });
     }
 }

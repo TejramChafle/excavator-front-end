@@ -25,26 +25,25 @@
             </div>
             <!-- / APP TITLE -->
 
-            <!-- SEARCH -->
-            <!-- ml-sm-32 -->
-            <div class="search-wrapper  mx-32 mx-md-0">
-                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon>search</mat-icon>
-                    <input #filter placeholder="Search for an invoice">
-                </div>
-            </div>
-            <!-- / SEARCH -->
-
-            <!-- ADD BUTTON -->
-            <!-- <button mat-raised-button
-                    [routerLink]="'/work-and-invoice/work'"
-                    class="add-work-button fuse-white mt-24 mt-md-0">
-                <span>ADD NEW WORK</span>
-            </button> -->
-            <!-- / ADD BUTTON -->
+             <!-- SEARCH BUTTON -->
+             <button mat-raised-button
+                    class="add-work-button fuse-white mt-24 mt-md-0"
+                    (click)="isSearching = true">
+                <mat-icon class="mr-8">search</mat-icon>
+                <span>SEARCH</span>
+            </button>
+            <!-- / SEARCH BUTTON -->
 
         </div>
         <!-- / HEADER -->
+
+        <!-- SEARCH BAR -->
+        <search-bar class="accent-600"
+            *ngIf="isSearching" [@slideInTop]
+            [searchingFor] = "'INVOICE'"
+            (onSearch)="onSearch($event)"
+            (backIsClicked)="onClickBack()">
+        </search-bar>
 
         <!-- CONTENT CARD -->
         <div class="content-card">
@@ -59,9 +58,11 @@
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice #</mat-header-cell>
                     <mat-cell *matCellDef="let invoice">
-                        <a class="text-truncate invoice-number-btn" [routerLink]="'/work-and-invoice/invoice/'+invoice._id">
+                        <button mat-raised-button
+                            [routerLink]="'/work-and-invoice/invoice/'+invoice._id"
+                            class="invoice-number-btn fuse-white">
                             {{_appService.formattedInvoiceNumber(invoice.invoiceNumber)}}
-                        </a>
+                        </button>
                     </mat-cell>
                 </ng-container>
 
@@ -69,7 +70,7 @@
                 <ng-container matColumnDef="invoiceTo">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Customer</mat-header-cell>
                     <mat-cell *matCellDef="let invoice" fxHide fxShow.gt-sm>
-                        <p class="text-truncate">{{invoice.invoiceTo.name}}</p>
+                        <p class="text-truncate">{{invoice.invoiceTo?.name}}</p>
                     </mat-cell>
                 </ng-container>
 
@@ -108,7 +109,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Updated On</mat-header-cell>
                     <mat-cell *matCellDef="let invoice">
                         <p class="text-truncate">
-                            {{invoice.statusHistory[invoice.statusHistory.length-1]?.date | date:'dd MMM, y'}}
+                            {{invoice.statusHistory[invoice.statusHistory?.length-1]?.date | date:'dd MMM, y'}}
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -157,11 +158,12 @@
                 <!-- [routerLink]="'/apps/e-commerce/invoices/'+invoice.id" -->
             </mat-table>
 
-            <mat-paginator #paginator
-                           [length]="dataSource.length"
-                           [pageIndex]="0"
-                           [pageSize]="10"
-                           [pageSizeOptions]="[5, 10, 25, 100]">
+            <mat-paginator 
+                #paginator [length]="_dataService.pagination.total"
+                [pageSize]="_dataService.pagination.limit"
+                [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                [pageIndex]="_dataService.pagination.page-1"
+                (page)="onPageChange($event)">
             </mat-paginator>
 
         </div>

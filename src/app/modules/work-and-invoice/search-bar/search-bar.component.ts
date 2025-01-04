@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -21,6 +21,7 @@ export class SearchBarComponent implements OnInit, OnDestroy
     isIndeterminate: boolean;
     selectedRecords: string[];
     @Output() backIsClicked = new EventEmitter<Boolean>();
+    @Input() searchingFor: String;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -176,8 +177,11 @@ export class SearchBarComponent implements OnInit, OnDestroy
     }
 
     search() {
-        console.log(this.form.getRawValue());
         this._dataService.onFilterChanged.next(this.form.getRawValue());
+        // adding delay to avoid page refresh
+        setTimeout(() => {
+            this.onClickBack();
+        }, 100);
     }
 
     clearForm() {

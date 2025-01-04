@@ -7,12 +7,10 @@
         </button>
     </div>
 
-    <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign.gt-sm="space-between center">
-        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="form">
-            
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-                <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+    <div class="form-container">
+        <form name="form" [formGroup]="form">
+            <div class="form-row">
+                <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Customer</mat-label>
                     <mat-select matNativeControl formControlName="customer">
                         <mat-option [value]="customer._id" *ngFor="let customer of customers">
@@ -22,7 +20,7 @@
                     <mat-icon matSuffix class="secondary-text">business</mat-icon>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="33" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'WORK'">
                     <mat-label>Service</mat-label>
                     <mat-select matNativeControl formControlName="service">
                         <mat-option [value]="service._id" *ngFor="let service of services">
@@ -32,16 +30,14 @@
                     <mat-icon matSuffix class="secondary-text">room_service</mat-icon>
                 </mat-form-field>
                 
-                <mat-form-field appearance="outline" fxFlex="33" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'WORK'">
                     <mat-label>Site</mat-label>
                     <input matInput #site
                         formControlName="site">
                     <mat-icon matSuffix class="secondary-text">place</mat-icon>
                 </mat-form-field>
-            </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'WORK'">
                     <mat-label>Work Date</mat-label>
                     <input matInput placeholder="Work Date"
                         name="date"
@@ -51,7 +47,7 @@
                        <mat-datepicker #workDatePicker></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="33" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'WORK'">
                     <mat-label>To Work Date</mat-label>
                     <input matInput placeholder="Work Date"
                         name="toDate"
@@ -61,7 +57,7 @@
                        <mat-datepicker #toDatePicker></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="33" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'WORK'">
                     <mat-label>Vehicle</mat-label>
                     <mat-select matNativeControl formControlName="vehicle" multiple>
                         <mat-option [value]="vehicle._id" *ngFor="let vehicle of vehicles">
@@ -70,10 +66,8 @@
                     </mat-select>
                     <mat-icon matSuffix class="secondary-text">local_shipping</mat-icon>
                 </mat-form-field>
-            </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'WORK'">
                     <mat-label>Workers</mat-label>
                     <mat-select matNativeControl formControlName="worker" multiple>
                         <mat-option [value]="worker._id" *ngFor="let worker of contacts">
@@ -82,11 +76,8 @@
                     </mat-select>
                     <mat-icon matSuffix class="secondary-text">person</mat-icon>
                 </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 
-                <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'INVOICE'">
                     <mat-label>Invoice Generated Date</mat-label>
                     <input matInput placeholder="Invoice Generated Date"
                         name="invoiceDate"
@@ -96,7 +87,7 @@
                        <mat-datepicker #invoiceDatePicker></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="33" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'INVOICE'">
                     <mat-label>Invoice #</mat-label>
                     <input matInput #invoiceNumber
                         formControlName="invoiceNumber" maxlength="6">
@@ -104,7 +95,7 @@
                     <mat-hint align="end">{{invoiceNumber.value.length}} / 6</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="33" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'INVOICE'">
                     <mat-label>Invoice Status</mat-label>
                     <mat-select matNativeControl formControlName="status">
                         <mat-option [value]="status.code" *ngFor="let status of statuses">
@@ -113,10 +104,8 @@
                     </mat-select>
                     <mat-icon matSuffix class="secondary-text">access_time</mat-icon>
                 </mat-form-field>
-            </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+                <mat-form-field appearance="outline" class="form-field" *ngIf="searchingFor == 'INVOICE'">
                     <mat-label>Total Amount</mat-label>
                     <input matInput #total
                         formControlName="total" maxlength="8">
@@ -124,7 +113,7 @@
                 </mat-form-field>
             </div>
             
-            <div class="action-buttons px-8">
+            <div class="action-buttons">
                 <button mat-raised-button class="fuse-white mt-24 mt-md-0" (click)="search()" aria-label="search">
                     <mat-icon class="mr-8">search</mat-icon>
                     <span class="text-uppercase">Search</span>
@@ -136,11 +125,5 @@
                 </button>
             </div>
         </form> 
-
     </div>
-
-    
-
-    
-
 </div>

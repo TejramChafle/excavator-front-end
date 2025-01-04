@@ -69,7 +69,7 @@ export class WorksComponent implements OnInit {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
                 this.dataSource = response.docs;
-                console.log('dataSource: ', this.dataSource);
+                // console.log('dataSource: ', this.dataSource);
 
                 this.checkboxes = {};
                 response.docs.map(record => {
@@ -134,9 +134,8 @@ export class WorksComponent implements OnInit {
 
     // Load data on page change
     onPageChange(page) {
-        console.log(page);
         this._dataService.getRecords(MODULE.works.backendRoute, { page: page.pageIndex + 1, limit: page.pageSize }).then(result => {
-            console.log('on page change : ', result);
+            // console.log('on page change : ', result);
         });
     }
 
@@ -170,13 +169,7 @@ export class WorksComponent implements OnInit {
         this._dataService.toggleSelectedRecord(recordId);
     }
 
-
-    onSearch(data) {
-        console.log({searching: data});
-    }
-
     onClickBack() {
         this.isSearching = false;
-        console.log('back')
     }
 }

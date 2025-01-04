@@ -20,3 +20,49 @@
         margin-right: 15px;
     }
 }
+
+/* Container Styles */
+.form-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Flexbox Row */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows fields to wrap to the next row */
+    gap: 10px;
+    /* Spacing between fields */
+}
+
+/* Flex Item (mat-form-field) */
+.form-field {
+    flex: 1 1 calc(33.333% - 10px); /* Default: 3 fields per row */
+    min-width: 200px; /* Minimum width for each field */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+
+    /* For tablets: 2 fields in a row */
+    .form-field {
+        flex: 1 1 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* For mobile: 1 field per row */
+    .form-field {
+        flex: 1 1 100%;
+    }
+}
+
+mat-form-field {
+    .mat-form-field-wrapper {
+        margin: -10px 0 !important;
+        // padding-bottom: 0px !important;
+    }
+}
+  

@@ -64,16 +64,16 @@ export class DataService implements Resolve<any> {
      * @returns {Observable<any> | Promise<any> | any}
      */
     resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        console.log({ _route });
+        // console.log({ _route });
         const route = MODULE[_route.data['module'] ? _route.data['module'] : _route.url[1].path].backendRoute;
-        console.log({ route });
+        // console.log({ route });
+        this.resetFilter();
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getRecords(route),
                 // this.getRecordData()
             ]).then(
                 ([response]) => {
-                    console.log(response);
                     this.onSearchTextChanged.subscribe(searchText => {
                         this.searchText = searchText;
                         this.getRecords(route);
@@ -81,7 +81,6 @@ export class DataService implements Resolve<any> {
 
                     this.onFilterChanged.subscribe(filter => {
                         this.filterBy = filter;
-                        console.log(this.filterBy);
                         this.getRecords(route);
                     });
                     this.recordsWithPagination = response;
@@ -102,7 +101,7 @@ export class DataService implements Resolve<any> {
         if (params && params.page) {
             url += '?page=' + params.page + '&limit=' + params.limit;
         } else {
-            url += '?page=1&limit=10';
+            url += '?page=1&limit=20';
         }
         if (params && params.name) {
             url += '&name=' + params.name;
@@ -111,7 +110,7 @@ export class DataService implements Resolve<any> {
         }
         url += '&businessId=' + this._appService.user.business._id;
         url += '&sort_order=desc';
-
+        
         if (this.filterBy) {
             Object.keys(this.filterBy).forEach((key) => {
                 if (this.filterBy[key] !== null) {
@@ -123,13 +122,9 @@ export class DataService implements Resolve<any> {
         return new Promise((resolve, reject) => {
             this._httpClient.get(url)
                 .subscribe((response: any) => {
-                    console.log({ response });
-                    // this.records = response.docs;
-                    // delete response.docs;
+                    console.log('get data response: ', response);
                     this.pagination = response;
-
                     this.onRecordsChanged.next(response);
-                    // resolve(this.records);
                     resolve(response);
                 }, (error) => {
                     this._appService.handleError(error);
@@ -331,6 +326,11 @@ export class DataService implements Resolve<any> {
                     return reject;
                 });
         });
+    }
+
+    // reset the filter to avoid reuse when component is switched
+    resetFilter() {
+        this.filterBy = undefined;
     }
 
 }
