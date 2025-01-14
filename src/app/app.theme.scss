@@ -125,6 +125,7 @@ $typography: mat-typography-config(
 
 @import "src/app/modules/configuration/configuration.theme";
 @import "src/app/modules/manage/employees/employees.theme";
+@import "src/app/modules/manage/fuel-logs/fuel-logs.theme";
 @import "src/app/modules/work-and-invoice/works/works/works.theme";
 @import "src/app/modules/work-and-invoice/invoices/invoices/invoices.theme";
 @import "src/app/modules/financials/transactions/transactions.theme";
@@ -194,6 +195,7 @@ $typography: mat-typography-config(
     @include expenses-theme($theme);
     @include borrowings-theme($theme);
     @include revenues-theme($theme);
+    @include fuel-logs-theme($theme);
 }
 
 // -----------------------------------------------------------------------------------------------------
@@ -378,4 +380,8 @@ body.theme-pink-dark {
 .invoice-number-btn {
     line-height: 30px !important;
     border-radius: 0 !important;
+}
+
+.icon-font {
+    font-size: 21px;
 }

@@ -13,24 +13,24 @@
                         today
                     </mat-icon>
                     <span class="logo-text" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                        <span *ngIf="employee">{{ employee.firstName + ' ' + employee.lastName }}</span> Attendace
+                        <span *ngIf="employee">{{ employee.firstName + ' ' + employee.lastName }}</span> Attendance
                     </span>
                 </div>
 
                 <!-- TOOLBAR -->
                 <div class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="start center">
-                        <button mat-raised-button color="accent" class="save-work-button" (click)="markAttendence()">
-                            <mat-icon class="mr-8">check</mat-icon>
-                            MARK ATTENDENCE
+                        <button mat-raised-button color="accent" class="save-work-button" (click)="markAttendance()">
+                            <mat-icon class="icon-font">check</mat-icon>
+                            MARK ATTENDANCE
                         </button>
                     </div>
                     
 
                     <!-- EMPLOYEE FILTER -->
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 1 auto" style="margin: 15px; width: 200px;">
-                        <mat-form-field appearance="outline" class="w-100-p" fxFlex="100">
-                            <mat-label>Employee</mat-label>
+                        <mat-form-field class="w-100-p" fxFlex="100">
+                            <mat-label>Select Employee</mat-label>
                             <mat-select matNativeControl (selectionChange)="onChangeEmployee($event)">
                                 <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.firstName}} {{employee.lastName}}</mat-option>
                             </mat-select>

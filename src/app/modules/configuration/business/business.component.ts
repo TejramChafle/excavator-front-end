@@ -123,7 +123,7 @@ export class BusinessComponent implements OnInit, OnDestroy {
         // data.handle = FuseUtils.handleize(data.name);
         this._businessService.updateBusiness(data).then(() => {
             // Trigger the subscription with new data
-            this._businessService.onBusinessChanged.next(data);
+            // this._businessService.onBusinessChanged.next(data);
             // Show the success message
             this._matSnackBar.open('Business updated', 'OK', {
                 verticalPosition: 'top',
@@ -140,7 +140,7 @@ export class BusinessComponent implements OnInit, OnDestroy {
         // data.handle = FuseUtils.handleize(data.name);
         this._businessService.addBusiness(data).then(() => {
             // Trigger the subscription with new data
-            this._businessService.onBusinessChanged.next(data);
+            // this._businessService.onBusinessChanged.next(data);
             // Show the success message
             this._matSnackBar.open('Business added', 'OK', {
                 verticalPosition: 'top',

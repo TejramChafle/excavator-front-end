@@ -1246,11 +1246,11 @@ export let navigation: FuseNavigation[] = [
             },
             {
                 id       : 'fuel',
-                title    : 'Fuel',
+                title    : 'Fuel Logs',
                 translate: 'NAV.FUEL',
                 type     : 'item',
                 icon     : 'local_gas_station',
-                url      : '/configuration/fuel'
+                url      : '/manage/fuel-logs'
             }
         ]
     },

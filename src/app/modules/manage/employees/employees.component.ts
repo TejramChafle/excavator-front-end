@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 
 import { fuseAnimations } from '@fuse/animations';
-import { takeUntil } from 'rxjs/internal/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/internal/operators';
 import { MODULE } from 'app/app.config';
 import { DataService } from 'app/data.service';
 import { Router } from '@angular/router';
@@ -58,12 +58,10 @@ export class EmployeesComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
-
-        /* fromEvent(this.filter.nativeElement, 'keyup')
+        fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
-                debounceTime(150),
+                debounceTime(500),
                 distinctUntilChanged()
             )
             .subscribe(() => {
@@ -71,9 +69,8 @@ export class EmployeesComponent implements OnInit {
                 {
                     return;
                 }
-
-                this.dataSource.filter = this.filter.nativeElement.value;
-            }); */
+                this._dataService.onSearchTextChanged.next(this.filter.nativeElement.value);
+            });
 
         this.tableColumns = MODULE.employees.tableColumns;
         this._dataService.onRecordsChanged

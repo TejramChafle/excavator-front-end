@@ -1,9 +1,9 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="p-24">
 
-    <div class="close-button-wrapper" fxFlex="0 1 auto" fxFlex.gt-sm="100px">
+    <div class="close-button-wrapper" fxFlex="0 1 auto" >
         <button class="p-8" mat-button fxLayout="row" fxLayoutAlign="start center" (click)="onClickBack()">
             <mat-icon class="mr-8">arrow_back</mat-icon>
-            <span class="text-uppercase">Back</span>
+            <!-- <span class="text-uppercase">Back</span> -->
         </button>
     </div>
 
@@ -115,12 +115,12 @@
             
             <div class="action-buttons">
                 <button mat-raised-button class="fuse-white mt-24 mt-md-0" (click)="search()" aria-label="search">
-                    <mat-icon class="mr-8">search</mat-icon>
+                    <mat-icon class="icon-font">search</mat-icon>
                     <span class="text-uppercase">Search</span>
                 </button>
         
                 <button mat-stroked-button color="warn" class="fuse-white mt-24 mt-md-0" (click)="clearForm()" aria-label="clear form">
-                    <mat-icon class="mr-8">clear</mat-icon>
+                    <mat-icon class="icon-font">clear</mat-icon>
                     <span class="text-uppercase">Clear</span>
                 </button>
             </div>

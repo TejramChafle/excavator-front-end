@@ -1,9 +1,9 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="p-24">
 
-    <div class="close-button-wrapper" fxFlex="0 1 auto" fxFlex.gt-sm="220px" (click)="deselectAll()">
-        <button class="p-8" mat-button fxLayout="row" fxLayoutAlign="start center">
+    <div class="close-button-wrapper" fxFlex="0 1 auto" fxFlex.gt-sm="220px">
+        <button class="p-8" mat-button fxLayout="row" fxLayoutAlign="start center" (click)="deselectAll()">
             <mat-icon class="mr-8">arrow_back</mat-icon>
-            <span class="text-uppercase">Back</span>
+            <!-- <span class="text-uppercase">Back</span> -->
         </button>
     </div>
 
@@ -30,12 +30,12 @@
 
     <div class="action-buttons">
         <button mat-raised-button class="fuse-white mt-24 mt-md-0" (click)="generateInvoice()" aria-label="delete selected">
-            <mat-icon class="mr-8">receipt</mat-icon>
+            <mat-icon class="icon-font">receipt</mat-icon>
             <span class="text-uppercase">Generate Invoice</span>
         </button>
 
-        <button mat-icon-button (click)="deleteSelectedContacts()" aria-label="delete selected">
-            <mat-icon class="mr-8">delete</mat-icon>
+        <button mat-stroked-button (click)="deleteSelectedContacts()" aria-label="delete selected">
+            <mat-icon class="icon-font">delete</mat-icon>
             <span class="text-uppercase">Delete</span>
         </button>
     </div>

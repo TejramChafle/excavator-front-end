@@ -37,7 +37,8 @@
             <button mat-raised-button
                     [routerLink]="'/manage/employee'"
                     class="add-employee-button fuse-white mt-24 mt-md-0">
-                <span>ADD NEW EMPLOYEE</span>
+                <mat-icon class="icon-font">add</mat-icon>
+                ADD NEW EMPLOYEE
             </button>
             <!-- / ADD BUTTON -->
 
@@ -84,15 +85,15 @@
 
                 <!-- Gender -->
                 <ng-container matColumnDef="gender">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
-                    <mat-cell *matCellDef="let employee">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Gender</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-md>
                         <p class="text-truncate">{{employee.gender}}</p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Designation Column -->
                 <ng-container matColumnDef="designation">
-                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Designation</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Designation</mat-header-cell>
                     <mat-cell *matCellDef="let employee" fxHide fxShow.gt-md>
                         <p class="text-truncate">
                             {{employee.designation}}
@@ -112,28 +113,28 @@
 
                 <!-- Joining Date Column -->
                 <ng-container matColumnDef="joiningdate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Joined Date</mat-header-cell>
-                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Joined Date</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-md>
                         <p class="text-truncate">
-                            {{employee.dateOfJoin | date}}
+                            {{employee.dateOfJoin | date:'dd MMM, y'}}
                         </p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Disabled on date Column -->
                 <ng-container matColumnDef="disabledon">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Disabled On</mat-header-cell>
-                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Disabled On</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-md>
                         <p class="text-truncate">
-                            {{employee.isActive ? '' : employee.disabledOn | date }}
+                            {{employee.isActive ? '' : employee.disabledOn | date:'dd MMM, y' }}
                         </p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Active Column -->
                 <ng-container matColumnDef="status">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Active</mat-header-cell>
-                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-xs>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Active</mat-header-cell>
+                    <mat-cell *matCellDef="let employee" fxHide fxShow.gt-md>
                         <mat-icon *ngIf="employee.active" class="active-icon green-600 s-16">check</mat-icon>
                         <mat-icon *ngIf="!employee.active" class="active-icon red-500 s-16">close</mat-icon>
                     </mat-cell>

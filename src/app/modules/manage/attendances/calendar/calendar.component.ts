@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'app/data.service';
 import { AttendanceFormComponent } from '../attendance-form/attendance-form.component';
 import { AttendanceModel } from '../attendance.model';
-import { AttendanceMultipleComponent } from '../attendence-multiple/attendence-multiple.component';
+import { AttendanceMultipleComponent } from '../attendance-multiple/attendance-multiple.component';
 
 @Component({
     selector: 'calendar',
@@ -301,7 +301,7 @@ export class CalendarComponent implements OnInit {
     }
 
     // This will mark the attence of multiple selected employees for day
-    markAttendence() {
+    markAttendance() {
         let attendanceFormRef = this._matDialog.open(AttendanceMultipleComponent, {
             disableClose: false,
             panelClass: 'event-form-dialog',
@@ -318,7 +318,7 @@ export class CalendarComponent implements OnInit {
         });
     }
 
-    // Based on selection of the employee from dropdown options, get the attendence records for the selected month
+    // Based on selection of the employee from dropdown options, get the attendance records for the selected month
     onChangeEmployee(event) {
         this._calendarService.getEvents(event.value._id);
     }

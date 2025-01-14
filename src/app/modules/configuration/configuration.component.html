@@ -27,7 +27,7 @@
             <div class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input [formControl]="searchInput" placeholder="Search for a {{pageTitle}}">
+                    <input [formControl]="searchInput" placeholder="Search for a {{pageTitle | lowercase}}">
                 </div>
             </div>
             <!-- / SEARCH -->
@@ -35,7 +35,8 @@
             <!-- ADD BUTTON -->
             <button mat-raised-button (click)="newConfiguration()"
                 class="add-product-button fuse-white mt-24 mt-md-0">
-                <span>ADD NEW {{pageTitle | uppercase}}</span>
+                <mat-icon class="icon-font">add</mat-icon>
+                ADD NEW {{pageTitle | uppercase}}
             </button>
             <!-- / ADD BUTTON -->
         </div>

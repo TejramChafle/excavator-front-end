@@ -11,6 +11,8 @@ export class AppCache {
     contacts: Array<any>;
     services: Array<any>;
     vehicles: Array<any>;
+    fuelPumps: Array<any>;
+    employees: Array<any>;
 
     constructor(private _dataService: DataService) {
     }
@@ -70,5 +72,35 @@ export class AppCache {
             });
         }
         return this.vehicles;
+    }
+
+    getFuelPumps() {
+        const fuelPumps = JSON.parse(localStorage.getItem('fuelPumps'));
+        if (fuelPumps) {
+            this.fuelPumps = fuelPumps;
+        } else {
+
+            this._dataService.records('petrol-pump', {}).subscribe((response) => {
+                // console.log({ fuelPumps: response });
+                this.fuelPumps = response.docs;
+                localStorage.setItem('fuelPumps', JSON.stringify(this.fuelPumps));
+            });
+        }
+        return this.fuelPumps;
+    }
+
+    getEmployees() {
+        const employees = JSON.parse(localStorage.getItem('employees'));
+        if (employees) {
+            this.employees = employees;
+        } else {
+
+            this._dataService.records('employee', {}).subscribe((response) => {
+                console.log({ employees: response });
+                this.employees = response.docs;
+                localStorage.setItem('employees', JSON.stringify(this.employees));
+            });
+        }
+        return this.employees;
     }
 }

@@ -5,9 +5,9 @@ import { AppService } from 'app/app.service';
 import { DataService } from 'app/data.service';
 
 @Component({
-    selector: 'attendence-multiple',
-    templateUrl: './attendence-multiple.component.html',
-    styleUrls: ['./attendence-multiple.component.scss'],
+    selector: 'attendance-multiple',
+    templateUrl: './attendance-multiple.component.html',
+    styleUrls: ['./attendance-multiple.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
@@ -55,7 +55,7 @@ export class AttendanceMultipleComponent {
                 updatedBy: this._appService.user._id
             });
         })
-        this._dataService.createRecordButNoRefresh(MODULE.attendances.backendRoute + MODULE.attendances.path.multiAttendence, { attendence: param }).then((response) => {
+        this._dataService.createRecordButNoRefresh(MODULE.attendances.backendRoute + MODULE.attendances.path.multiAttendance, { attendance: param }).then((response) => {
             console.log({ response });
             this._appService.handleMessage(
                 'Marked attendance of selected employees',

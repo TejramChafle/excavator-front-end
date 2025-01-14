@@ -1,0 +1,195 @@
+<div id="fuel-log" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/manage/fuel-logs'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        Updating Fuel Log | {{fuelLog.fuel | titlecase}} | {{fuelLog._id}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Fuel Log
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Fuel log information</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-fuel-log-button"
+                    [disabled]="fuelLogForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="onSubmit()">
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-fuel-log-button"
+                    [disabled]="fuelLogForm.invalid || fuelLogForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="onSubmit()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="fuelLogForm" [formGroup]="fuelLogForm" class="employee w-100-p" fxLayout="column" fxFlex>
+
+                    <mat-tab-group>
+
+                        <mat-tab label="Filling Info">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <!-- invoice Photo -->
+                                <div class="tab-content p-24" fusePerfectScrollbar>
+                                    <!-- <div fxLayout="row wrap" fxLayoutAlign="start start">
+                                        <div *ngIf="!log.invoicePhoto"
+                                            class="fuel-log-image" fxlayout="row" fxLayoutAlign="center center">
+                                            <img class="media"
+                                                [src]="'assets/images/ecommerce/log-image-placeholder.png'" alt="">
+                                        </div>
+
+                                        <div *ngIf="log.invoicePhoto"
+                                                class="fuel-log-image" fxlayout="row" fxLayoutAlign="center center">
+                                            <img class="media" [src]="log.invoicePhoto" alt="">
+                                        </div>
+                                    </div> -->
+
+                                    <!-- Fuel: PETROL, DIESEL, CNG, KEROSENE, OTHER -->
+                                    <mat-form-field appearance="outline" class="w-100-p">
+                                        <mat-label>Fuel</mat-label>
+                                        <mat-select matNativeControl required formControlName="fuel">
+                                            <mat-option value="PETROL">Petrol</mat-option>
+                                            <mat-option value="DIESEL">Diesel</mat-option>
+                                            <mat-option value="CNG">CNG</mat-option>
+                                            <mat-option value="OTHER">Other</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <!-- Fuel Filled Date -->
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Fuel Filled Date</mat-label>
+                                        <input matInput placeholder="Fuel Filled Date"
+                                            name="date"
+                                            formControlName="date"
+                                            required
+                                            [matDatepicker]="fuelDatePicker">
+                                        
+                                        <mat-datepicker-toggle matSuffix [for]="fuelDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #fuelDatePicker></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <!-- Fuel Pump -->
+                                    <mat-form-field appearance="outline" class="w-100-p">
+                                        <mat-label>Fuel Pump</mat-label>
+                                        <mat-select matNativeControl required formControlName="petrolPump"
+                                            (selectionChange)="onChangePetrolPump($event)">
+                                            <mat-option [value]="pump._id" *ngFor="let pump of petrolPumps">
+                                                {{pump.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <!-- Invoice # -->
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Invoice Number</mat-label>
+                                        <input matInput placeholder="Invoice Number"
+                                            name="invoiceId"
+                                            formControlName="invoiceId"
+                                            required
+                                            type="tel"
+                                            maxlength="10">
+                                    </mat-form-field>
+
+                                    <!-- Rate -->
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Rate</mat-label>
+                                        <input matInput placeholder="0.00"
+                                            name="rate"
+                                            formControlName="rate"
+                                            type="number">
+                                        <span matPrefix>₹&nbsp;</span>
+                                    </mat-form-field>
+
+                                    <!-- Volume -->
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Volume</mat-label>
+                                        <input matInput placeholder="Volume"
+                                            name="volume"
+                                            formControlName="volume"
+                                            type="number"
+                                            required
+                                            (change)="onChangeQuantity($event)">
+                                    </mat-form-field>
+
+                                    <!-- Total -->
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Total</mat-label>
+                                        <input matInput placeholder="0.00"
+                                            name="total"
+                                            formControlName="total"
+                                            type="number"
+                                            required>
+                                        <span matPrefix>₹&nbsp;</span>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                        </mat-tab>
+
+                        <mat-tab label="Optional">
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                    <!-- Vehicle -->
+                                    <mat-form-field appearance="outline" class="w-100-p">
+                                        <mat-label>Vehicle</mat-label>
+                                        <mat-select matNativeControl formControlName="vehicle">
+                                            <mat-option [value]="vehicle._id" *ngFor="let vehicle of vehicles">
+                                                {{vehicle.name}} {{vehicle.number}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <!-- Employee -->
+                                    <mat-form-field appearance="outline" class="w-100-p">
+                                        <mat-label>Employee</mat-label>
+                                        <mat-select matNativeControl formControlName="employee">
+                                            <mat-option [value]="employee._id" *ngFor="let employee of employees">{{employee.firstName}} {{employee.lastName}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

@@ -8,7 +8,9 @@ import { EmployeeComponent } from './employees/employee/employee.component';
 import { AttendanceFormComponent } from './attendances/attendance-form/attendance-form.component';
 import { AttendancesComponent } from './attendances/attendances.component';
 import { CalendarModule } from './attendances/calendar/calendar.module';
-import { AttendanceMultipleComponent } from './attendances/attendence-multiple/attendence-multiple.component';
+import { AttendanceMultipleComponent } from './attendances/attendance-multiple/attendance-multiple.component';
+import { FuelLogsComponent } from './fuel-logs/fuel-logs.component';
+import { FuelLogComponent } from './fuel-logs/fuel-log/fuel-log.component';
 
 const routes: Routes = [
     {
@@ -42,6 +44,22 @@ const routes: Routes = [
     {
         path: 'attendances',
         loadChildren: './attendances/calendar/calendar.module#CalendarModule'
+    },
+    {
+        path: 'fuel-logs',
+        component: FuelLogsComponent,
+        resolve: {
+            recordsWithPagination: DataService
+        },
+        data : { module : 'fuelLogs' }
+    },
+    {
+        path: 'fuel-log/:id',
+        component: FuelLogComponent
+    },
+    {
+        path: 'fuel-log',
+        component: FuelLogComponent
     }
 ];
 
@@ -52,7 +70,9 @@ const routes: Routes = [
         AttendanceFormComponent,
         AttendancesComponent,
         // CalendarComponent,
-        AttendanceMultipleComponent
+        AttendanceMultipleComponent,
+        FuelLogsComponent,
+        FuelLogComponent
     ],
     imports: [
         RouterModule.forChild(routes),

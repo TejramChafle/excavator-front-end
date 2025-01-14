@@ -64,7 +64,7 @@ export class DataService implements Resolve<any> {
      * @returns {Observable<any> | Promise<any> | any}
      */
     resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        // console.log({ _route });
+        console.log({ _route });
         const route = MODULE[_route.data['module'] ? _route.data['module'] : _route.url[1].path].backendRoute;
         // console.log({ route });
         this.resetFilter();

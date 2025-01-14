@@ -213,7 +213,7 @@ export const MODULE = {
             'actions'
         ],
         path: {
-            multiAttendence: '/multiple'
+            multiAttendance: '/multiple'
         }
     },
     transactions: {
@@ -280,21 +280,21 @@ export const MODULE = {
             'actions'
         ]
     },
-    fuels: {
+    fuelLogs: {
         backendRoute: 'fuel',
         frontendRoute: 'fuels',
         pageTitle: 'Fuel Log',
         tableColumns: [
             'date',
             'fuel',
-            'petrolPump',
-            'rate',
             'volume',
             'total',
-            'vehicle',
-            'employee',
             'invoice',
-            'transaction',
+            'petrolPump',
+            'rate',
+            'employee',
+            'vehicle',
+            // 'transaction',
             // 'updatedBy',
             // 'updatedAt',
             'actions'
