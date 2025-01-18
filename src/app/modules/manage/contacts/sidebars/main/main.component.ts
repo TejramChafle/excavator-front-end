@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { ContactsService } from '../../contacts.service';
 import { DataService } from '../../../../../data.service';
 import { AppService } from '../../../../../app.service';
 
@@ -22,10 +20,9 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy {
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {DataService} _dataService
      */
     constructor(
-        private _contactsService: ContactsService,
         private _dataService: DataService,
         public _appService: AppService
     ) {
@@ -41,9 +38,9 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this.filterBy = this._contactsService.filterBy || 'all';
+        this.filterBy = this._dataService.filterBy || 'all';
 
-        this._contactsService.onUserDataChanged
+        this._dataService.onRecordDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(user => {
                 this.user = user;
@@ -70,6 +67,23 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy {
      */
     changeFilter(filter): void {
         this.filterBy = filter;
-        this._contactsService.onFilterChanged.next(this.filterBy);
+        let data: any = {};
+        switch (filter) {
+            case 'all' || null:
+                data.contactType = null;
+                break;
+            case 'business':
+                data.contactType = 'Business';
+                break;
+            case 'employee':
+                data.contactType = 'Employee';
+                break;
+            case 'starred':
+                data.isStarred = true;
+                break;
+            default:
+                data.contactType = null;
+        }
+        this._dataService.onFilterChanged.next(data);
     }
 }

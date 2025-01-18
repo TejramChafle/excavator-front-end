@@ -4,16 +4,14 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-
-import { ContactsService } from '../contacts.service';
+import { DataService } from 'app/data.service';
 
 @Component({
-    selector   : 'selected-bar',
+    selector: 'selected-bar',
     templateUrl: './selected-bar.component.html',
-    styleUrls  : ['./selected-bar.component.scss']
+    styleUrls: ['./selected-bar.component.scss']
 })
-export class ContactsSelectedBarComponent implements OnInit, OnDestroy
-{
+export class ContactsSelectedBarComponent implements OnInit, OnDestroy {
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     hasSelectedContacts: boolean;
     isIndeterminate: boolean;
@@ -25,14 +23,13 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {DataService} _dataService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
+        private _dataService: DataService,
         public _matDialog: MatDialog
-    )
-    {
+    ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -44,15 +41,14 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-        this._contactsService.onSelectedContactsChanged
+    ngOnInit(): void {
+        this._dataService.onSelectedRecordsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
                 this.selectedContacts = selectedContacts;
                 setTimeout(() => {
                     this.hasSelectedContacts = selectedContacts.length > 0;
-                    this.isIndeterminate = (selectedContacts.length !== this._contactsService.contacts.length && selectedContacts.length > 0);
+                    this.isIndeterminate = (selectedContacts.length !== this._dataService.pagination.docs.length && selectedContacts.length > 0);
                 }, 0);
             });
     }
@@ -60,8 +56,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -74,24 +69,21 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     /**
      * Select all
      */
-    selectAll(): void
-    {
-        this._contactsService.selectContacts();
+    selectAll(): void {
+        this._dataService.selectRecords();
     }
 
     /**
      * Deselect all
      */
-    deselectAll(): void
-    {
-        this._contactsService.deselectContacts();
+    deselectAll(): void {
+        this._dataService.deselectRecords();
     }
 
     /**
      * Delete selected contacts
      */
-    deleteSelectedContacts(): void
-    {
+    deleteSelectedContacts(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -100,9 +92,8 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
 
         this.confirmDialogRef.afterClosed()
             .subscribe(result => {
-                if ( result )
-                {
-                    this._contactsService.deleteSelectedContacts();
+                if (result) {
+                    this._dataService.deselectRecords();
                 }
                 this.confirmDialogRef = null;
             });

@@ -48,7 +48,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _dataService: DataService,
-        private _appService: AppService,
+        public _appService: AppService,
         private _formBuilder: FormBuilder,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,

@@ -25,14 +25,20 @@
                     </a>
                 </div>
 
-                <div class="nav-item" aria-label="frequently contacted" (click)="changeFilter('frequent')">
-                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='frequent'}">
-                        <div class="title">Freequently contacted</div>
+                <div class="nav-item" aria-label="frequently contacted">
+                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='employee'}" (click)="changeFilter('employee')">
+                        <div class="title">Employee Contacts</div>
                     </a>
                 </div>
 
-                <div class="nav-item" aria-label="starred" (click)="changeFilter('starred')">
-                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='starred'}">
+                <div class="nav-item" aria-label="frequently contacted">
+                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='business'}" (click)="changeFilter('business')">
+                        <div class="title">Business Contacts</div>
+                    </a>
+                </div>
+
+                <div class="nav-item" aria-label="starred">
+                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='starred'}"  (click)="changeFilter('starred')">
                         <div class="title">Starred Contacts</div>
                     </a>
                 </div>

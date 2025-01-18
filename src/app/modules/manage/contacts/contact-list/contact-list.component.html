@@ -71,7 +71,7 @@
     <ng-container matColumnDef="important">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Important</mat-header-cell>
         <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
-            <button mat-icon-button (click)="$event.stopPropagation();toggleStar(contact._id)" aria-label="Toggle star">
+            <button mat-icon-button (click)="$event.stopPropagation();toggleStar(contact)" aria-label="Toggle star">
                 <mat-icon class="amber-fg" *ngIf="contact.isStarred">star</mat-icon>
                 <mat-icon class="secondary-text" *ngIf="!contact.isStarred">star_border</mat-icon>
             </button>

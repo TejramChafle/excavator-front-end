@@ -40,7 +40,7 @@ export class InvoicesComponent implements OnInit, OnDestroy {
      * @param {DataService} _dataService
      */
     constructor(
-        private _dataService: DataService,
+        public _dataService: DataService,
         private _router: Router,
         public _appService: AppService
     ) {

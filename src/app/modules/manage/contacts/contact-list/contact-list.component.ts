@@ -1,17 +1,16 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DataSource } from '@angular/cdk/collections';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { ContactsService } from '../contacts.service';
 import { ContactFormDialogComponent } from '../contact-form/contact-form.component';
 import { DataService } from 'app/data.service';
 import { MODULE } from '../../../../app.config';
+import { AppService } from 'app/app.service';
 
 @Component({
     selector: 'contacts-list',
@@ -41,19 +40,19 @@ export class ContactsListComponent implements OnInit, OnDestroy {
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {DataService} _dataService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
         public _matDialog: MatDialog,
-        private _dataService: DataService
+        private _dataService: DataService,
+        private _appService: AppService
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
 
         this.tableColumns = MODULE['contacts'].tableColumns;
-        console.log('this.tableColumns: ', this.tableColumns);
+        // console.log('this.tableColumns: ', this.tableColumns);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -64,13 +63,10 @@ export class ContactsListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // this.dataSource = new FilesDataSource(this._contactsService);
 
-        // this._contactsService.onContactsChanged
         this._dataService.onRecordsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
-                // this.contacts = contacts;
 
                 this.checkboxes = {};
                 response.docs.map(contact => {
@@ -81,7 +77,6 @@ export class ContactsListComponent implements OnInit, OnDestroy {
                 console.log('dataSource: ', this.dataSource);
             });
 
-        // this._contactsService.onSelectedContactsChanged
         this._dataService.onSelectedRecordsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
@@ -95,16 +90,16 @@ export class ContactsListComponent implements OnInit, OnDestroy {
                 this.selectedContacts = selectedContacts;
             });
 
-        this._contactsService.onUserDataChanged
+        this._dataService.onRecordDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(user => {
                 this.user = user;
             });
 
-        this._contactsService.onFilterChanged
+        this._dataService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this._contactsService.deselectContacts();
+                this._dataService.deselectRecords();
             });
     }
 
@@ -147,8 +142,11 @@ export class ContactsListComponent implements OnInit, OnDestroy {
                      * Save
                      */
                     case 'save':
-                        // this._contactsService.updateContact(formData.getRawValue());
-                        this._dataService.updateRecord('contact', formData.getRawValue());
+                        const data = {
+                            ...formData.getRawValue(),
+                            updatedBy: this._appService.user._id
+                        }
+                        this._dataService.updateRecord(MODULE.contacts.backendRoute, data);
                         break;
                     /**
                      * Delete
@@ -172,7 +170,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this._contactsService.deleteContact(contact);
+                this._dataService.deleteRecord(MODULE.contacts.backendRoute, contact);
             }
             this.confirmDialogRef = null;
         });
@@ -185,50 +183,16 @@ export class ContactsListComponent implements OnInit, OnDestroy {
      * @param contactId
      */
     onSelectedChange(contactId): void {
-        this._contactsService.toggleSelectedContact(contactId);
+        this._dataService.toggleSelectedRecord(contactId);
     }
 
     /**
      * Toggle star
      *
-     * @param contactId
+     * @param contact
      */
-    toggleStar(contactId): void {
-        if (this.user.starred.includes(contactId)) {
-            this.user.starred.splice(this.user.starred.indexOf(contactId), 1);
-        }
-        else {
-            this.user.starred.push(contactId);
-        }
-
-        this._contactsService.updateUserData(this.user);
-    }
-}
-
-export class FilesDataSource extends DataSource<any>
-{
-    /**
-     * Constructor
-     *
-     * @param {ContactsService} _contactsService
-     */
-    constructor(
-        private _contactsService: ContactsService
-    ) {
-        super();
-    }
-
-    /**
-     * Connect function called by the table to retrieve one stream containing the data to render.
-     * @returns {Observable<any[]>}
-     */
-    connect(): Observable<any[]> {
-        return this._contactsService.onContactsChanged;
-    }
-
-    /**
-     * Disconnect
-     */
-    disconnect(): void {
+    toggleStar(contact): void {
+        contact.isStarred = !contact.isStarred;
+        this._dataService.updateRecord(MODULE.contacts.backendRoute, contact);
     }
 }

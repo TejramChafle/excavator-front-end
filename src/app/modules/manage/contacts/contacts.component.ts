@@ -6,11 +6,11 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-
-import { ContactsService } from './contacts.service';
 import { ContactFormDialogComponent } from './contact-form/contact-form.component';
 
 import { DataService } from '../../../data.service';
+import { AppService } from 'app/app.service';
+import { MODULE } from 'app/app.config';
 
 @Component({
     selector: 'contacts',
@@ -30,16 +30,14 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
     /**
      * Constructor
-     *
-     * @param {ContactsService} _contactsService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        // private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
-        private _dataService: DataService
+        private _dataService: DataService,
+        private _appService: AppService
     ) {
         // Set the defaults
         this.searchInput = new FormControl('');
@@ -56,7 +54,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // this._contactsService.onSelectedContactsChanged
         this._dataService.onSelectedRecordsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
@@ -66,11 +63,10 @@ export class ContactsComponent implements OnInit, OnDestroy {
         this.searchInput.valueChanges
             .pipe(
                 takeUntil(this._unsubscribeAll),
-                debounceTime(300),
+                debounceTime(750),
                 distinctUntilChanged()
             )
             .subscribe(searchText => {
-                // this._contactsService.onSearchTextChanged.next(searchText);
                 this._dataService.onSearchTextChanged.next(searchText);
             });
     }
@@ -104,9 +100,14 @@ export class ContactsComponent implements OnInit, OnDestroy {
                 if (!response) {
                     return;
                 }
-                console.log('formdata: ', response.getRawValue());
-                // this._contactsService.updateContact(response.getRawValue());
-                this._dataService.createRecord('contact', response.getRawValue());
+                // console.log('formdata: ', response.getRawValue());
+                const data = {
+                    ...response.getRawValue(),
+                    business: this._appService.user.business._id,
+                    createdBy: this._appService.user._id,
+                    updatedBy: this._appService.user._id
+                }
+                this._dataService.createRecord(MODULE.contacts.backendRoute, data);
             });
     }
 
